@@ -10,3 +10,4 @@ func animate(animation_name : String, custom_speed : float, can_loop : bool):
 	
 	play(animation_name, -1, custom_speed)
 	previous_animation = animation_name
+	

@@ -11,10 +11,12 @@ func step(host, delta):
 	if Input.is_action_just_released("ui_down"):
 		return 'OnGround'
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_jump"):
 		p += 120
 		host.animation.stop(true)
 		host.audio_player.play('spin_dash_charge')
+	
+	host.rotation_degrees = 0;
 	
 	p = min(p, 480)
 	p -= int(p / 7.5) / 15360.0
@@ -27,4 +29,5 @@ func exit(host):
 	host.audio_player.play('spin_dash_release')
 
 func animation_step(host, animator):
-	animator.animate('SpinDashCharge', 1.0, false)
+	animator.animate('SpinDashCharge', 3.0, false)
+	pass

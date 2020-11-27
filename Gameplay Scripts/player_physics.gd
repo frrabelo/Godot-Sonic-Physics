@@ -15,9 +15,14 @@ export(float) var JMP = 390
 export(float) var FALL = 150
 export(float) var AIR = 5.625
 export(float) var GRV = 13.125
+export(bool) var instaShield = true;
+export(bool) var superPeelOut = true;
+export(bool) var dropDash = true;
+export(bool) var spinDash = true;
 
 onready var player_camera = $'../PlayerCamera'
 onready var player_vfx = $Characters/VFX
+onready var GLOBAL = get_node("/root/Global");
 
 onready var high_collider = $HighCollider
 onready var low_collider = $LowCollider
@@ -28,9 +33,11 @@ onready var left_wall = $LeftWallSensor
 onready var right_wall = $RightWallSensor
 
 onready var character = $Characters
-onready var animation = $Characters/Sonic/AnimationPlayer
+onready var sprite = $Characters/Sonic
+onready var animation = sprite.get_node("CharAnimation");
 onready var audio_player = $AudioPlayer
 
+var direction : Vector2 = Vector2.ZERO;
 var gsp : float
 var velocity : Vector2
 var ground_mode : int
@@ -60,6 +67,14 @@ func _process(delta):
 	low_collider.disabled = !roll_anim
 	left_ground.position.x = -9 if !roll_anim else -7
 	right_ground.position.x = 9 if !roll_anim else 7
+	
+	direction.x = \
+	-int(GLOBAL.controller['left']) +\
+	int(GLOBAL.controller['right'])
+	
+	direction.y = \
+	-int(GLOBAL.controller['up']) +\
+	int(GLOBAL.controller['down'])
 	
 	if (control_locked and is_grounded) or control_unlock_timer < control_unlock_time:
 		control_unlock_timer -= delta
@@ -126,7 +141,6 @@ func ground_angle():
 
 func is_on_ground():
 	var ground_ray = get_ground_ray()
-	
 	if ground_ray != null:
 		var point = ground_ray.get_collision_point()
 		var normal = ground_ray.get_collision_normal()
@@ -168,3 +182,7 @@ func get_ground_ray():
 		return left_ground
 	else:
 		return right_ground
+
+
+func _on_CharAnimation_animation_finished(anim_name):
+	pass # Replace with function body.

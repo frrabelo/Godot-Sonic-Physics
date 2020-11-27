@@ -1,13 +1,13 @@
 extends Node
 
-onready var states = {
+export onready var states = {
 	'OnGround' : $OnGround,
 	'OnAir' : $OnAir,
 	'SpinDash' : $SpinDash,
 	'SuperPeelOut' : $SuperPeelOut,
 }
 
-onready var host = get_parent()
+onready var host = get_parent();
 
 var current_state = 'OnGround'
 var previous_state = null
@@ -33,5 +33,5 @@ func change_state(state_name):
 	current_state = state_name
 	states[current_state].enter(host)
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_CharAnimation_animation_finished(anim_name):
 	states[current_state]._on_animation_finished(anim_name)

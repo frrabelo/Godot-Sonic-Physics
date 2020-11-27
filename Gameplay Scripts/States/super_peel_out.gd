@@ -34,6 +34,6 @@ func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
 		anim_name = 'Running'
 	
 	if animation_speed >= 720:
-		anim_name = 'PeelOut'
+		anim_name = 'SuperPeelOut'
 	
 	animator.animate(anim_name, anim_speed, false)
