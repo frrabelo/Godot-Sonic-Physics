@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=2]
+[gd_scene load_steps=143 format=2]
 
 [ext_resource path="res://Gameplay Scripts/States/spin_dash.gd" type="Script" id=1]
 [ext_resource path="res://Gameplay Scripts/States/on_air.gd" type="Script" id=2]
@@ -108,6 +108,7 @@
 [ext_resource path="res://Sprites/Player/Characters/Sonic/velocidade maxima/vm#3.png" type="Texture" id=106]
 [ext_resource path="res://Sprites/Player/Characters/Sonic/velocidade maxima/vm#4.png" type="Texture" id=107]
 [ext_resource path="res://Sprites/Player/Characters/Sonic/velocidade maxima/vm#2.png" type="Texture" id=108]
+[ext_resource path="res://Audio/sfx/DropDash.wav" type="AudioStream" id=109]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Braking"
@@ -306,16 +307,21 @@ tracks/0/keys = {
 "values": [ 17, 18, 19, 20, 21, 14, 15, 16 ]
 }
 
-[sub_resource type="SpriteFrames" id=15]
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
+"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
+"loop": true,
+"name": "Down",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 27 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
+"frames": [ ExtResource( 108 ), ExtResource( 106 ), ExtResource( 107 ), ExtResource( 105 ) ],
 "loop": true,
-"name": "Down",
+"name": "SuperPeelOut",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 94 ), ExtResource( 88 ), ExtResource( 83 ) ],
@@ -326,11 +332,6 @@ animations = [ {
 "frames": [ ExtResource( 86 ), ExtResource( 93 ) ],
 "loop": true,
 "name": "BrakeLoop",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 108 ), ExtResource( 106 ), ExtResource( 107 ), ExtResource( 105 ) ],
-"loop": true,
-"name": "SuperPeelOut",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 87 ), ExtResource( 84 ), ExtResource( 90 ), ExtResource( 92 ), ExtResource( 89 ), ExtResource( 85 ), ExtResource( 91 ) ],
@@ -381,7 +382,7 @@ animations = [ {
 script = ExtResource( 21 )
 frame_offset = Vector2( 0, 0 )
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=14]
 resource_name = "BrakeLoop"
 length = 0.2
 loop = true
@@ -422,7 +423,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 1, 2 ) ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=15]
 resource_name = "Braking"
 length = 0.7
 tracks/0/type = "value"
@@ -502,7 +503,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, 2 ), Vector2( 5, 4 ), Vector2( 6, 4 ), Vector2( 6, 7 ) ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=17]
 resource_name = "DropCharge"
 length = 1.6
 loop = true
@@ -543,8 +544,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 6 ) ]
 }
 
-[sub_resource type="Animation" id=17]
-resource_name = "Idle"
+[sub_resource type="Animation" id=18]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -583,8 +583,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=18]
-resource_name = "Jogging"
+[sub_resource type="Animation" id=19]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -623,8 +622,7 @@ tracks/2/keys = {
 "values": [ Vector2( -2, 1 ), Vector2( -3, 1 ), Vector2( -1, 2 ), Vector2( -2, 1 ), Vector2( 0, 1 ), Vector2( 0, 2 ), Vector2( -1, 2 ), Vector2( -2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=19]
-resource_name = "Jumping_Rolling"
+[sub_resource type="Animation" id=20]
 length = 1.6
 loop = true
 tracks/0/type = "value"
@@ -652,8 +650,7 @@ tracks/1/keys = {
 "values": [ 0, 2, 1, 3, 0, 4, 1, 5, 0, 6, 1, 7, 0, 8, 1, 9 ]
 }
 
-[sub_resource type="Animation" id=20]
-resource_name = "LookUp"
+[sub_resource type="Animation" id=21]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -692,7 +689,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -1, -1 ), Vector2( 0, -1 ) ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=22]
 resource_name = "PostBrakReturn"
 length = 0.3
 tracks/0/type = "value"
@@ -732,8 +729,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=21]
-resource_name = "Running"
+[sub_resource type="Animation" id=23]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -773,8 +769,7 @@ tracks/2/keys = {
 "values": [ Vector2( -2, 2 ), Vector2( -3, 2 ), Vector2( -2, 2 ), Vector2( -3, 2 ), Vector2( -2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=22]
-resource_name = "SpinDashCharge"
+[sub_resource type="Animation" id=24]
 length = 1.4
 loop = true
 tracks/0/type = "value"
@@ -814,7 +809,7 @@ tracks/2/keys = {
 "values": [ Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ) ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=25]
 resource_name = "SuperPeelOut"
 length = 0.4
 loop = true
@@ -855,7 +850,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 4 ), Vector2( 0, 3 ), Vector2( 0, 4 ), Vector2( 0, 3 ) ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=26]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
 tracks/0/interp = 1
@@ -893,7 +888,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1, 2 ) ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=27]
 length = 1.09091
 loop = true
 step = 0.0909091
@@ -934,7 +929,15 @@ tracks/2/keys = {
 "values": [ "Walking" ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="SpriteFrames" id=28]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=29]
 length = 0.28
 loop = true
 step = 0.04
@@ -951,8 +954,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "InstaShield"
+[sub_resource type="Animation" id=30]
 length = 0.12
 step = 0.02
 tracks/0/type = "value"
@@ -968,14 +970,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=25]
+[sub_resource type="CapsuleShape2D" id=31]
 radius = 9.03
 height = 6.05999
 
-[sub_resource type="CircleShape2D" id=26]
+[sub_resource type="CircleShape2D" id=32]
 radius = 9.0
 
-[sub_resource type="RayShape2D" id=27]
+[sub_resource type="RayShape2D" id=33]
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 0, -0.210224 )
@@ -1026,29 +1028,34 @@ script = ExtResource( 4 )
 
 [node name="Sonic" type="AnimatedSprite" parent="Characters"]
 position = Vector2( 0, 4 )
-frames = SubResource( 15 )
-animation = "Running"
-offset = Vector2( 0, 2 )
+frames = SubResource( 13 )
+animation = "BrakeLoop"
+offset = Vector2( 2, 2 )
 
 [node name="CharAnimation" type="AnimationPlayer" parent="Characters/Sonic"]
-anims/BrakeLoop = SubResource( 29 )
-anims/Braking = SubResource( 28 )
+anims/BrakeLoop = SubResource( 14 )
+anims/Braking = SubResource( 15 )
 anims/Down = SubResource( 16 )
-anims/DropCharge = SubResource( 31 )
-anims/Idle = SubResource( 17 )
-anims/Jogging = SubResource( 18 )
-anims/Jumping_Rolling = SubResource( 19 )
-anims/LookUp = SubResource( 20 )
-anims/PostBrakReturn = SubResource( 30 )
-anims/Running = SubResource( 21 )
-anims/SpinDashCharge = SubResource( 22 )
-anims/SuperPeelOut = SubResource( 32 )
-anims/UpToIdle = SubResource( 23 )
-anims/Walking = SubResource( 24 )
+anims/DropCharge = SubResource( 17 )
+anims/Idle = SubResource( 18 )
+anims/Jogging = SubResource( 19 )
+anims/Jumping_Rolling = SubResource( 20 )
+anims/LookUp = SubResource( 21 )
+anims/PostBrakReturn = SubResource( 22 )
+anims/Running = SubResource( 23 )
+anims/SpinDashCharge = SubResource( 24 )
+anims/SuperPeelOut = SubResource( 25 )
+anims/UpToIdle = SubResource( 26 )
+anims/Walking = SubResource( 27 )
 script = ExtResource( 4 )
 
 [node name="VFX" type="Node2D" parent="Characters"]
 script = ExtResource( 7 )
+
+[node name="DropDashPulse" type="AnimatedSprite" parent="Characters/VFX"]
+frames = SubResource( 28 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/DropDashPulse"]
 
 [node name="ChargeDust" type="Sprite" parent="Characters/VFX"]
 visible = false
@@ -1057,23 +1064,26 @@ texture = ExtResource( 19 )
 hframes = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/ChargeDust"]
-anims/ChargeDust = SubResource( 13 )
+anims/ChargeDust = SubResource( 29 )
 
 [node name="InstaShield" type="Sprite" parent="Characters/VFX"]
 visible = false
 position = Vector2( 0, 9 )
 texture = ExtResource( 16 )
 hframes = 6
-frame = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/InstaShield"]
-anims/InstaShield = SubResource( 14 )
+anims/InstaShield = SubResource( 30 )
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource( 17 )
 
 [node name="jump" type="AudioStreamPlayer" parent="AudioPlayer"]
 stream = ExtResource( 8 )
+volume_db = -15.0
+
+[node name="DropDashCharge" type="AudioStreamPlayer" parent="AudioPlayer"]
+stream = ExtResource( 109 )
 volume_db = -15.0
 
 [node name="brake" type="AudioStreamPlayer" parent="AudioPlayer"]
@@ -1105,39 +1115,33 @@ stream = ExtResource( 13 )
 volume_db = -25.0
 
 [node name="HighCollider" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, -5 )
-shape = SubResource( 25 )
+shape = SubResource( 31 )
 
 [node name="LowCollider" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 5 )
-shape = SubResource( 26 )
+shape = SubResource( 32 )
 
 [node name="RayShape" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 27 )
+shape = SubResource( 33 )
 
 [node name="LeftGroundSensor" type="RayCast2D" parent="."]
-visible = false
 position = Vector2( -9, 0 )
 enabled = true
-cast_to = Vector2( 0, 85 )
+cast_to = Vector2( 0, 40 )
 
 [node name="RightGroundSensor" type="RayCast2D" parent="."]
-visible = false
 position = Vector2( 9, 0 )
 enabled = true
-cast_to = Vector2( 0, 85 )
+cast_to = Vector2( 0, 40 )
 
 [node name="RightWallSensor" type="RayCast2D" parent="."]
-visible = false
 enabled = true
-cast_to = Vector2( 11, 0 )
+cast_to = Vector2( 15, 0 )
 
 [node name="LeftWallSensor" type="RayCast2D" parent="."]
-visible = false
 enabled = true
-cast_to = Vector2( -11, 0 )
+cast_to = Vector2( -15, 0 )
 [connection signal="animation_finished" from="Characters/Sonic3/AnimationPlayer" to="StateMachine" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="Characters/Sonic/CharAnimation" to="StateMachine/OnGround" method="_on_CharAnimation_animation_finished"]

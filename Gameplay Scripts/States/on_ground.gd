@@ -24,12 +24,13 @@ func step(host, delta):
 			host.is_rolling = true
 		elif host.ground_mode == 0:
 			host.is_rolling = false
-			if Input.is_action_just_pressed("ui_jump"):
-				return 'SpinDash'
+			if host.spinDash:
+				if Input.is_action_just_pressed("ui_jump"):
+					return 'SpinDash'
 			host.is_looking_down = true
 	elif host.direction.y < 0:
 		if abs(host.gsp) < .1 and host.ground_mode == 0:
-			if Input.is_action_just_pressed("ui_jump"):
+			if Input.is_action_just_pressed("ui_jump") && host.superPeelOut:
 				return 'SuperPeelOut'
 			host.is_looking_up = true
 	
@@ -137,7 +138,6 @@ func animation_step(host, animator):
 			var cdown = host.sprite.offset.y >= 0;
 			var numBase = {up : 14, cdown : 6}
 			host.sprite.offset.y = numBase[true] * cos(host.character.rotation);
-			print(host.sprite.offset, host.rotation_degrees);
 			anim_name = 'Jumping_Rolling'
 			anim_speed = -((5.0 / 60.0) - (abs(host.gsp) / 120.0))
 		else:
@@ -168,7 +168,7 @@ func animation_step(host, animator):
 		if host.is_looking_down:
 			idle_anim = 'Idle'
 			anim_name = 'Down'
-			anim_speed = 2;
+			anim_speed = 3;
 			play_once = true
 		elif host.is_looking_up:
 			idle_anim = 'Idle'

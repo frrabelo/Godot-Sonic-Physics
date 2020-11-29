@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/BreakedTile.png" type="Texture" id=1]
+[ext_resource path="res://Gameplay Scripts/Braked.gd" type="Script" id=2]
+
+[node name="Breaked" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = Vector2( 10, -200 )
+active = true
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

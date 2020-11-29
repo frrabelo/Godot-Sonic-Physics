@@ -30,6 +30,7 @@ func step(host, delta):
 			480 * host.character.scale.x;
 			host.is_rolling = true;
 			dropCharging = false;
+			host.audio_player.play("spin_dash_release")
 		if dropTimer != null:
 			dropPress = false;
 			dropTimer.stop();
@@ -86,9 +87,8 @@ func step(host, delta):
 
 func _dropTimeOut(host, delta):
 	dropCharging = true;
-	host.audio_player.play('spin_dash_charge');
+	host.audio_player.play('drop_dash_charge');
 	dropTimer.stop();
-	print("charging...");
 	pass
 
 func exit(host):

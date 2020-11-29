@@ -2,6 +2,14 @@ extends Node2D
 
 class_name PlayerCamera
 
+export(float) var vertical_margin
+
+export(bool) var followUp = false;
+export(bool) var followLeft = true;
+export(bool) var followRight = true;
+export(bool) var followDown = true;
+
+
 export(float) var LEFT = -16
 export(float) var RIGHT = .0
 export(float) var GROUND_TOP = .0
@@ -13,6 +21,8 @@ export(float) var SCROLL_UP = -104
 export(float) var SCROLL_DOWN = 88
 export(float) var SCROLL_SPEED = 120
 export(float) var SCROLL_DELAY = 2
+
+export(bool) var delay_after_drop = false;
 
 var scroll_timer : float
 
@@ -40,15 +50,15 @@ func vertical_border(player : PlayerPhysics):
 	if player.is_grounded:
 		if player.position.y + 16 - position.y != 0:
 			if abs(player.velocity.y) <= 360:
-				position.y += max(player.position.y + 16 - position.y, -6)
+				position.y += (max(player.position.y + 16 - position.y, -6) + vertical_margin)
 			else:
-				position.y += max(player.position.y + 16 - position.y, -16)
+				position.y += (max(player.position.y + 16 - position.y, -16) + vertical_margin)
 		return
 	
 	if player.position.y < position.y - AIR_TOP:
-		position.y += max(player.position.y - (position.y - AIR_TOP), -16)
+		position.y += max(player.position.y - (position.y - AIR_TOP) + vertical_margin, -16)
 	elif player.position.y > position.y + AIR_BOTTOM:
-		position.y += min(player.position.y - (position.y + AIR_BOTTOM), 16)
+		position.y += min(player.position.y - (position.y + AIR_BOTTOM) + vertical_margin, 16)
 
 func vertical_scrolling(player : PlayerPhysics, delta : float):
 	var scroll_back = true

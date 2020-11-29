@@ -20,6 +20,7 @@ export(bool) var superPeelOut = true;
 export(bool) var dropDash = true;
 export(bool) var spinDash = true;
 
+onready var fsm = $StateMachine
 onready var player_camera = $'../PlayerCamera'
 onready var player_vfx = $Characters/VFX
 onready var GLOBAL = get_node("/root/Global");
@@ -33,7 +34,7 @@ onready var left_wall = $LeftWallSensor
 onready var right_wall = $RightWallSensor
 
 onready var character = $Characters
-onready var sprite = $Characters/Sonic
+onready var sprite = character.get_node('Sonic');
 onready var animation = sprite.get_node("CharAnimation");
 onready var audio_player = $AudioPlayer
 
@@ -89,6 +90,8 @@ func physics_step():
 	
 	if is_on_ground():
 		is_grounded = true
+	
+	
 	
 	if is_grounded and is_ray_colliding:
 		ground_point = ground_ray.get_collision_point()

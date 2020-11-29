@@ -6,6 +6,7 @@ onready var audios = {
 	'jump' : $jump,
 	'brake' : $brake,
 	'spin' : $spin,
+	'drop_dash_charge': $DropDashCharge,
 	'spin_dash_charge' : $SpinDashCharge,
 	'spin_dash_release' : $SpinDashRelease,
 	'peel_out_charge' : $PeelOutCharge,
