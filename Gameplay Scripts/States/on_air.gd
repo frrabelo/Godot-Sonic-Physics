@@ -2,6 +2,7 @@ extends '../state.gd'
 
 var has_jumped : bool
 var has_rolled : bool
+var has_pushed : bool
 var roll_jump : bool
 var can_attack : bool
 var dropTimer : Timer;
@@ -20,10 +21,12 @@ func enter(host):
 	host.has_jumped = false
 	host.is_rolling = false
 	roll_jump = has_jumped and has_rolled
+	has_pushed = host.has_pushed;
 
 func step(host, delta):
 	
 	if host.is_grounded:
+		host.has_pushed = false;
 		host.ground_reacquisition()
 		if (dropCharging):
 			host.gsp = \
@@ -37,25 +40,29 @@ func step(host, delta):
 			dropTimer = null;
 		return 'OnGround'
 	
-	var can_move = true if !host.control_locked and !roll_jump else false
+	host.velocity.x = 0 if host.is_wall_left && host.velocity.x < 0 else host.velocity.x
+	host.velocity.x = 0 if host.is_wall_right && host.velocity.x > 0 else host.velocity.x
+	
+
+	var can_move = true if !host.control_locked && !roll_jump else false
 	var no_rotation = has_jumped or has_rolled
 	host.rotation_degrees = int(lerp(host.rotation_degrees, 0, .2)) if !no_rotation else 0
 	
-	if host.direction.x < 0 and can_move:
+	if host.direction.x < 0 && can_move:
 		if host.velocity.x > -host.TOP:
 			host.velocity.x -= host.AIR
-	elif host.direction.x > 0 and can_move:
+	elif host.direction.x > 0 && can_move:
 		if host.velocity.x < host.TOP:
 			host.velocity.x += host.AIR;
 		
-	if host.instaShield:
+	if host.instaShield && !has_pushed:
 		if Input.is_action_just_pressed("ui_jump") and\
 		can_attack:
 			host.player_vfx.play('InstaShield', true)
 			host.audio_player.play('insta_shield')
 			can_attack = false
 			roll_jump = false
-	if has_jumped:
+	if has_jumped && !has_pushed:
 		if host.dropDash:
 			if Input.is_action_pressed("ui_jump") && !dropPress:
 				dropPress = true;
@@ -70,20 +77,13 @@ func step(host, delta):
 					if has_node(dropTimer.name):
 						self.remove_child(dropTimer);
 					dropTimer = null;
-				dropCharging = false;
-	
-	
+				dropCharging = false;		
 	if host.velocity.y < 0 and host.velocity.y > -240:
 		host.velocity.x -= int(host.velocity.x / 7.5) / 15360.0
-	
 	host.velocity.y += host.GRV
-	
 	if Input.is_action_just_released("ui_jump"): # has jumped
 			if host.velocity.y < -240.0: # set min jump height
 				host.velocity.y = -240.0
-	
-	host.velocity.x = 0 if host.is_wall_left and host.velocity.x < 0 else host.velocity.x
-	host.velocity.x = 0 if host.is_wall_right and host.velocity.x > 0 else host.velocity.x
 
 func _dropTimeOut(host, delta):
 	dropCharging = true;
@@ -101,13 +101,17 @@ func animation_step(host, animator):
 	if anim_name == 'Braking':
 		anim_name = 'Walking';
 	
-	if has_jumped or has_rolled:
-		if !dropCharging:
-			anim_name = 'Jumping_Rolling';
-			anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
-		else:
-			anim_name = 'DropCharge';
-			anim_speed = 4.5;
+	if has_pushed:
+		anim_name = "SpringJump"
+		anim_speed = 3;
+	else:
+		if has_jumped or has_rolled:
+			if !dropCharging:
+				anim_name = 'Jumping_Rolling';
+				anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
+			else:
+				anim_name = 'DropCharge';
+				anim_speed = 4.5;
 	
 	if host.direction.x > 0:
 		host.character.scale.x = 1
@@ -115,3 +119,6 @@ func animation_step(host, animator):
 		host.character.scale.x = -1
 	
 	animator.animate(anim_name, anim_speed, true)
+
+func when_pushed_by_spring():
+	has_pushed = true;

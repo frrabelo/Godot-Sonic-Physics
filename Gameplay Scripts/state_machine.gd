@@ -21,8 +21,11 @@ func _physics_process(delta):
 		change_state(state_name)
 	var top_collide:Vector2 = Vector2(sin(host.rotation) * 1, -cos(host.rotation)*1);
 	host.velocity = host.move_and_slide(\
-		host.velocity, \
-		top_collide\
+		host.velocity,\
+		top_collide,\
+		false,\
+		deg2rad(75),\
+		true
 	)
 	states[current_state].animation_step(host, host.animation)
 	host.player_camera.camera_step(host, delta)

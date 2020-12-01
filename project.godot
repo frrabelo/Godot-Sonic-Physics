@@ -64,8 +64,8 @@ Global="*res://Gameplay Scripts/Global.gd"
 window/size/width=480
 window/size/height=270
 window/size/resizable=false
-window/size/test_width=720
-window/size/test_height=405
+window/size/test_width=800
+window/size/test_height=450
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

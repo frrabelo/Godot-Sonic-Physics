@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=2]
+[gd_scene load_steps=154 format=2]
 
 [ext_resource path="res://Gameplay Scripts/States/spin_dash.gd" type="Script" id=1]
 [ext_resource path="res://Gameplay Scripts/States/on_air.gd" type="Script" id=2]
@@ -109,6 +109,16 @@
 [ext_resource path="res://Sprites/Player/Characters/Sonic/velocidade maxima/vm#4.png" type="Texture" id=107]
 [ext_resource path="res://Sprites/Player/Characters/Sonic/velocidade maxima/vm#2.png" type="Texture" id=108]
 [ext_resource path="res://Audio/sfx/DropDash.wav" type="AudioStream" id=109]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#7.png" type="Texture" id=110]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#6.png" type="Texture" id=111]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#2.png" type="Texture" id=112]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#4.png" type="Texture" id=113]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#8.png" type="Texture" id=114]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#3.png" type="Texture" id=115]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#10.png" type="Texture" id=116]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#9.png" type="Texture" id=117]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#5.png" type="Texture" id=118]
+[ext_resource path="res://Sprites/Player/Characters/Sonic/pulo de mola/pdm#1.png" type="Texture" id=119]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Braking"
@@ -377,6 +387,11 @@ animations = [ {
 "frames": [ ExtResource( 102 ), ExtResource( 104 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 101 ), ExtResource( 97 ), ExtResource( 96 ), ExtResource( 95 ), ExtResource( 98 ), ExtResource( 103 ) ],
 "loop": true,
 "name": "DropCharge",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 119 ), ExtResource( 112 ), ExtResource( 115 ), ExtResource( 113 ), ExtResource( 118 ), ExtResource( 111 ), ExtResource( 110 ), ExtResource( 114 ), ExtResource( 117 ), ExtResource( 116 ) ],
+"loop": true,
+"name": "SpringJump",
 "speed": 5.0
 } ]
 script = ExtResource( 21 )
@@ -809,6 +824,46 @@ tracks/2/keys = {
 "values": [ Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ) ]
 }
 
+[sub_resource type="Animation" id=34]
+resource_name = "SpringJump"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "SpringJump" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 6 ), Vector2( 0, 5 ), Vector2( -2, 5 ), Vector2( -1, 5 ), Vector2( 0, 5 ), Vector2( -2, 5 ) ]
+}
+
 [sub_resource type="Animation" id=25]
 resource_name = "SuperPeelOut"
 length = 0.4
@@ -1029,8 +1084,7 @@ script = ExtResource( 4 )
 [node name="Sonic" type="AnimatedSprite" parent="Characters"]
 position = Vector2( 0, 4 )
 frames = SubResource( 13 )
-animation = "BrakeLoop"
-offset = Vector2( 2, 2 )
+animation = "SpringJump"
 
 [node name="CharAnimation" type="AnimationPlayer" parent="Characters/Sonic"]
 anims/BrakeLoop = SubResource( 14 )
@@ -1044,6 +1098,7 @@ anims/LookUp = SubResource( 21 )
 anims/PostBrakReturn = SubResource( 22 )
 anims/Running = SubResource( 23 )
 anims/SpinDashCharge = SubResource( 24 )
+anims/SpringJump = SubResource( 34 )
 anims/SuperPeelOut = SubResource( 25 )
 anims/UpToIdle = SubResource( 26 )
 anims/Walking = SubResource( 27 )
@@ -1115,10 +1170,12 @@ stream = ExtResource( 13 )
 volume_db = -25.0
 
 [node name="HighCollider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -5 )
 shape = SubResource( 31 )
 
 [node name="LowCollider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 shape = SubResource( 32 )
 
@@ -1127,21 +1184,33 @@ visible = false
 shape = SubResource( 33 )
 
 [node name="LeftGroundSensor" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( -9, 0 )
 enabled = true
 cast_to = Vector2( 0, 40 )
 
 [node name="RightGroundSensor" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 9, 0 )
 enabled = true
 cast_to = Vector2( 0, 40 )
 
 [node name="RightWallSensor" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 15, 0 )
+cast_to = Vector2( 12, 0 )
 
 [node name="LeftWallSensor" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( -15, 0 )
+cast_to = Vector2( -12, 0 )
+
+[node name="RightWallSensorBottom" type="RayCast2D" parent="."]
+position = Vector2( 0, 11 )
+enabled = true
+cast_to = Vector2( 9, 0 )
+
+[node name="LeftWallSensorBottom" type="RayCast2D" parent="."]
+position = Vector2( 0, 11 )
+enabled = true
+cast_to = Vector2( -9, 0 )
 [connection signal="animation_finished" from="Characters/Sonic3/AnimationPlayer" to="StateMachine" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="Characters/Sonic/CharAnimation" to="StateMachine/OnGround" method="_on_CharAnimation_animation_finished"]

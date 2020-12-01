@@ -4,8 +4,11 @@ var slope : float
 var is_braking : bool
 var idle_anim = 'Idle'
 var brake_sign : int
+var hit_spring : bool;
+var spring: Node2D
 
 func enter(host):
+	hit_spring = false;
 	idle_anim = 'Idle'
 
 func step(host, delta):
@@ -102,11 +105,29 @@ func step(host, delta):
 			host.rotation_degrees = 0
 			host.is_grounded = false
 			host.has_jumped = true
+			host.has_pushed = false
 			host.audio_player.play('jump')
 			return 'OnAir'
 	
+	if hit_spring:
+		print (spring.jump_height);
+		host.velocity.x -= host.JMP * sin(ground_angle)
+		host.velocity.y -= host.JMP * cos(ground_angle)
+		host.velocity.x -= spring.jump_height * sin(ground_angle)
+		host.velocity.y -= spring.jump_height * cos(ground_angle)
+		host.rotation_degrees = 0
+		host.is_grounded = false
+		host.has_jumped = false
+		host.has_pushed = true
+		return 'OnAir';
+	
 	if !host.can_fall:
 		host.snap_to_ground()
+
+func when_pushed_by_spring(spring_hit):
+	print ("hit");
+	spring = spring_hit;
+	hit_spring = true;
 
 func exit(host):
 	is_braking = false

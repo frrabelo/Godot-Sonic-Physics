@@ -2,7 +2,8 @@ extends Node2D
 
 class_name PlayerCamera
 
-export(float) var vertical_margin
+export(float) var vertical_offset
+export(float) var horizontal_offset
 
 export(bool) var followUp = false;
 export(bool) var followLeft = true;
@@ -41,24 +42,36 @@ func camera_step(player : PlayerPhysics, delta : float):
 	vertical_scrolling(player, delta)
 
 func horizontal_border(player : PlayerPhysics):
-	if player.position.x > position.x + RIGHT:
+	if player.position.x > position.x + RIGHT && followRight:
 		position.x += min(player.position.x - (position.x + RIGHT), 16)
-	elif player.position.x < position.x + LEFT:
+	elif player.position.x < position.x + LEFT && followLeft:
 		position.x += max(player.position.x - (position.x + LEFT), -16)
 
 func vertical_border(player : PlayerPhysics):
+	var scroll_back = true
+	var scroll_world = camera_scroll.global_position
 	if player.is_grounded:
 		if player.position.y + 16 - position.y != 0:
-			if abs(player.velocity.y) <= 360:
-				position.y += (max(player.position.y + 16 - position.y, -6) + vertical_margin)
-			else:
-				position.y += (max(player.position.y + 16 - position.y, -16) + vertical_margin)
+			var playerPosCam = (player.position.y + 16) - position.y;
+			var playerLt360 = abs(player.velocity.y) <= 360;
+			var vel = \
+				max(playerPosCam,\
+					-6 - (10 * int(!playerLt360)\
+				));
+			if vel < 0 && !followUp:
+				return
+			elif vel > 0 && !followDown:
+				return
+			position.y += vel + vertical_offset;
 		return
-	
+	var vel;
 	if player.position.y < position.y - AIR_TOP:
-		position.y += max(player.position.y - (position.y - AIR_TOP) + vertical_margin, -16)
+		vel = max(player.position.y - (position.y - AIR_TOP) + vertical_offset, -16);
 	elif player.position.y > position.y + AIR_BOTTOM:
-		position.y += min(player.position.y - (position.y + AIR_BOTTOM) + vertical_margin, 16)
+		vel = min(player.position.y - (position.y + AIR_BOTTOM) + vertical_offset, 16);
+	else:
+		vel = 0;
+	position.y += vel;
 
 func vertical_scrolling(player : PlayerPhysics, delta : float):
 	var scroll_back = true

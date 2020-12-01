@@ -32,6 +32,8 @@ onready var left_ground = $LeftGroundSensor
 onready var right_ground = $RightGroundSensor
 onready var left_wall = $LeftWallSensor
 onready var right_wall = $RightWallSensor
+onready var left_wall_bottom = $LeftWallSensorBottom
+onready var right_wall_bottom = $RightWallSensorBottom
 
 onready var character = $Characters
 onready var sprite = character.get_node('Sonic');
@@ -58,6 +60,7 @@ var is_wall_right : bool
 var is_pushing : bool
 var is_looking_down : bool
 var is_looking_up : bool
+var has_pushed : bool
 
 func _ready():
 	control_unlock_timer = control_unlock_time
@@ -103,8 +106,8 @@ func physics_step():
 		ground_normal = Vector2(0, -1)
 		is_grounded = false
 	
-	is_wall_left = left_wall.is_colliding() or position.x - 9 <= 0
-	is_wall_right = right_wall.is_colliding()
+	is_wall_left = (left_wall.is_colliding() || left_wall_bottom.is_colliding()) || position.x - 9 <= 0
+	is_wall_right = right_wall.is_colliding() || right_wall_bottom.is_colliding()
 
 func fall_from_ground():
 	if abs(gsp) < FALL and ground_mode != 0:
