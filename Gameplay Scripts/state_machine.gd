@@ -34,7 +34,7 @@ func change_state(state_name):
 	if state_name == current_state:
 		return
 	
-	states[current_state].exit(host)
+	states[current_state].exit(host, state_name)
 	previous_state = current_state
 	current_state = state_name
 	states[current_state].enter(host)

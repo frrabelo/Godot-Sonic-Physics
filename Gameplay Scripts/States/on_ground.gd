@@ -8,13 +8,13 @@ var hit_spring : bool;
 var spring: Node2D
 
 func enter(host):
+	host.is_pushing = false
 	hit_spring = false;
 	idle_anim = 'Idle'
 
 func step(host, delta):
 	host.is_looking_down = false
 	host.is_looking_up = false
-	host.is_pushing = false
 	
 	if !host.is_ray_colliding or host.fall_from_ground():
 		host.is_grounded = false
@@ -99,39 +99,33 @@ func step(host, delta):
 	host.velocity.x = host.gsp * cos(ground_angle)
 	host.velocity.y = host.gsp * -sin(ground_angle);
 	
-	if Input.is_action_just_pressed("ui_jump"):
+	if !hit_spring:
+		if Input.is_action_just_pressed("ui_jump"):
 			host.velocity.x -= host.JMP * sin(ground_angle)
 			host.velocity.y -= host.JMP * cos(ground_angle)
 			host.rotation_degrees = 0
 			host.is_grounded = false
-			host.has_jumped = true
 			host.has_pushed = false
+			host.has_jumped = true
 			host.audio_player.play('jump')
 			return 'OnAir'
-	
-	if hit_spring:
-		print (spring.jump_height);
-		host.velocity.x -= host.JMP * sin(ground_angle)
-		host.velocity.y -= host.JMP * cos(ground_angle)
-		host.velocity.x -= spring.jump_height * sin(ground_angle)
-		host.velocity.y -= spring.jump_height * cos(ground_angle)
-		host.rotation_degrees = 0
-		host.is_grounded = false
-		host.has_jumped = false
-		host.has_pushed = true
-		return 'OnAir';
-	
+	else:
+		print ("has_pushed = true");
 	if !host.can_fall:
 		host.snap_to_ground()
 
 func when_pushed_by_spring(spring_hit):
-	print ("hit");
 	spring = spring_hit;
 	hit_spring = true;
 
-func exit(host):
+func exit(host, next_stage):
 	is_braking = false
 	host.is_braking = false
+	if next_stage == 'OnAir':
+		print("Ar");
+		if(hit_spring):
+			print("tocou na mola")
+			host.has_pushed = true;
 
 func animation_step(host, animator):
 	var anim_name = idle_anim
@@ -198,7 +192,8 @@ func animation_step(host, animator):
 			play_once = true;
 		elif host.is_pushing:
 			idle_anim = 'Idle'
-			anim_name = 'Walking'
+			anim_name = 'Pushing'
+			anim_speed = 1.5;
 	
 	animator.animate(anim_name, anim_speed, play_once);
 
@@ -231,4 +226,4 @@ func _on_CharAnimation_animation_finished(anim_name):
 				is_braking = false;
 				idle_anim = 'Idle';
 			
-	pass # Replace with function body.
+	pass # Replace with function host.

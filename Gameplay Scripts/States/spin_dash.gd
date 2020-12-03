@@ -21,7 +21,7 @@ func step(host, delta):
 	p = min(p, 480)
 	p -= int(p / 7.5) / 15360.0
 
-func exit(host):
+func exit(host, next_state):
 	host.is_rolling = true
 	host.gsp = (480 + (floor(p) / 2)) * host.character.scale.x
 	host.player_vfx.stop('ChargeDust')

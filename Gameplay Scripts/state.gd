@@ -7,7 +7,7 @@ func enter(host: PlayerPhysics):
 func step(host: PlayerPhysics, delta: float):
 	return
 
-func exit(host: PlayerPhysics):
+func exit(host: PlayerPhysics, next_state:String):
 	return
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator):

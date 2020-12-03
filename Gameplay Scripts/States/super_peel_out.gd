@@ -19,7 +19,7 @@ func step(host: PlayerPhysics, delta):
 	if Input.is_action_just_released("ui_up"):
 		return 'OnGround'
 
-func exit(host: PlayerPhysics):
+func exit(host: PlayerPhysics, next_stage:String):
 	if charge_timer <= 0:
 		host.gsp = DASH_SPEED * host.character.scale.x
 		host.audio_player.play('peel_out_release')

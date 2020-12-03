@@ -4,6 +4,7 @@ class_name AudioPlayer
 
 onready var audios = {
 	'jump' : $jump,
+	'spring' : $Spring,
 	'brake' : $brake,
 	'spin' : $spin,
 	'drop_dash_charge': $DropDashCharge,

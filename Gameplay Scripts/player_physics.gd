@@ -89,7 +89,7 @@ func _process(delta):
 func physics_step():
 	position.x = max(position.x, 9.0)
 	var ground_ray = get_ground_ray()
-	is_ray_colliding = true if ground_ray != null else false
+	is_ray_colliding = (ground_ray != null)
 	
 	if is_on_ground():
 		is_grounded = true
@@ -150,19 +150,20 @@ func is_on_ground():
 	if ground_ray != null:
 		var point = ground_ray.get_collision_point()
 		var normal = ground_ray.get_collision_normal()
-		if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
-			return position.y + 20 > point.y and velocity.y >= 0
+		if velocity.y >= 0:
+			if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
+				return position.y + 20 > point.y and velocity.y >= 0
 	
 	return false
 
 func get_ground_ray():
 	can_fall = true
 	
-	if !left_ground.is_colliding() and !right_ground.is_colliding():
+	if !left_ground.is_colliding() && !right_ground.is_colliding():
 		return null
-	elif !left_ground.is_colliding() and right_ground.is_colliding():
+	elif !left_ground.is_colliding() && right_ground.is_colliding():
 		return right_ground
-	elif !right_ground.is_colliding() and left_ground.is_colliding():
+	elif !right_ground.is_colliding() && left_ground.is_colliding():
 		return left_ground
 	
 	can_fall = false

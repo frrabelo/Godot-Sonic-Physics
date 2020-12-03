@@ -17,32 +17,21 @@ func enter(host):
 	dropPress = true;
 	has_jumped = host.has_jumped
 	has_rolled = host.is_rolling
+	has_pushed = host.has_pushed;
 	can_attack = has_jumped
 	host.has_jumped = false
 	host.is_rolling = false
-	roll_jump = has_jumped and has_rolled
-	has_pushed = host.has_pushed;
+	host.has_pushed = false;
+	roll_jump = has_jumped && has_rolled
 
 func step(host, delta):
 	
 	if host.is_grounded:
-		host.has_pushed = false;
 		host.ground_reacquisition()
-		if (dropCharging):
-			host.gsp = \
-			480 * host.character.scale.x;
-			host.is_rolling = true;
-			dropCharging = false;
-			host.audio_player.play("spin_dash_release")
-		if dropTimer != null:
-			dropPress = false;
-			dropTimer.stop();
-			dropTimer = null;
 		return 'OnGround'
 	
 	host.velocity.x = 0 if host.is_wall_left && host.velocity.x < 0 else host.velocity.x
 	host.velocity.x = 0 if host.is_wall_right && host.velocity.x > 0 else host.velocity.x
-	
 
 	var can_move = true if !host.control_locked && !roll_jump else false
 	var no_rotation = has_jumped or has_rolled
@@ -54,36 +43,36 @@ func step(host, delta):
 	elif host.direction.x > 0 && can_move:
 		if host.velocity.x < host.TOP:
 			host.velocity.x += host.AIR;
-		
-	if host.instaShield && !has_pushed:
-		if Input.is_action_just_pressed("ui_jump") and\
-		can_attack:
-			host.player_vfx.play('InstaShield', true)
-			host.audio_player.play('insta_shield')
-			can_attack = false
-			roll_jump = false
-	if has_jumped && !has_pushed:
-		if host.dropDash:
-			if Input.is_action_pressed("ui_jump") && !dropPress:
-				dropPress = true;
-				dropTimer = Timer.new();
-				self.add_child(dropTimer);
-				dropTimer.start(0.325);
-				dropTimer.connect("timeout", self, "_dropTimeOut", [host, delta]);
-			if Input.is_action_just_released("ui_jump"):
-				dropPress = false;
-				if (dropTimer != null):
-					dropTimer.stop();
-					if has_node(dropTimer.name):
-						self.remove_child(dropTimer);
-					dropTimer = null;
-				dropCharging = false;		
+	if !has_pushed:
+		if host.instaShield:
+			if Input.is_action_just_pressed("ui_jump") and\
+			can_attack:
+				host.player_vfx.play('InstaShield', true)
+				host.audio_player.play('insta_shield')
+				can_attack = false
+				roll_jump = false
+		if has_jumped:
+			if host.dropDash:
+				if Input.is_action_pressed("ui_jump") && !dropPress:
+					dropPress = true;
+					dropTimer = Timer.new();
+					self.add_child(dropTimer);
+					dropTimer.start(0.325);
+					dropTimer.connect("timeout", self, "_dropTimeOut", [host, delta]);
+				if Input.is_action_just_released("ui_jump"):
+					dropPress = false;
+					if (dropTimer != null):
+						dropTimer.stop();
+						if has_node(dropTimer.name):
+							self.remove_child(dropTimer);
+						dropTimer = null;
+					dropCharging = false;
+				if Input.is_action_just_released("ui_jump"): # has jumped
+					if host.velocity.y < -240.0: # set min jump height
+						host.velocity.y = -240.0
 	if host.velocity.y < 0 and host.velocity.y > -240:
 		host.velocity.x -= int(host.velocity.x / 7.5) / 15360.0
 	host.velocity.y += host.GRV
-	if Input.is_action_just_released("ui_jump"): # has jumped
-			if host.velocity.y < -240.0: # set min jump height
-				host.velocity.y = -240.0
 
 func _dropTimeOut(host, delta):
 	dropCharging = true;
@@ -91,8 +80,19 @@ func _dropTimeOut(host, delta):
 	dropTimer.stop();
 	pass
 
-func exit(host):
-	pass
+func exit(host, next_stage):
+	host.has_pushed = false;
+	if next_stage == 'OnGround':
+		if (dropCharging):
+			host.gsp = \
+			480 * host.character.scale.x;
+			host.is_rolling = true;
+			dropCharging = false;
+			host.audio_player.play("spin_dash_release")
+		if dropTimer != null:
+			dropPress = false;
+			dropTimer.stop();
+			dropTimer = null;
 
 func animation_step(host, animator):
 	var anim_name = animator.current_animation
