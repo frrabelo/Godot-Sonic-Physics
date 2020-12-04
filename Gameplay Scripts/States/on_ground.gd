@@ -49,37 +49,33 @@ func step(host, delta):
 			slope = host.SLPROLLDOWN
 	
 	host.gsp -= slope * sin(host.ground_angle())
-	
-	if host.direction.x < 0 and !host.control_locked:
-		if host.gsp > 0:
-			host.gsp -= host.DEC if !host.is_rolling else host.ROLLDEC
-			
-			if host.gsp > 270 and !host.is_rolling and host.ground_mode == 0:
+	if !host.control_locked:
+		if host.direction.x < 0:
+			if host.gsp > 0 :
+					host.gsp -= host.DEC if !host.is_rolling else host.ROLLDEC
+			if host.gsp > 270 && !host.is_rolling && host.ground_mode:
 				if !is_braking:
 					brake_sign = sign(host.gsp)
 					host.audio_player.play('brake')
 				is_braking = true
-		elif host.gsp > -host.TOP and !host.is_rolling:
-			host.gsp -= host.ACC
-		
-		if host.is_wall_left and host.gsp < 0:
-			host.is_pushing = true
-	elif host.direction.x > 0 and !host.control_locked:
-		if host.gsp < 0 :
-			host.gsp += host.DEC if !host.is_rolling else host.ROLLDEC
-			
-			if host.gsp < -270 and !host.is_rolling and host.ground_mode == 0:
+		elif host.direction.x > 0:
+			if host.gsp < 0 :
+				host.gsp += host.DEC if !host.is_rolling else host.ROLLDEC
+			if host.gsp < -270 && !host.is_rolling && host.ground_mode == 0:
 				if !is_braking:
 					brake_sign = sign(host.gsp)
 					host.audio_player.play('brake')
 				is_braking = true
-		elif host.gsp < host.TOP and !host.is_rolling:
-			host.gsp += host.ACC
-		
-		if host.is_wall_right and host.gsp > 0:
-			host.is_pushing = true
-	elif !host.is_rolling:
-		host.gsp -= min(abs(host.gsp), host.FRC) * sign(host.gsp)
+		if host.direction.x != 0:
+			if !is_braking && host.gsp < host.TOP && host.gsp > -host.TOP && !host.is_rolling:
+				host.gsp += host.ACC * (host.direction.x);
+		else:
+			if !host.is_rolling:
+				host.gsp -= min(abs(host.gsp), host.FRC) * sign(host.gsp)
+	if host.is_wall_right && host.gsp > 0 || host.is_wall_left && host.gsp < 0:
+		host.is_pushing = true
+	else:
+		host.is_pushing = false;
 	
 	if sign(host.gsp) != brake_sign or abs(host.gsp) <= 0.01:
 		is_braking = false
@@ -110,7 +106,7 @@ func step(host, delta):
 			host.audio_player.play('jump')
 			return 'OnAir'
 	else:
-		print ("has_pushed = true");
+		print ("teste")
 	if !host.can_fall:
 		host.snap_to_ground()
 
@@ -122,9 +118,7 @@ func exit(host, next_stage):
 	is_braking = false
 	host.is_braking = false
 	if next_stage == 'OnAir':
-		print("Ar");
 		if(hit_spring):
-			print("tocou na mola")
 			host.has_pushed = true;
 
 func animation_step(host, animator):

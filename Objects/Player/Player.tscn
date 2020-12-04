@@ -760,7 +760,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=36]
 resource_name = "Pushing"
 length = 1.4
 loop = true
@@ -801,7 +801,7 @@ tracks/2/keys = {
 "values": [ Vector2( -3, 2 ), Vector2( -2, 2 ), Vector2( -2, 1 ), Vector2( 0, 1 ), Vector2( -2, 2 ), Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( -3, 2 ) ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=37]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -841,7 +841,7 @@ tracks/2/keys = {
 "values": [ Vector2( -2, 2 ), Vector2( -3, 2 ), Vector2( -2, 2 ), Vector2( -3, 2 ), Vector2( -2, 2 ) ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=38]
 length = 1.4
 loop = true
 tracks/0/type = "value"
@@ -881,8 +881,7 @@ tracks/2/keys = {
 "values": [ Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 6, 6 ) ]
 }
 
-[sub_resource type="Animation" id=25]
-resource_name = "SpringJump"
+[sub_resource type="Animation" id=39]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -921,7 +920,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 6 ), Vector2( 0, 5 ), Vector2( -2, 5 ), Vector2( -1, 5 ), Vector2( 0, 5 ), Vector2( -2, 5 ) ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=40]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -961,7 +960,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 4 ), Vector2( 0, 3 ), Vector2( 0, 4 ), Vector2( 0, 3 ) ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=41]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
 tracks/0/interp = 1
@@ -999,7 +998,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1, 2 ) ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=42]
 length = 1.09091
 loop = true
 step = 0.0909091
@@ -1040,7 +1039,7 @@ tracks/2/keys = {
 "values": [ "Walking" ]
 }
 
-[sub_resource type="SpriteFrames" id=29]
+[sub_resource type="SpriteFrames" id=43]
 animations = [ {
 "frames": [  ],
 "loop": true,
@@ -1048,7 +1047,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=44]
 length = 0.28
 loop = true
 step = 0.04
@@ -1065,7 +1064,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6 ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=45]
 length = 0.12
 step = 0.02
 tracks/0/type = "value"
@@ -1081,14 +1080,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=32]
+[sub_resource type="CapsuleShape2D" id=46]
 radius = 9.03
 height = 0.0
 
-[sub_resource type="CircleShape2D" id=33]
+[sub_resource type="CircleShape2D" id=47]
 radius = 7.00316
 
-[sub_resource type="RayShape2D" id=34]
+[sub_resource type="RayShape2D" id=35]
 custom_solver_bias = 1.0
 
 [node name="Player" type="KinematicBody2D"]
@@ -1155,20 +1154,20 @@ anims/Jogging = SubResource( 19 )
 anims/Jumping_Rolling = SubResource( 20 )
 anims/LookUp = SubResource( 21 )
 anims/PostBrakReturn = SubResource( 22 )
-anims/Pushing = SubResource( 35 )
-anims/Running = SubResource( 23 )
-anims/SpinDashCharge = SubResource( 24 )
-anims/SpringJump = SubResource( 25 )
-anims/SuperPeelOut = SubResource( 26 )
-anims/UpToIdle = SubResource( 27 )
-anims/Walking = SubResource( 28 )
+anims/Pushing = SubResource( 36 )
+anims/Running = SubResource( 37 )
+anims/SpinDashCharge = SubResource( 38 )
+anims/SpringJump = SubResource( 39 )
+anims/SuperPeelOut = SubResource( 40 )
+anims/UpToIdle = SubResource( 41 )
+anims/Walking = SubResource( 42 )
 script = ExtResource( 4 )
 
 [node name="VFX" type="Node2D" parent="Characters"]
 script = ExtResource( 7 )
 
 [node name="DropDashPulse" type="AnimatedSprite" parent="Characters/VFX"]
-frames = SubResource( 29 )
+frames = SubResource( 43 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/DropDashPulse"]
 
@@ -1179,7 +1178,7 @@ texture = ExtResource( 19 )
 hframes = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/ChargeDust"]
-anims/ChargeDust = SubResource( 30 )
+anims/ChargeDust = SubResource( 44 )
 
 [node name="InstaShield" type="Sprite" parent="Characters/VFX"]
 visible = false
@@ -1188,7 +1187,7 @@ texture = ExtResource( 16 )
 hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Characters/VFX/InstaShield"]
-anims/InstaShield = SubResource( 31 )
+anims/InstaShield = SubResource( 45 )
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource( 17 )
@@ -1236,17 +1235,17 @@ volume_db = -25.0
 [node name="HighCollider" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, -2 )
-shape = SubResource( 32 )
+shape = SubResource( 46 )
 
 [node name="LowCollider" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 5 )
 rotation = 3.14159
-shape = SubResource( 33 )
+shape = SubResource( 47 )
 
 [node name="RayShape" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 34 )
+shape = SubResource( 35 )
 
 [node name="LeftGroundSensor" type="RayCast2D" parent="."]
 position = Vector2( -9, 0 )

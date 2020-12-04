@@ -84,12 +84,15 @@ func exit(host, next_stage):
 	host.has_pushed = false;
 	if next_stage == 'OnGround':
 		if (dropCharging):
+			if host.gsp < 270:
+				host.player_camera.delay(0.25);
 			host.gsp = \
 			480 * host.character.scale.x;
 			host.is_rolling = true;
 			dropCharging = false;
 			host.audio_player.play("spin_dash_release")
 		if dropTimer != null:
+			self.remove_child(dropTimer);
 			dropPress = false;
 			dropTimer.stop();
 			dropTimer = null;

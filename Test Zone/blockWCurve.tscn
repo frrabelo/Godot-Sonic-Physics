@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Sprites/TileSets/SonicWorldsDeltaV1.5.2/Art Kit/Template Tileset/testtilesetteasertwo.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/TileSets/Template Tileset/testtilesetteasertwo.png" type="Texture" id=1]
 
 [node name="blockWCurve" type="Node2D"]
 

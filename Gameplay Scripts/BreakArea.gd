@@ -1,5 +1,6 @@
 extends StaticBody2D
 const block_scene = preload("res://Test Zone/Braked.tscn");
+onready var breaking = $BreakingSound
 func spawnBlock(pos:Vector2, speed:Vector2, body):
 	
 	var block = block_scene.instance(PackedScene.GEN_EDIT_STATE_MAIN);
@@ -17,16 +18,12 @@ func spawnMultiBlock(body, args:Array):
 
 func _on_BreakArea_body_entered(body):
 	var min_speed = 270;
-	print ("entered")
 	if body.name == 'Player':
-		print ('is_player');
 		if body.fsm.current_state == 'OnGround':
-			print ("is_on_ground");
 			print(body.animation.current_animation);
 			if (body.animation.current_animation == "Jumping_Rolling"):
-				print("ir_rolling")
 				if body.gsp > min_speed || body.gsp < -min_speed:
-					print ("is_above_%s" % min_speed)
+					breaking.play();
 					removeChildren();
 					var speed_gsp_gt = int (body.gsp > 0);
 					var speed_gsp_lt = int (body.gsp < 0);
@@ -66,7 +63,11 @@ func _on_BreakArea_body_entered(body):
 
 func removeChildren():
 	var children = get_children();
-	print (children);
 	for i in children:
-		remove_child(i);
+		if i.name != 'BreakingSound':
+			remove_child(i);
 	
+
+
+func _on_BreakingSound_finished():
+	get_parent().remove_child(self);

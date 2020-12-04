@@ -23,6 +23,7 @@ func exit(host: PlayerPhysics, next_stage:String):
 	if charge_timer <= 0:
 		host.gsp = DASH_SPEED * host.character.scale.x
 		host.audio_player.play('peel_out_release')
+		host.player_camera.delay(0.25)
 	else:
 		host.audio_player.stop('peel_out_charge')
 

@@ -5,6 +5,7 @@ class_name PlayerCamera
 export(float) var vertical_offset
 export(float) var horizontal_offset
 
+export(bool) var follow = true;
 export(bool) var followUp = false;
 export(bool) var followLeft = true;
 export(bool) var followRight = true;
@@ -42,36 +43,54 @@ func camera_step(player : PlayerPhysics, delta : float):
 	vertical_scrolling(player, delta)
 
 func horizontal_border(player : PlayerPhysics):
-	if player.position.x > position.x + RIGHT && followRight:
-		position.x += min(player.position.x - (position.x + RIGHT), 16)
-	elif player.position.x < position.x + LEFT && followLeft:
-		position.x += max(player.position.x - (position.x + LEFT), -16)
+	if follow:
+		if player.position.x > position.x + RIGHT && followRight:
+			position.x += min(player.position.x - (position.x + RIGHT), 16)
+		elif player.position.x < position.x + LEFT && followLeft:
+			position.x += max(player.position.x - (position.x + LEFT), -16)
 
 func vertical_border(player : PlayerPhysics):
-	var scroll_back = true
-	var scroll_world = camera_scroll.global_position
-	if player.is_grounded:
-		if player.position.y + 16 - position.y != 0:
-			var playerPosCam = (player.position.y + 16) - position.y;
-			var playerLt360 = abs(player.velocity.y) <= 360;
-			var vel = \
-				max(playerPosCam,\
-					-6 - (10 * int(!playerLt360)\
-				));
-			if vel < 0 && !followUp:
-				return
-			elif vel > 0 && !followDown:
-				return
-			position.y += vel + vertical_offset;
-		return
-	var vel;
-	if player.position.y < position.y - AIR_TOP:
-		vel = max(player.position.y - (position.y - AIR_TOP) + vertical_offset, -16);
-	elif player.position.y > position.y + AIR_BOTTOM:
-		vel = min(player.position.y - (position.y + AIR_BOTTOM) + vertical_offset, 16);
-	else:
-		vel = 0;
-	position.y += vel;
+	if follow:
+		var vel;
+		var scroll_back = true
+		var scroll_world = camera_scroll.global_position
+		var realPos = position.y + vertical_offset;
+		if player.is_grounded:
+			if (realPos + 16 - position.y) != 0:
+				var playerPosCam = (player.position.y + 16) - realPos;
+				var playerLt360 = abs(player.velocity.y) <= 360;
+				vel = \
+					max(playerPosCam,\
+						-6 - (10 * int(!playerLt360)\
+					));
+				if ((realPos + vel) - realPos < 0) && !followUp:
+					return
+				elif ((realPos + vel) - realPos > 0) && !followDown:
+					return
+				position.y += vel;
+			return
+		
+		var velAtt;
+		var playerLtAt = player.position.y < realPos - AIR_TOP;
+		var playerGtAb = player.position.y > realPos + AIR_BOTTOM;
+		if (!playerGtAb && !playerLtAt):
+			return
+		
+		if (playerLtAt):
+			vel = max(\
+				player.position.y - (realPos - AIR_TOP), -16
+			)
+		elif playerGtAb:
+			vel = min(\
+				player.position.y - (realPos + AIR_BOTTOM), 16
+			)
+		
+		if ((realPos + vel) - realPos < 0) && !followUp:
+			return
+		elif ((realPos + vel) - realPos > 0) && !followDown:
+			return
+		
+		position.y += vel;
 
 func vertical_scrolling(player : PlayerPhysics, delta : float):
 	var scroll_back = true
@@ -97,3 +116,15 @@ func vertical_scrolling(player : PlayerPhysics, delta : float):
 		elif camera_scroll.position.y < 0:
 			camera_scroll.position.y += SCROLL_SPEED * delta
 			camera_scroll.position.y = min(camera_scroll.position.y, 0)
+
+func delay(secs:float = -1):
+	follow = false
+	var timer = Timer.new();
+	self.add_child(timer);
+	timer.start(secs);
+	timer.connect("timeout", self, "followAgain", [timer]);
+	
+
+func followAgain(timerNode:Timer):
+	remove_child(timerNode);
+	follow = true
