@@ -107,7 +107,7 @@ func physics_step():
 		is_grounded = false
 	
 	is_wall_left = (left_wall.is_colliding() || left_wall_bottom.is_colliding()) || position.x - 9 <= 0
-	is_wall_right = right_wall.is_colliding() || right_wall_bottom.is_colliding()
+	is_wall_right = right_wall.is_colliding() || right_wall_bottom.is_colliding();
 
 func fall_from_ground():
 	if abs(gsp) < FALL and ground_mode != 0:
@@ -121,11 +121,13 @@ func fall_from_ground():
 		return false
 
 func snap_to_ground():
+
 	rotation_degrees = -rad2deg(ground_angle())
 	velocity += -ground_normal * 150
 
 func ground_reacquisition():
 	var angle = abs(rad2deg(ground_angle()))
+	var ground_angle = ground_angle();
 	
 	if angle >= 0 and angle < 22.5:
 		gsp = velocity.x
@@ -133,14 +135,14 @@ func ground_reacquisition():
 		if abs(velocity.x) > velocity.y:
 			gsp = velocity.x
 		else:
-			gsp = velocity.y * .5 * -sign(sin(ground_angle()))
+			gsp = velocity.y * .5 * -sign(sin(ground_angle))
 	elif angle >= 45.0 and angle < 90:
 		if abs(velocity.x) > velocity.y:
 			gsp = velocity.x
 		else:
-			gsp = velocity.y * -sign(sin(ground_angle()))
+			gsp = velocity.y * -sign(sin(ground_angle))
 	
-	rotation_degrees = -rad2deg(ground_angle())
+	rotation_degrees = -rad2deg(ground_angle)
 
 func ground_angle():
 	return ground_normal.angle_to(Vector2(0, -1))

@@ -1,6 +1,9 @@
-extends StaticBody2D
+extends Node2D
 const block_scene = preload("res://Test Zone/Braked.tscn");
-onready var breaking = $BreakingSound
+export var breakingSound:AudioStream;
+onready var hitBox = $"Body/HitBox"
+onready var player = $"../../Player"
+var min_speed = 270;
 func spawnBlock(pos:Vector2, speed:Vector2, body):
 	
 	var block = block_scene.instance(PackedScene.GEN_EDIT_STATE_MAIN);
@@ -17,19 +20,20 @@ func spawnMultiBlock(body, args:Array):
 		)
 
 func _on_BreakArea_body_entered(body):
-	var min_speed = 270;
 	if body.name == 'Player':
-		if body.fsm.current_state == 'OnGround':
-			print(body.animation.current_animation);
-			if (body.animation.current_animation == "Jumping_Rolling"):
+		if body.is_grounded:
+			if (body.is_rolling):
 				if body.gsp > min_speed || body.gsp < -min_speed:
-					breaking.play();
 					removeChildren();
+					var player = AudioStreamPlayer.new();
+					player.stream = breakingSound;
+					add_child(player)
+					player.play()
 					var speed_gsp_gt = int (body.gsp > 0);
 					var speed_gsp_lt = int (body.gsp < 0);
 					var gsp = body.gsp;
-					var speedXL = gsp - speed_gsp_lt * 30;
-					var speedXG = gsp + speed_gsp_gt * 30;
+					var speedXL = body.gsp - (speed_gsp_lt * 30);
+					var speedXG = body.gsp + (speed_gsp_gt * 30);
 					spawnMultiBlock(\
 						body,\
 						[
@@ -59,15 +63,21 @@ func _on_BreakArea_body_entered(body):
 							},
 						]
 					)
-			
+	pass
 
 func removeChildren():
 	var children = get_children();
 	for i in children:
-		if i.name != 'BreakingSound':
 			remove_child(i);
 	
 
-
 func _on_BreakingSound_finished():
 	get_parent().remove_child(self);
+
+func _ready():
+	set_process(true);
+
+func _process(delta):
+	hitBox.disabled = \
+	(player.gsp > min_speed || player.gsp < -min_speed) &&\
+	player.is_rolling;

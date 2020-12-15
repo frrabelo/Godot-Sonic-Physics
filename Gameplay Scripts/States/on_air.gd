@@ -8,16 +8,21 @@ var can_attack : bool
 var dropTimer : Timer;
 var dropPress : bool;
 var dropCharging : bool
+var dropDust : PackedScene = preload("res://Objects/Player/DropDashDust.tscn");
 
 var override_anim : String
 
 func enter(host):
-	host.sprite.offset = Vector2(0, 6)
 	host.character.rotation = 0;
 	dropPress = true;
-	has_jumped = host.has_jumped
-	has_rolled = host.is_rolling
-	has_pushed = host.has_pushed;
+	has_pushed = host.has_pushed
+	if !has_pushed:
+		has_jumped = host.has_jumped
+		has_rolled = host.is_rolling
+	else:
+		has_jumped = false
+		has_rolled = false
+	host.sprite.offset = Vector2(0, 6) if (has_rolled || has_jumped) else host.sprite.offset
 	can_attack = has_jumped
 	host.has_jumped = false
 	host.is_rolling = false
@@ -25,6 +30,13 @@ func enter(host):
 	roll_jump = has_jumped && has_rolled
 
 func step(host, delta):
+	
+	if host.has_pushed:
+		has_pushed = true;
+		has_jumped = false;
+		has_rolled = false;
+		roll_jump = false;
+		dropCharging = false;
 	
 	if host.is_grounded:
 		host.ground_reacquisition()
@@ -71,7 +83,7 @@ func step(host, delta):
 					if host.velocity.y < -240.0: # set min jump height
 						host.velocity.y = -240.0
 	if host.velocity.y < 0 and host.velocity.y > -240:
-		host.velocity.x -= int(host.velocity.x / 7.5) / 15360.0
+		host.velocity.x -= int(host.velocity.x / 7.5) /15360
 	host.velocity.y += host.GRV
 
 func _dropTimeOut(host, delta):
@@ -81,9 +93,12 @@ func _dropTimeOut(host, delta):
 	pass
 
 func exit(host, next_stage):
-	host.has_pushed = false;
 	if next_stage == 'OnGround':
 		if (dropCharging):
+			var dust:Node2D = dropDust.instance(PackedScene.GEN_EDIT_STATE_INSTANCE);
+			add_child(dust);
+			dust.position = host.position;
+			dust.get_child(0).scale.x = host.character.scale.x
 			if host.gsp < 270:
 				host.player_camera.delay(0.25);
 			host.gsp = \

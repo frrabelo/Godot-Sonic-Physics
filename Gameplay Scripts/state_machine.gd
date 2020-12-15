@@ -19,7 +19,10 @@ func _physics_process(delta):
 	
 	if state_name:
 		change_state(state_name)
-	var top_collide:Vector2 = Vector2(sin(host.rotation) * 1, -cos(host.rotation)*1);
+	var top_collide:Vector2 = Vector2(\
+		sin(host.rotation) * 1,\
+		-cos(host.rotation) * 1\
+	);
 	host.velocity = host.move_and_slide(\
 		host.velocity,\
 		top_collide,\

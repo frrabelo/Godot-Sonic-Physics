@@ -24,9 +24,10 @@ export(float) var SCROLL_DOWN = 88
 export(float) var SCROLL_SPEED = 120
 export(float) var SCROLL_DELAY = 2
 
-export(bool) var delay_after_drop = false;
-
 var scroll_timer : float
+export(bool) var rotateWithPlayer:bool
+var stuck_in_object:bool
+var object_to_stuck;
 
 onready var camera_scroll = $CameraScroll
 
@@ -38,9 +39,18 @@ func can_scroll(delta : float):
 	return true
 
 func camera_step(player : PlayerPhysics, delta : float):
-	horizontal_border(player)
-	vertical_border(player)
-	vertical_scrolling(player, delta)
+	if !stuck_in_object:
+		horizontal_border(player)
+		vertical_border(player)
+		vertical_scrolling(player, delta);
+		$CameraScroll/Camera2D.rotating = rotateWithPlayer;
+		if rotateWithPlayer:
+			var playerRot = fmod(player.rotation, 3.14)
+			if player.rotation != rotation:
+				rotation = lerp_angle(rotation, player.rotation, 0.25)
+	else:
+		move_local_x((position.y - object_to_stuck.position.y)/4);
+		move_local_x((position.y - object_to_stuck.position.y)/4);
 
 func horizontal_border(player : PlayerPhysics):
 	if follow:

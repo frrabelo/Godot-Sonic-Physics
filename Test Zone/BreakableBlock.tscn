@@ -5,36 +5,35 @@
 [ext_resource path="res://Audio/sfx/Cliff break.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15, 24 )
+extents = Vector2( 16, 24 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 26, 24 )
+extents = Vector2( 24, 15 )
 
-[node name="BreakableBlock" type="StaticBody2D"]
-collision_mask = 0
+[node name="BreakableBlock" type="Node2D"]
 script = ExtResource( 2 )
+breakingSound = ExtResource( 3 )
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="BreakingSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="Body"]
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 32, 48 )
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
-visible = false
+[node name="HitBox" type="CollisionShape2D" parent="Body"]
 shape = SubResource( 1 )
 
-[node name="BreakArea" type="Area2D" parent="."]
+[node name="BreakArea" type="Area2D" parent="Body"]
 gravity_vec = Vector2( 0, 0 )
 linear_damp = 0.0
 angular_damp = 0.0
 
-[node name="Area" type="CollisionShape2D" parent="BreakArea"]
+[node name="Area" type="CollisionShape2D" parent="Body/BreakArea"]
+rotation = 1.5708
 shape = SubResource( 2 )
-[connection signal="finished" from="BreakingSound" to="." method="_on_BreakingSound_finished"]
-[connection signal="body_entered" from="BreakArea" to="." method="_on_BreakArea_body_entered"]
+[connection signal="body_entered" from="Body/BreakArea" to="." method="_on_BreakArea_body_entered"]

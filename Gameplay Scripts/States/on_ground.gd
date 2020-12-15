@@ -117,9 +117,6 @@ func when_pushed_by_spring(spring_hit):
 func exit(host, next_stage):
 	is_braking = false
 	host.is_braking = false
-	if next_stage == 'OnAir':
-		if(hit_spring):
-			host.has_pushed = true;
 
 func animation_step(host, animator):
 	var anim_name = idle_anim
@@ -133,7 +130,7 @@ func animation_step(host, animator):
 		if abs_gsp >= 250:
 			anim_name = 'Jogging'
 		
-		if abs_gsp >= 360:
+		if abs_gsp >= 380:
 			anim_name = 'Running'
 		
 		if abs_gsp >= 960:

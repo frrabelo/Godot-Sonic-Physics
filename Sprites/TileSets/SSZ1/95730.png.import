@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/block64x64.bmp-6e12b06bc2900a53a3787f4749dccb0e.stex"
+path="res://.import/95730.png-cc66dac3c9c5cddafecb11b54c0b476e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/Template Tileset/block64x64.bmp"
-dest_files=[ "res://.import/block64x64.bmp-6e12b06bc2900a53a3787f4749dccb0e.stex" ]
+source_file="res://Sprites/TileSets/SSZ1/95730.png"
+dest_files=[ "res://.import/95730.png-cc66dac3c9c5cddafecb11b54c0b476e.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

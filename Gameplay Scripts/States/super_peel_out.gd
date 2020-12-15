@@ -31,7 +31,10 @@ func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
 	var anim_speed = max(-(8.0 / 60.0 - (animation_speed / 120.0)), 1.0)
 	var anim_name = 'Walking'
 	
-	if animation_speed >= 360:
+	if animation_speed >= 270:
+		anim_name = 'Running'
+	
+	if animation_speed >= 540:
 		anim_name = 'Running'
 	
 	if animation_speed >= 720:

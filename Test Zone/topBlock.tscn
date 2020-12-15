@@ -7,13 +7,13 @@ extents = Vector2( 32, 32 )
 
 [node name="TopBlock" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="BodyBlock" type="StaticBody2D" parent="."]
 collision_mask = 0
 
-[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+[node name="Sprite" type="Sprite" parent="BodyBlock"]
 texture = ExtResource( 1 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyBlock"]
 visible = false
 shape = SubResource( 1 )
