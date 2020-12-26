@@ -4,7 +4,7 @@ var timer:Timer;
 
 func _on_Area_body_entered(body):
 	if (body.name == "Player"):
-		remove_child($Area);
+		$Area.queue_free();
 		timer = Timer.new();
 		add_child(timer);
 		timer.start(0.5);
@@ -12,7 +12,7 @@ func _on_Area_body_entered(body):
 
 func breakDown():
 	timer.stop();
-	remove_child($StaticBody2D)
+	$StaticBody2D.queue_free();
 	timer = null;
 	$BreakSound.play();
 	spawn(Vector2(8, 0), 0.10);
@@ -29,4 +29,4 @@ func spawn(pos: Vector2, delay:float = 0):
 
 
 func _on_BreakSound_finished():
-	get_parent().remove_child(self);
+	queue_free()

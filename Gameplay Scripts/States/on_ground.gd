@@ -8,11 +8,12 @@ var hit_spring : bool;
 var spring: Node2D
 
 func enter(host):
+	host.has_pushed = false;
 	host.is_pushing = false
 	hit_spring = false;
 	idle_anim = 'Idle'
 
-func step(host, delta):
+func step(host:PlayerPhysics, delta):
 	host.is_looking_down = false
 	host.is_looking_up = false
 	
@@ -123,7 +124,6 @@ func animation_step(host, animator):
 	var anim_speed = 1.0
 	var abs_gsp = abs(host.gsp);
 	var play_once = false
-	
 	if abs_gsp > .1 and !is_braking:
 		idle_anim = 'Idle'
 		anim_name = 'Walking'
@@ -144,7 +144,7 @@ func animation_step(host, animator):
 			var cdown = host.sprite.offset.y >= 0;
 			var numBase = {up : 14, cdown : 6}
 			host.sprite.offset.y = numBase[true] * cos(host.character.rotation);
-			anim_name = 'Jumping_Rolling'
+			anim_name = 'Rolling'
 			anim_speed = -((5.0 / 60.0) - (abs(host.gsp) / 120.0))
 		else:
 			host.character.rotation = 0

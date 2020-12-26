@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Gameplay Scripts/character_animator.gd"
 }, {
+"base": "HBoxContainer",
+"class": "ContributorClass",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/ContributorClass.gd"
+}, {
 "base": "Node",
 "class": "GEAction",
 "language": "GDScript",
@@ -99,10 +104,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/Godoxel/Util.gd"
 }, {
+"base": "PanelContainer",
+"class": "GistItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/GistItem.gd"
+}, {
 "base": "SpriteFrames",
 "class": "ImprovedSpriteFrames",
 "language": "GDScript",
 "path": "res://Classes/AnimatedSpriteWithAnchor.gd"
+}, {
+"base": "HBoxContainer",
+"class": "InvitationItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/InvitationItem.gd"
+}, {
+"base": "Node2D",
+"class": "NumCounter",
+"language": "GDScript",
+"path": "res://Classes/NumDigit.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerCamera",
@@ -118,12 +138,18 @@ _global_script_classes=[ {
 "class": "PositionedAnimationPlayer",
 "language": "GDScript",
 "path": "res://Objects/Player/AnimationPlayerContainer.gd"
+}, {
+"base": "PanelContainer",
+"class": "RepositoryItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/RepositoryItem.gd"
 } ]
 _global_script_class_icons={
 "AudioPlayer": "",
 "BlockGen": "",
 "BrushPrefabs": "",
 "CharacterAnimator": "",
+"ContributorClass": "",
 "GEAction": "",
 "GEBrighten": "",
 "GEBrush": "",
@@ -138,10 +164,14 @@ _global_script_class_icons={
 "GERainbow": "",
 "GERect": "",
 "GEUtils": "",
+"GistItem": "",
 "ImprovedSpriteFrames": "",
+"InvitationItem": "",
+"NumCounter": "",
 "PlayerCamera": "",
 "PlayerPhysics": "",
-"PositionedAnimationPlayer": ""
+"PositionedAnimationPlayer": "",
+"RepositoryItem": ""
 }
 
 [application]
@@ -154,6 +184,10 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Gameplay Scripts/Global.gd"
+PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
+IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
+UserData="*res://addons/github-integration/scripts/user_data.gd"
+RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 
 [display]
 
@@ -164,6 +198,10 @@ window/size/test_width=960
 window/size/test_height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "Godoxel", "github-integration", "terminal" )
 
 [importer_defaults]
 

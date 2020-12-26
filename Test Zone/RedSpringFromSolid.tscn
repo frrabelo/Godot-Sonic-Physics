@@ -1,13 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Sprites/TileSets/SSZ1/95730.png" type="Texture" id=1]
 [ext_resource path="res://Test Zone/RedSpring.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Gameplay Scripts/SpringFromSolid.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 73, 3 )
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 80, 90 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 80, 3 )
+
+[sub_resource type="Animation" id=2]
 resource_name = "Hide"
 length = 0.25
 tracks/0/type = "value"
@@ -35,8 +38,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "Normal"
+[sub_resource type="Animation" id=3]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpPlat:rotation_degrees")
@@ -63,8 +65,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Show"
+[sub_resource type="Animation" id=4]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -91,8 +92,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Stand"
+[sub_resource type="Animation" id=5]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -121,16 +121,15 @@ tracks/1/keys = {
 
 [node name="RedSpringFromSolid" type="Node2D"]
 script = ExtResource( 3 )
-trigger_position = Vector2( -74, -39 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="SpPlat" type="Node2D" parent="."]
 rotation = -3.14159
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
-position = Vector2( -16, -16 )
 
 [node name="Platform" type="Sprite" parent="SpPlat"]
 position = Vector2( -16, 16 )
@@ -139,41 +138,48 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1076, 2562, 32, 32 )
 
+[node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
+position = Vector2( -16, -16 )
+direction = 0
+
 [node name="ShowTrigger" type="Area2D" parent="."]
-position = Vector2( -74, -39 )
+position = Vector2( 80, -39 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="CollisionTrigger" type="CollisionShape2D" parent="ShowTrigger"]
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 
-[node name="HideTrigger" type="Area2D" parent="."]
-position = Vector2( -74, 44 )
+[node name="HideTriggerBottom" type="Area2D" parent="."]
+visible = false
+position = Vector2( 80, 44 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTrigger"]
-shape = SubResource( 3 )
+[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTriggerBottom"]
+shape = SubResource( 7 )
 
-[node name="HideTrigger2" type="Area2D" parent="."]
-position = Vector2( -74, -189 )
+[node name="HideTriggerTop" type="Area2D" parent="."]
+visible = false
+position = Vector2( 80, -189 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTrigger2"]
-shape = SubResource( 3 )
+[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTriggerTop"]
+shape = SubResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SpPlat")
 playback_speed = 0.0
-anims/Hide = SubResource( 5 )
-anims/Normal = SubResource( 1 )
-anims/Show = SubResource( 2 )
-anims/Stand = SubResource( 4 )
+anims/Hide = SubResource( 2 )
+anims/Normal = SubResource( 3 )
+anims/Show = SubResource( 4 )
+anims/Stand = SubResource( 5 )
+[connection signal="script_changed" from="." to="." method="_on_RedSpringFromSolid_script_changed"]
 [connection signal="body_entered" from="ShowTrigger" to="." method="_on_ShowTrigger_body_entered"]
-[connection signal="body_entered" from="HideTrigger" to="." method="_on_HideTrigger_body_entered"]
-[connection signal="body_entered" from="HideTrigger2" to="." method="_on_HideTrigger_body_entered"]
+[connection signal="body_entered" from="HideTriggerBottom" to="." method="_on_HideTrigger_body_entered"]
+[connection signal="body_entered" from="HideTriggerTop" to="." method="_on_HideTrigger_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

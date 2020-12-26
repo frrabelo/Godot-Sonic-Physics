@@ -9,12 +9,13 @@ func _on_Area_body_entered(body):
 				Vector2((20 * -dir), -300),\
 				Vector2(0, -5)\
 			);
-			if body.gsp < 700:
+			var abs_gsp = abs(body.gsp)
+			if abs_gsp < 700:
 				body.gsp = 700 * dir
-			elif body.gsp < 1100:
+			elif abs_gsp < 1100:
 				body.gsp += 150 * dir
 			else:
-				body.gsp = 1100
+				body.gsp = 1100 * dir
 
 func spawnBullet(speed:Vector2, pos:Vector2):
 	var bullet:Node2D = bullet_scene.instance(PackedScene.GEN_EDIT_STATE_MAIN);

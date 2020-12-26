@@ -27,11 +27,12 @@ func _physics_process(delta):
 		host.velocity,\
 		top_collide,\
 		false,\
-		deg2rad(75),\
+		deg2rad(100),\
 		true
 	)
 	states[current_state].animation_step(host, host.animation)
-	host.player_camera.camera_step(host, delta)
+	if host.player_camera != null:
+		host.player_camera.camera_step(host, delta)
 
 func change_state(state_name):
 	if state_name == current_state:

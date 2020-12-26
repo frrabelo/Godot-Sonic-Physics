@@ -53,6 +53,7 @@ var is_grounded : bool
 var ground_point : Vector2
 var ground_normal : Vector2
 var has_jumped : bool
+var is_floating : bool
 var is_rolling : bool
 var is_braking : bool
 var is_wall_left : bool
@@ -94,13 +95,11 @@ func physics_step():
 	if is_on_ground():
 		is_grounded = true
 	
-	
-	
 	if is_grounded and is_ray_colliding:
 		ground_point = ground_ray.get_collision_point()
 		ground_normal = ground_ray.get_collision_normal()
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
-		ground_mode = 2 if ground_mode == -2 else ground_mode
+		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
 	else:
 		ground_mode = 0
 		ground_normal = Vector2(0, -1)
@@ -121,7 +120,6 @@ func fall_from_ground():
 		return false
 
 func snap_to_ground():
-
 	rotation_degrees = -rad2deg(ground_angle())
 	velocity += -ground_normal * 150
 
@@ -191,7 +189,3 @@ func get_ground_ray():
 		return left_ground
 	else:
 		return right_ground
-
-
-func _on_CharAnimation_animation_finished(anim_name):
-	pass # Replace with function body.

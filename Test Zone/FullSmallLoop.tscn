@@ -19,17 +19,19 @@ rotation = 3.14159
 
 [node name="small_loop_part_blue" parent="." instance=ExtResource( 2 )]
 position = Vector2( -64, 64 )
+z_index = -2
 
 [node name="small_loop_part_red" parent="." instance=ExtResource( 1 )]
 position = Vector2( 64, 64 )
 rotation = -1.5708
+z_index = 2
 
 [node name="MaskSetterRed" parent="." instance=ExtResource( 6 )]
-position = Vector2( -133, 65 )
+position = Vector2( -157, 65 )
 scale = Vector2( 1, 2.75 )
 
 [node name="MaskSetterBlue" parent="." instance=ExtResource( 3 )]
-position = Vector2( 133, 64 )
+position = Vector2( 153, 64 )
 scale = Vector2( 1, 2.75 )
 
 [node name="MaskSetterInvert" parent="." instance=ExtResource( 4 )]

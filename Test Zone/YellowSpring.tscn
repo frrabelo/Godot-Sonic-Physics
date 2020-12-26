@@ -1,10 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Gameplay Scripts/Spring.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/TileSets/General Objects/YellowSprings.png" type="Texture" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 18, 9 )
+[ext_resource path="res://Test Zone/SpringCollisions.tscn" type="PackedScene" id=3]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
@@ -131,36 +129,23 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 16, 8 )
-
 [node name="YellowSpring" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-jump_height = 150
 
-[node name="Body" type="StaticBody2D" parent="."]
-
-[node name="HitBox" type="CollisionShape2D" parent="Body"]
-position = Vector2( 0, 7 )
-shape = SubResource( 1 )
-
-[node name="Sprite" type="AnimatedSprite" parent="Body"]
+[node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
 animation = "Push"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Sprite"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 playback_speed = 3.0
 anims/Push = SubResource( 11 )
 anims/Stop = SubResource( 12 )
 
-[node name="Area" type="Area2D" parent="Body"]
+[node name="Body" parent="." instance=ExtResource( 3 )]
+[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="Body/JumpArea" to="." method="_on_JumpArea_body_entered"]
 
-[node name="JumpCollide" type="CollisionShape2D" parent="Body/Area"]
-position = Vector2( 0, 5 )
-shape = SubResource( 13 )
-one_way_collision = true
-[connection signal="animation_finished" from="Body/Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="body_entered" from="Body/Area" to="." method="_on_Area_body_entered"]
+[editable path="Body"]

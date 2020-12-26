@@ -4,5 +4,4 @@
 
 [node name="BlockGen" type="Node2D"]
 script = ExtResource( 1 )
-size = Vector2( 64, 64 )
 [connection signal="script_changed" from="." to="." method="_on_BlockGen_script_changed"]

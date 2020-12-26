@@ -1,30 +1,57 @@
 tool
 extends Node2D
 var showTrigger:Area2D;
+var hideTriggerB:Area2D;
+var hideTriggerT:Area2D;
 var eds = get_viewport();
-export(Vector2) var trigger_position setget setTriggerPos, getTriggerPos;
+export(float) var trigger_position = 80 setget setTriggerPos, getTriggerPos;
+export var trigger_width:float = 80 setget setTriggerWidth, getTriggerWidth
+var rect:RectangleShape2D = RectangleShape2D.new();
+var show_rect:RectangleShape2D = RectangleShape2D.new();
 
 func _ready():
 	$AnimationPlayer.play("Normal", -1, 0);
 
+func _enter_tree():
+	_prepare();
+
+func _prepare():
+	setShowTrigger()
+	show_rect.extents = Vector2(trigger_width, 90)
+	rect.extents = Vector2(trigger_width, 3)
+	$ShowTrigger/CollisionTrigger.shape = show_rect;
+	$HideTriggerTop/CollisionTrigger.shape = rect;
+	$HideTriggerBottom/CollisionTrigger.shape = rect;
+
 func setShowTrigger():
 	if has_node("ShowTrigger"):
 		showTrigger = $ShowTrigger;
-		showTrigger.set_process_input(true);
+	if has_node("HideTriggerBottom"):
+		hideTriggerB = $HideTriggerBottom
+	if has_node("HideTriggerTop"):
+		hideTriggerT = $HideTriggerTop
 
-func setTriggerPos(value: Vector2):
+func setTriggerPos(value: float):
 	if showTrigger == null:
 		setShowTrigger();
 	if showTrigger != null:
-		showTrigger.position = value;
+		hideTriggerB.position.x = value;
+		hideTriggerT.position.x = value;
+		showTrigger.position.x = value;
 
 func getTriggerPos():
 	if showTrigger == null:
 		setShowTrigger();
 	if (showTrigger != null):
-		return showTrigger.position;
-	return Vector2.ZERO;
+		return showTrigger.position.x;
+	return 0;
 
+func setTriggerWidth(value:float):
+	rect.extents.x = value
+	show_rect.extents.x = value;
+
+func getTriggerWidth():
+	return rect.extents.x
 
 func _on_ShowTrigger_body_entered(body):
 	if (body.name == "Player"):
@@ -52,3 +79,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	elif anim_name == "":
 		anim_name = "Normal";
 	$AnimationPlayer.play(anim_name, -1, 0)
+
+
+func _on_RedSpringFromSolid_script_changed():
+	_prepare();
