@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/BreakableBlock.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Scripts/TestZoneGimmicks/BreakArea.gd" type="Script" id=2]
+
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 24 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 15 )
+
+[node name="BreakableBlock" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Body"]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 48 )
+
+[node name="HitBox" type="CollisionShape2D" parent="Body"]
+shape = SubResource( 1 )
+
+[node name="BreakArea" type="Area2D" parent="Body"]
+gravity_vec = Vector2( 0, 0 )
+linear_damp = 0.0
+angular_damp = 0.0
+
+[node name="Area" type="CollisionShape2D" parent="Body/BreakArea"]
+rotation = 1.5708
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Body/BreakArea" to="." method="_on_BreakArea_body_entered"]

@@ -1,45 +1,44 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=40 format=2]
 
-[ext_resource path="res://Gameplay Scripts/main.gd" type="Script" id=1]
-[ext_resource path="res://Objects/Player/PlayerCamera.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Objects/Player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Test Zone/FullLoop.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Test Zone/FullCircle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Test Zone/CirclePart.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Test Zone/LoopBlockBlue.res" type="PackedScene" id=7]
-[ext_resource path="res://Sprites/TileSets/SSZ1/Background 1.png" type="Texture" id=8]
-[ext_resource path="res://General/MaskSetterBlue.res" type="PackedScene" id=9]
-[ext_resource path="res://General/MaskSetterRed.res" type="PackedScene" id=10]
-[ext_resource path="res://General/MaskSetterInvert.res" type="PackedScene" id=11]
-[ext_resource path="res://Test Zone/LoopBlockRed.res" type="PackedScene" id=12]
-[ext_resource path="res://Sprites/TileSets/SSZ1/Background 2.png" type="Texture" id=13]
-[ext_resource path="res://Test Zone/blockWCurve.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Test Zone/BiggerSlope.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Classes/AudioChain.gd" type="Script" id=16]
-[ext_resource path="res://Audio/musics/07 Endless Mine Loop.ogg" type="AudioStream" id=17]
-[ext_resource path="res://Test Zone/RedSpring.tscn" type="PackedScene" id=18]
-[ext_resource path="res://Audio/musics/07 Endless MineBegin.ogg" type="AudioStream" id=19]
-[ext_resource path="res://Test Zone/FullCircleWLine.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Sprites/TileSets/Template Tileset/block64x64.bmp" type="Texture" id=21]
-[ext_resource path="res://Test Zone/topBlock.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Test Zone/loop_part.res" type="PackedScene" id=23]
-[ext_resource path="res://Test Zone/BreakableBlock.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Test Zone/FullSmallLoop.tscn" type="PackedScene" id=25]
-[ext_resource path="res://Sprites/TileSets/Template Tileset/DecorationBlock.png" type="Texture" id=26]
-[ext_resource path="res://Test Zone/CirclePartWithLine.tscn" type="PackedScene" id=27]
-[ext_resource path="res://Test Zone/YellowSpring.tscn" type="PackedScene" id=28]
-[ext_resource path="res://Test Zone/block.tscn" type="PackedScene" id=29]
-[ext_resource path="res://Test Zone/GimmickShootSonic.tscn" type="PackedScene" id=30]
-[ext_resource path="res://Test Zone/loop_part_blue.res" type="PackedScene" id=31]
-[ext_resource path="res://Test Zone/Clif.tscn" type="PackedScene" id=32]
-[ext_resource path="res://Test Zone/BlockGenerator.tscn" type="PackedScene" id=34]
-[ext_resource path="res://Test Zone/RedSpringFromSolid.tscn" type="PackedScene" id=35]
-[ext_resource path="res://Objects/Ring.tscn" type="PackedScene" id=36]
-[ext_resource path="res://Test Zone/Platform.tscn" type="PackedScene" id=37]
-[ext_resource path="res://Test Zone/Fan.tscn" type="PackedScene" id=38]
-[ext_resource path="res://3DModels/EmeraldRingIn2D.tscn" type="PackedScene" id=39]
-[ext_resource path="res://Test Zone/FanFromWall.tscn" type="PackedScene" id=40]
-[ext_resource path="res://Audio/sfx/Cliff break.wav" type="AudioStream" id=41]
+[ext_resource path="res://Assets/Scripts/GeneralScripts/main.gd" type="Script" id=1]
+[ext_resource path="res://Assets/General Objects/Player/PlayerCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/General Objects/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Zones/Test Zone/FullLoop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Zones/Test Zone/FullCircle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Zones/Test Zone/blockMaker.gd" type="Script" id=6]
+[ext_resource path="res://Zones/Test Zone/LoopBlockBlue.res" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Sprites/TileSets/TestZone/Background 1.png" type="Texture" id=8]
+[ext_resource path="res://Assets/General Objects/MaskSetterBlue.res" type="PackedScene" id=9]
+[ext_resource path="res://Assets/General Objects/MaskSetterRed.res" type="PackedScene" id=10]
+[ext_resource path="res://Assets/General Objects/MaskSetterInvert.res" type="PackedScene" id=11]
+[ext_resource path="res://Zones/Test Zone/LoopBlockRed.res" type="PackedScene" id=12]
+[ext_resource path="res://Assets/Sprites/TileSets/TestZone/Background 2.png" type="Texture" id=13]
+[ext_resource path="res://Zones/Test Zone/blockWCurve.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Zones/Test Zone/BiggerSlope.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Assets/Classes/AudioChain.gd" type="Script" id=16]
+[ext_resource path="res://Assets/Audio/musics/07 Endless Mine Loop.ogg" type="AudioStream" id=17]
+[ext_resource path="res://Zones/Test Zone/RedSpring.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Assets/Audio/musics/07 Endless MineBegin.ogg" type="AudioStream" id=19]
+[ext_resource path="res://Zones/Test Zone/FullCircleWLine.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/block64x64_top.bmp" type="Texture" id=21]
+[ext_resource path="res://Zones/Test Zone/topBlock.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Zones/Test Zone/loop_part.res" type="PackedScene" id=23]
+[ext_resource path="res://Zones/Test Zone/BreakableBlock.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Zones/Test Zone/FullSmallLoop.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/DecorationBlock.png" type="Texture" id=26]
+[ext_resource path="res://Zones/Test Zone/CirclePartWithLine.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Zones/Test Zone/YellowSpring.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Zones/Test Zone/block.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Zones/Test Zone/GimmickShootSonic.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Zones/Test Zone/loop_part_blue.res" type="PackedScene" id=31]
+[ext_resource path="res://Zones/Test Zone/Clif.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Zones/Test Zone/BlockGenerator.tscn" type="PackedScene" id=34]
+[ext_resource path="res://Zones/Test Zone/RedSpringFromSolid.tscn" type="PackedScene" id=35]
+[ext_resource path="res://Assets/General Objects/Ring.tscn" type="PackedScene" id=36]
+[ext_resource path="res://Zones/Test Zone/Platform.tscn" type="PackedScene" id=37]
+[ext_resource path="res://Zones/Test Zone/Fan.tscn" type="PackedScene" id=38]
+[ext_resource path="res://Zones/Test Zone/FanFromWall.tscn" type="PackedScene" id=40]
+[ext_resource path="res://Assets/Audio/sfx/Cliff break.wav" type="AudioStream" id=41]
 
 [node name="main" type="Node"]
 script = ExtResource( 1 )
@@ -514,7 +513,7 @@ rotation = 4.71239
 z_index = 2
 
 [node name="LoopBlockBlue" parent="Level/FullLoop" instance=ExtResource( 7 )]
-position = Vector2( -128, 75 )
+position = Vector2( -128, 64 )
 z_index = -2
 
 [node name="MaskSetterRed" parent="Level/FullLoop" instance=ExtResource( 10 )]
@@ -531,7 +530,7 @@ position = Vector2( 0.380005, -66.209 )
 z_index = 2
 
 [node name="LoopBlockRed" parent="Level/FullLoop" instance=ExtResource( 12 )]
-position = Vector2( -64, 127 )
+position = Vector2( -64, 128 )
 
 [node name="block26" parent="Level/FullLoop" instance=ExtResource( 29 )]
 position = Vector2( 64, 128 )
@@ -544,17 +543,12 @@ z_index = 1
 
 [node name="BlockGen31" parent="Level/FullLoop" instance=ExtResource( 34 )]
 position = Vector2( -128, -80 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 2
 
 [node name="BlockGen45" parent="Level/FullLoop" instance=ExtResource( 34 )]
 position = Vector2( 0, 128 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
-columns = 1
-rows = 1
 
 [node name="FullLoop2" parent="Level" instance=ExtResource( 4 )]
 position = Vector2( 1429, -968 )
@@ -563,7 +557,7 @@ position = Vector2( 1429, -968 )
 position = Vector2( 1911, -1040 )
 
 [node name="FullLoop5" parent="Level" instance=ExtResource( 25 )]
-position = Vector2( 3208, -473 )
+position = Vector2( 3216, -481 )
 
 [node name="FullLoop3" parent="Level" instance=ExtResource( 4 )]
 position = Vector2( 2032, 256 )
@@ -630,8 +624,16 @@ z_index = 3
 [node name="CirclePartStand6" parent="Level/InitialGround" instance=ExtResource( 27 )]
 position = Vector2( 4208, -752 )
 
+[node name="CirclePartStand9" parent="Level/InitialGround" instance=ExtResource( 27 )]
+position = Vector2( 5152, 320 )
+rotation = 4.71239
+
+[node name="CirclePartStand12" parent="Level/InitialGround" instance=ExtResource( 27 )]
+position = Vector2( 4880, 48 )
+rotation = 4.71239
+
 [node name="CirclePartStand11" parent="Level/InitialGround" instance=ExtResource( 27 )]
-position = Vector2( 4880, -689 )
+position = Vector2( 4880, -688 )
 rotation = 1.5708
 z_index = 3
 
@@ -668,6 +670,25 @@ z_index = 2
 position = Vector2( 4424, 1720 )
 z_index = 2
 
+[node name="loop_part20" parent="Level" instance=ExtResource( 23 )]
+position = Vector2( 5304, 888 )
+rotation = 4.71239
+z_index = 2
+
+[node name="loop_part21" parent="Level" instance=ExtResource( 23 )]
+position = Vector2( 5304, 776 )
+rotation = 3.14159
+z_index = 2
+
+[node name="loop_part27" parent="Level" instance=ExtResource( 23 )]
+position = Vector2( 5064, 504 )
+rotation = 3.14159
+z_index = 2
+
+[node name="loop_part28" parent="Level" instance=ExtResource( 23 )]
+position = Vector2( 4712, 536 )
+z_index = 2
+
 [node name="loop_part17" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4280, 1720 )
 rotation = 4.71239
@@ -682,9 +703,7 @@ z_index = 2
 position = Vector2( 1120, 368 )
 
 [node name="YellowSpring" parent="Level" instance=ExtResource( 28 )]
-position = Vector2( 3690, -374 )
-direction = 0
-push_force = 500
+position = Vector2( 3698, -382 )
 
 [node name="MaskSetterBlue3" parent="Level" instance=ExtResource( 9 )]
 position = Vector2( 2978, 1267 )
@@ -740,11 +759,11 @@ rotation = 4.71239
 z_index = 1
 
 [node name="loop_part12" parent="Level" instance=ExtResource( 23 )]
-position = Vector2( 4968, -218 )
+position = Vector2( 4968, -216 )
 z_index = 3
 
 [node name="loop_part13" parent="Level" instance=ExtResource( 23 )]
-position = Vector2( 5080, -218 )
+position = Vector2( 5080, -216 )
 rotation = 4.71239
 z_index = 3
 
@@ -825,8 +844,8 @@ scale = Vector2( 1, 1 )
 position = Vector2( 997, 57 )
 scale = Vector2( 1, 1 )
 
-[node name="CirclePart6" parent="Level" instance=ExtResource( 6 )]
-position = Vector2( 3036, -333 )
+[node name="CirclePartStand" parent="Level" instance=ExtResource( 27 )]
+position = Vector2( 3040, -337 )
 
 [node name="loop_part" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 760, 504 )
@@ -834,24 +853,21 @@ position = Vector2( 760, 504 )
 [node name="loop_part18" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3256, 1256 )
 rotation = 3.14159
-type_loop = 1
+collision_layer = 1
 
 [node name="loop_part19" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3048, 1256 )
 rotation = 1.5708
-type_loop = 2
+collision_layer = 2
 
 [node name="RedSpring3" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 2557, 848 )
-direction = 0
 
 [node name="RedSpring4" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 1617, 290 )
-direction = 0
 
 [node name="RedSpring6" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 4016, -142 )
-direction = 0
 
 [node name="RedSpring5" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 1488, 848 )
@@ -869,6 +885,21 @@ position = Vector2( 3693, 433 )
 rotation = 4.71239
 z_index = 2
 
+[node name="SonicImpulsor8" parent="Level" instance=ExtResource( 30 )]
+position = Vector2( 4679, 350 )
+rotation = 1.5708
+z_index = 2
+
+[node name="SonicImpulsor9" parent="Level" instance=ExtResource( 30 )]
+position = Vector2( 4679, 100 )
+rotation = 1.5708
+z_index = 2
+
+[node name="SonicImpulsor10" parent="Level" instance=ExtResource( 30 )]
+position = Vector2( 4678, -160 )
+rotation = 1.5708
+z_index = 2
+
 [node name="SonicImpulsor3" parent="Level" instance=ExtResource( 30 )]
 position = Vector2( 3693, 49 )
 rotation = 4.71239
@@ -878,13 +909,13 @@ z_index = 2
 position = Vector2( 4800, -373 )
 
 [node name="SonicImpulsor5" parent="Level" instance=ExtResource( 30 )]
-position = Vector2( 5648, -471 )
+position = Vector2( 5648, -469 )
 
 [node name="SonicImpulsor6" parent="Level" instance=ExtResource( 30 )]
-position = Vector2( 6032, -471 )
+position = Vector2( 6032, -470 )
 
 [node name="SonicImpulsor7" parent="Level" instance=ExtResource( 30 )]
-position = Vector2( 6416, -470 )
+position = Vector2( 6416, -469 )
 
 [node name="Collision4" parent="Level" instance=ExtResource( 24 )]
 position = Vector2( 1136, 536 )
@@ -904,16 +935,13 @@ position = Vector2( -48, -64 )
 
 [node name="BlockGen7" parent="Level/Ramp" instance=ExtResource( 34 )]
 position = Vector2( -48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 2
 
 [node name="BlockGen8" parent="Level/Ramp" instance=ExtResource( 34 )]
 position = Vector2( 48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 2
 
 [node name="loop_part5" parent="Level/Ramp" instance=ExtResource( 23 )]
@@ -926,7 +954,7 @@ position = Vector2( 136, 40 )
 z_index = 2
 
 [node name="Ramp2" type="Node2D" parent="Level"]
-position = Vector2( 5648, -354 )
+position = Vector2( 5648, -352 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -940,16 +968,13 @@ position = Vector2( -48, -64 )
 
 [node name="BlockGen7" parent="Level/Ramp2" instance=ExtResource( 34 )]
 position = Vector2( -48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 2
 
 [node name="BlockGen8" parent="Level/Ramp2" instance=ExtResource( 34 )]
 position = Vector2( 48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 2
 
 [node name="loop_part5" parent="Level/Ramp2" instance=ExtResource( 23 )]
@@ -962,7 +987,7 @@ position = Vector2( 136, 40 )
 z_index = 2
 
 [node name="Ramp3" type="Node2D" parent="Level"]
-position = Vector2( 6032, -354 )
+position = Vector2( 6032, -352 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -976,16 +1001,13 @@ position = Vector2( -48, -64 )
 
 [node name="BlockGen7" parent="Level/Ramp3" instance=ExtResource( 34 )]
 position = Vector2( -48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 2
 
 [node name="BlockGen8" parent="Level/Ramp3" instance=ExtResource( 34 )]
 position = Vector2( 48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 2
 
 [node name="loop_part5" parent="Level/Ramp3" instance=ExtResource( 23 )]
@@ -998,7 +1020,7 @@ position = Vector2( 136, 40 )
 z_index = 2
 
 [node name="Ramp4" type="Node2D" parent="Level"]
-position = Vector2( 6416, -354 )
+position = Vector2( 6416, -352 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1012,16 +1034,13 @@ position = Vector2( -48, -64 )
 
 [node name="BlockGen7" parent="Level/Ramp4" instance=ExtResource( 34 )]
 position = Vector2( -48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 2
 
 [node name="BlockGen8" parent="Level/Ramp4" instance=ExtResource( 34 )]
 position = Vector2( 48, 16 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 2
 
 [node name="loop_part5" parent="Level/Ramp4" instance=ExtResource( 23 )]
@@ -1035,363 +1054,310 @@ z_index = 2
 
 [node name="BlockGen" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 32, 464 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 11
 rows = 13
 
 [node name="BlockGen4" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 736, 656 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 7
 rows = 10
 
 [node name="BlockGen24" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2192, 384 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 5
 rows = 3
 
 [node name="RedSpringFromSolid" parent="Level" instance=ExtResource( 35 )]
 position = Vector2( 2641, 623 )
-trigger_position = -80.0
+trigger_position = -120.0
+trigger_width = 120.0
 
 [node name="RedSpringFromSolid2" parent="Level" instance=ExtResource( 35 )]
 position = Vector2( 4671, 1167 )
 scale = Vector2( -1, 1 )
 z_index = 1
 trigger_position = -80.0
+trigger_width = 80.0
 
 [node name="BlockGen34" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 2672, 239 )
-size = Vector2( 64, 64 )
+position = Vector2( 2672, 240 )
 object = ExtResource( 29 )
-columns = 1
 rows = 8
 
 [node name="BlockGen35" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2160, 176 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 11
-rows = 1
 
 [node name="BlockGen36" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2416, 127 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 7
-rows = 1
 
 [node name="BlockGen28" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1392, 384 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 13
 rows = 2
 
 [node name="BlockGen20" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1232, 320 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 3
-rows = 1
 
 [node name="BlockGen22" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1424, 320 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 6
-rows = 1
 
 [node name="BlockGen23" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1936, 384 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 4
-rows = 1
 
 [node name="BlockGen25" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2320, 320 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 2
-rows = 1
 
 [node name="BlockGen37" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2544, 79 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 5
-rows = 1
 
 [node name="BlockGen38" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 3112, -345 )
-size = Vector2( 64, 64 )
+position = Vector2( 3120, -353 )
 object = ExtResource( 22 )
 columns = 10
-rows = 1
 
 [node name="BlockGen72" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4864, 960 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
-columns = 20
-rows = 1
+columns = 9
+
+[node name="BlockGen77" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4864, 336 )
+rotation = 4.71239
+object = ExtResource( 22 )
+columns = 10
+
+[node name="BlockGen78" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5136, 576 )
+rotation = 4.71239
+object = ExtResource( 22 )
+
+[node name="BlockGen75" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5136, 608 )
+object = ExtResource( 22 )
+
+[node name="BlockGen73" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5232, 704 )
+rotation = 3.14159
+object = ExtResource( 22 )
 
 [node name="BlockGen39" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 4480, -353 )
-size = Vector2( 64, 64 )
+position = Vector2( 4480, -352 )
+z_index = 1
 object = ExtResource( 37 )
 columns = 6
-rows = 1
 
 [node name="BlockGen64" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4640, -336 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
-rows = 29
+rows = 30
+
+[node name="BlockGen87" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4032, -96 )
+object = ExtResource( 29 )
+columns = 10
+rows = 2
+
+[node name="BlockGen88" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4208, -336 )
+object = ExtResource( 29 )
+columns = 7
+rows = 4
 
 [node name="BlockGen40" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 5168, -242 )
+position = Vector2( 5168, -240 )
 z_index = 3
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 5
-rows = 1
 
 [node name="BlockGen41" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 6640, -242 )
-size = Vector2( 64, 64 )
+position = Vector2( 6640, -240 )
 object = ExtResource( 22 )
 columns = 6
-rows = 1
 
 [node name="BlockGen33" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1968, 112 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 7
-rows = 1
 
 [node name="BlockGen27" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2384, 576 )
 rotation = 3.14159
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 4
-rows = 1
 
 [node name="BlockGen70" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2160, 512 )
 rotation = 3.14159
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 13
-rows = 1
 
 [node name="BlockGen26" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2480, 416 )
 rotation = 1.5708
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 2
-rows = 1
 
 [node name="BlockGen6" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1072, 912 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 29
 rows = 3
 
 [node name="BlockGen29" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2144, 1488 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 27
 rows = 2
 
 [node name="BlockGen44" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3552, 1328 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 5
 rows = 2
 
 [node name="BlockGen48" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3232, 1456 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 10
-rows = 1
 
 [node name="BlockGen54" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3344, 1408 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 3
-rows = 1
 
 [node name="BlockGen51" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1072, 1088 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 24
 rows = 4
 
 [node name="BlockGen60" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1072, 1344 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 6
 rows = 8
 
-[node name="BlockGen67" parent="Level" instance=ExtResource( 34 )]
+[node name="BlockGen67" type="Node2D" parent="Level"]
 position = Vector2( 32, 400 )
-size = Vector2( 64, 64 )
+script = ExtResource( 6 )
 object = ExtResource( 22 )
 columns = 10
-rows = 1
 
 [node name="BlockGen21" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1168, 320 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
-columns = 1
-rows = 1
 
 [node name="BlockGen3" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 736, 592 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 7
-rows = 1
 
 [node name="BlockGen5" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1280, 896 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 4
-rows = 1
 
 [node name="BlockGen7" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1792, 896 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 6
-rows = 1
 
 [node name="BlockGen8" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2176, 896 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 12
-rows = 1
 
 [node name="BlockGen19" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2912, 1424 )
 scale = Vector2( -1, 1 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 12
-rows = 1
 
 [node name="BlockGen49" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2112, 1520 )
 rotation = 4.71239
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
-columns = 1
-rows = 1
 
 [node name="BlockGen50" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2208, 1616 )
 rotation = 3.14159
 scale = Vector2( -1, 1 )
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 26
-rows = 1
 
 [node name="BlockGen52" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 1456, 1792 )
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 54
-rows = 1
 
 [node name="BlockGen9" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3088, 896 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 2
-rows = 1
 
 [node name="BlockGen16" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3104, 928 )
 rotation = 3.14159
 scale = Vector2( -1, 1 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 5
-rows = 1
 
 [node name="BlockGen13" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3040, 1056 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 5
-rows = 1
 
 [node name="BlockGen14" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3296, 1184 )
 rotation = 3.14159
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 10
-rows = 1
 
 [node name="BlockGen15" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3520, 1200 )
 rotation = 4.71239
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 3
-rows = 1
 
 [node name="BlockGen10" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3296, 752 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 10
-rows = 1
 
 [node name="BlockGen71" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4352, 1536 )
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
-columns = 1
-rows = 1
 
 [node name="BlockGen30" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4192, -240 )
 rotation = 4.71239
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 2
-rows = 1
 
 [node name="BlockGen11" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3312.04, 783.694 )
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 10
 rows = 3
@@ -1399,17 +1365,73 @@ rows = 3
 [node name="BlockGen63" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4864, 1024 )
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
+columns = 16
 rows = 13
+
+[node name="BlockGen76" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5168, -208 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 30
+rows = 11
+
+[node name="BlockGen83" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5488, -224 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 19
+
+[node name="BlockGen81" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4928, -144 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 6
+rows = 9
+
+[node name="BlockGen82" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4896, -240 )
+z_index = 1
+object = ExtResource( 29 )
+rows = 2
+
+[node name="BlockGen79" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4944, 432 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 4
+
+[node name="BlockGen80" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5152, 480 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 16
+rows = 2
+
+[node name="BlockGen84" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5200, 608 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 15
+rows = 2
+
+[node name="BlockGen85" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5296, 688 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 15
+
+[node name="BlockGen86" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 5392, 752 )
+z_index = 1
+object = ExtResource( 29 )
+columns = 8
+rows = 5
 
 [node name="BlockGen65" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 4352, 1600 )
 z_index = 1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 4
 
 [node name="BlockGen66" parent="Level" instance=ExtResource( 34 )]
@@ -1418,7 +1440,13 @@ z_index = 1
 size = Vector2( 64, 32 )
 object = ExtResource( 37 )
 columns = 6
-rows = 1
+
+[node name="BlockGen74" parent="Level" instance=ExtResource( 34 )]
+position = Vector2( 4704, 592 )
+z_index = 1
+size = Vector2( 64, 32 )
+object = ExtResource( 37 )
+columns = 7
 
 [node name="BlockGen69" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 912, 336 )
@@ -1426,40 +1454,32 @@ z_index = 1
 size = Vector2( 64, 32 )
 object = ExtResource( 37 )
 columns = 2
-rows = 1
 
 [node name="BlockGen18" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2976, 1296 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 3
 
 [node name="BlockGen45" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2544, 960 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 6
 rows = 4
 
 [node name="BlockGen46" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2928, 1072 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 7
 rows = 2
 
 [node name="BlockGen47" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2608, 1168 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
-rows = 1
 
 [node name="BlockGen31" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3824, 368 )
 z_index = -1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 3
@@ -1467,15 +1487,12 @@ rows = 3
 [node name="BlockGen32" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3824, -16 )
 z_index = -1
-size = Vector2( 64, 64 )
 object = ExtResource( 22 )
 columns = 2
-rows = 1
 
 [node name="BlockGen43" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3824, 32 )
 z_index = -1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
 rows = 2
@@ -1483,35 +1500,26 @@ rows = 2
 [node name="BlockGen68" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3936, 0 )
 z_index = -1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 11
+columns = 12
 rows = 15
 
 [node name="BlockGen42" parent="Level" instance=ExtResource( 34 )]
-position = Vector2( 7024, -690 )
+position = Vector2( 7024, -688 )
 z_index = -1
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
-columns = 1
 rows = 8
 
 [node name="BlockGen12" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3872, 768 )
-size = Vector2( 64, 64 )
-object = null
-columns = 1
-rows = 1
 
 [node name="BlockGen17" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 3216, 912 )
-size = Vector2( 64, 64 )
 object = ExtResource( 29 )
 columns = 2
-rows = 1
 
 [node name="GreatLoop" type="Node2D" parent="Level"]
-position = Vector2( 5025, -449 )
+position = Vector2( 5025, -448 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1548,7 +1556,6 @@ position = Vector2( -128, 21 )
 z_index = -2
 size = Vector2( 64, 62 )
 object = ExtResource( 7 )
-columns = 1
 rows = 3
 
 [node name="BlockGen47" parent="Level/GreatLoop" instance=ExtResource( 34 )]
@@ -1556,7 +1563,6 @@ position = Vector2( 128, -42 )
 z_index = 2
 size = Vector2( 64, 62 )
 object = ExtResource( 12 )
-columns = 1
 rows = 4
 
 [node name="BlockGen46" parent="Level/GreatLoop" instance=ExtResource( 34 )]
@@ -1565,7 +1571,6 @@ z_index = -2
 size = Vector2( 64, 62 )
 object = ExtResource( 7 )
 columns = 4
-rows = 1
 
 [node name="BallLoop" type="Node2D" parent="Level"]
 position = Vector2( 3088, 143 )
@@ -1589,21 +1594,17 @@ rotation = 1.5708
 scale = Vector2( 1, 4 )
 
 [node name="BlockGen49" parent="Level/BallLoop" instance=ExtResource( 34 )]
-position = Vector2( -64, -403 )
+position = Vector2( -64, -400 )
 z_index = 2
 z_as_relative = false
-size = Vector2( 64, 62 )
 object = ExtResource( 12 )
-columns = 1
 rows = 7
 
 [node name="BlockGen48" parent="Level/BallLoop" instance=ExtResource( 34 )]
-position = Vector2( -224, -65 )
+position = Vector2( -224, -64 )
 z_index = -2
-size = Vector2( 64, 62 )
 object = ExtResource( 7 )
 columns = 4
-rows = 1
 
 [node name="FullCircle2" parent="Level/BallLoop" instance=ExtResource( 20 )]
 scale = Vector2( 1, 1 )
@@ -1615,63 +1616,47 @@ z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
 columns = 6
-rows = 1
 
 [node name="BlockGen55" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2606, -6 )
 z_index = -2
 size = Vector2( 30, 30 )
-object = null
-columns = 1
-rows = 1
 
 [node name="BlockGen56" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2698, 1228 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="BlockGen57" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2671, 1229 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="BlockGen58" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2645, 1235 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="BlockGen62" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2624, 1252 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="BlockGen59" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2608, 1277 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="BlockGen61" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 2603, 1304 )
 z_index = -2
 size = Vector2( 30, 30 )
 object = ExtResource( 36 )
-columns = 1
-rows = 1
 
 [node name="Fan" parent="Level" instance=ExtResource( 38 )]
 position = Vector2( 4816, 1748 )
@@ -1680,35 +1665,41 @@ position = Vector2( 4816, 1748 )
 position = Vector2( 4848, 1572 )
 z_index = 1
 triggers_x = -126.0
+triggers_w = 110.0
 
 [node name="FromWall2" parent="Level" instance=ExtResource( 40 )]
 position = Vector2( 4656, 1460 )
 z_index = 1
 quantity = 2
 triggers_x = 96.0
+triggers_w = 80.0
 
 [node name="FromWall4" parent="Level" instance=ExtResource( 40 )]
 position = Vector2( 4624, 1460 )
 z_index = 1
 quantity = 2
-triggers_x = 129.0
+triggers_x = 128.0
+triggers_w = 80.0
 
 [node name="FromWall3" parent="Level" instance=ExtResource( 40 )]
 position = Vector2( 4848, 1300 )
 z_index = 1
 quantity = 2
 triggers_x = -96.0
+triggers_w = 80.0
 
 [node name="FromWall5" parent="Level" instance=ExtResource( 40 )]
 position = Vector2( 4880, 1300 )
 z_index = 1
 quantity = 2
 triggers_x = -128.0
+triggers_w = 80.0
 
-[node name="EmeraldRingIn2D" parent="Level" instance=ExtResource( 39 )]
-position = Vector2( 3703, 1149 )
+[node name="TopBlock" parent="Level" instance=ExtResource( 22 )]
+position = Vector2( 96, 400 )
 
 [node name="StageMusic" type="AudioStreamPlayer" parent="."]
+autoplay = true
 script = ExtResource( 16 )
 preSong = ExtResource( 19 )
 song = ExtResource( 17 )
@@ -1722,4 +1713,5 @@ stream = ExtResource( 41 )
 wait_time = 600.0
 one_shot = true
 autostart = true
+[connection signal="script_changed" from="Level/BlockGen67" to="Level/BlockGen67" method="_on_BlockGen_script_changed"]
 [connection signal="finished" from="StageMusic" to="StageMusic" method="_on_StageMusic_finished"]

@@ -1,0 +1,47 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0003.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0007.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0005.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0014.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0009.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0002.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0004.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0012.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0008.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0000.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0013.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0006.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0001.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0015.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0011.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Sprites/TileSets/General Objects/Rings/frame0010.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Classes/Ring.gd" type="Script" id=17]
+
+
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 10 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 12 ), ExtResource( 2 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 4 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 40.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[node name="Ring" type="Node2D"]
+script = ExtResource( 17 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+frame = 3
+playing = true
+
+[node name="Area" type="Area2D" parent="."]
+visible = false
+
+[node name="Collide" type="CollisionShape2D" parent="Area"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

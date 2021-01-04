@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/05 Chrome Gadget.ogg-595c99459d5921b484695d31883e9f30.oggstr"
+
+[deps]
+
+source_file="res://Assets/Audio/musics/05 Chrome Gadget.ogg"
+dest_files=[ "res://.import/05 Chrome Gadget.ogg-595c99459d5921b484695d31883e9f30.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

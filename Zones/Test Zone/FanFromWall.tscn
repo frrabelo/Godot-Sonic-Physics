@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/chr011.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Scripts/TestZoneGimmicks/FromWall.gd" type="Script" id=4]
+[ext_resource path="res://Zones/Test Zone/Fan.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 100, 90 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 100, 3 )
+
+[node name="FromWall" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="FanContainer" type="Node2D" parent="."]
+
+[node name="Fan" parent="FanContainer" instance=ExtResource( 5 )]
+
+[node name="Sprite2" type="Sprite" parent="FanContainer"]
+position = Vector2( 0, 20 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 16, 0, 32, 16 )
+
+[node name="Appear" type="Area2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collide" type="CollisionShape2D" parent="Appear"]
+position = Vector2( 0, -25 )
+shape = SubResource( 1 )
+
+[node name="DisappearTop" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0, -272 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collide" type="CollisionShape2D" parent="DisappearTop"]
+shape = SubResource( 2 )
+
+[node name="DisappearBottom" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0, 100 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collide" type="CollisionShape2D" parent="DisappearBottom"]
+shape = SubResource( 2 )
+[connection signal="script_changed" from="." to="." method="_on_FromWall_script_changed"]
+[connection signal="tree_entered" from="." to="." method="_on_FromWall_tree_entered"]
+[connection signal="body_entered" from="Appear" to="." method="_on_Appear_body_entered"]
+[connection signal="body_entered" from="DisappearTop" to="." method="_on_Disappear_body_entered"]
+[connection signal="body_entered" from="DisappearBottom" to="." method="_on_Disappear_body_entered"]

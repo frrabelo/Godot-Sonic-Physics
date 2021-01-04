@@ -1,0 +1,183 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Scripts/SpringFromSolid.gd" type="Script" id=1]
+[ext_resource path="res://Zones/Test Zone/RedSpring.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sprites/TileSets/TestZone/Gimmicks/SpringPlatformFromWall.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 90 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 3 )
+
+[sub_resource type="Animation" id=3]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -180.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -180.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -180.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="RedSpringFromSolid" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+trigger_width = 10.0
+
+[node name="SpPlat" type="Node2D" parent="."]
+rotation = -3.14159
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Platform" type="Sprite" parent="SpPlat"]
+position = Vector2( -16, 16 )
+rotation = -1.5708
+texture = ExtResource( 3 )
+region_rect = Rect2( 1076, 2562, 32, 32 )
+
+[node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
+position = Vector2( -16, -16 )
+
+[node name="ShowTrigger" type="Area2D" parent="."]
+position = Vector2( 80, -39 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionTrigger" type="CollisionShape2D" parent="ShowTrigger"]
+shape = SubResource( 1 )
+
+[node name="HideTriggerBottom" type="Area2D" parent="."]
+visible = false
+position = Vector2( 80, 44 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTriggerBottom"]
+shape = SubResource( 2 )
+
+[node name="HideTriggerTop" type="Area2D" parent="."]
+visible = false
+position = Vector2( 80, -189 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionTrigger" type="CollisionShape2D" parent="HideTriggerTop"]
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../SpPlat")
+playback_speed = 0.0
+anims/Hide = SubResource( 3 )
+anims/Normal = SubResource( 4 )
+anims/Show = SubResource( 5 )
+anims/Stand = SubResource( 6 )
+[connection signal="script_changed" from="." to="." method="_on_RedSpringFromSolid_script_changed"]
+[connection signal="body_entered" from="ShowTrigger" to="." method="_on_ShowTrigger_body_entered"]
+[connection signal="body_entered" from="HideTriggerBottom" to="." method="_on_HideTrigger_body_entered"]
+[connection signal="body_entered" from="HideTriggerTop" to="." method="_on_HideTrigger_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
