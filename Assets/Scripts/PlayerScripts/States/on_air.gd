@@ -1,5 +1,6 @@
 extends '../state.gd'
 
+var was_damaged : bool
 var has_jumped : bool
 var has_rolled : bool
 var has_pushed : bool
@@ -15,6 +16,10 @@ var override_anim : String
 func enter(host):
 	host.character.rotation = 0;
 	dropPress = true;
+	was_damaged = host.was_damaged;
+	if was_damaged:
+		host.invulnerable = true;
+		host.control_locked = true;
 	is_floating = host.is_floating;
 	if !is_floating:
 		has_pushed = host.has_pushed
@@ -37,6 +42,9 @@ func enter(host):
 
 func step(host, delta):
 	
+	if host.is_on_ceiling():
+		host.velocity.y = 0;
+	
 	if host.is_floating:
 		is_floating = true
 		has_pushed = false;
@@ -53,6 +61,7 @@ func step(host, delta):
 	
 	if host.is_grounded:
 		host.ground_reacquisition()
+		was_damaged = false;
 		return 'OnGround'
 	
 	host.velocity.x = 0 if host.is_wall_left && host.velocity.x < 0 else host.velocity.x
@@ -109,10 +118,13 @@ func exit(host, next_state):
 	is_floating = false;
 	host.is_floating = false;
 	if next_state == 'OnGround' || host.is_grounded:
+		if host.was_damaged:
+			host.control_locked = false
+			host.velocity.x = 0;
+			host.gsp = 0;
+		host.was_damaged = false;
 		if (dropCharging):
 			var dust:Node2D = dropDust.instance();
-			print(dropDust)
-			print(dust)
 			add_child(dust);
 			dust.position = host.position;
 			dust.get_child(0).scale.x = host.character.scale.x
@@ -137,21 +149,25 @@ func animation_step(host, animator):
 	if anim_name == 'Braking':
 		anim_name = 'Walking';
 	
-	if is_floating:
-		anim_name = "Rotating"
-		anim_speed = 3;
+	if was_damaged:
+		anim_name = "Hurt"
+		anim_speed = 2
 	else:
-		if has_pushed:
-			anim_name = "SpringJump"
+		if is_floating:
+			anim_name = "Rotating"
 			anim_speed = 3;
 		else:
-			if has_jumped or has_rolled:
-				if !dropCharging:
-					anim_name = 'Rolling';
-					anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
-				else:
-					anim_name = 'DropCharge';
-					anim_speed = 4.5;
+			if has_pushed:
+				anim_name = "SpringJump"
+				anim_speed = 3;
+			else:
+				if has_jumped or has_rolled:
+					if !dropCharging:
+						anim_name = 'Rolling';
+						anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
+					else:
+						anim_name = 'DropCharge';
+						anim_speed = 4.5;
 	
 	host.character.scale.x = host.direction.x if host.direction.x != 0 else host.character.scale.x
 	animator.animate(anim_name, anim_speed, true)

@@ -4,7 +4,7 @@ var count:float = 0;
 var seconds:float = 0;
 var milliseconds:float;
 var minutes:float;
-var ring:int = 0 setget setRing, getRings;
+var ring:int = 100 setget setRing, getRings;
 var time:String;
 func _ready():
 	pass

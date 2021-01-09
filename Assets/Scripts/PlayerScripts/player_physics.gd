@@ -2,10 +2,12 @@ extends KinematicBody2D
 
 class_name PlayerPhysics
 
-export(float) var ACC = 2.8125
+signal damaged
+
+export(float) var ACC = 4.6875
 export(float) var DEC = 30
 export(float) var ROLLDEC = 7.5
-export(float) var FRC = 2.8125
+export(float) var FRC = 4.6875
 export(float) var SLP = 7.5
 export(float) var SLPROLLUP = 4.6875
 export(float) var SLPROLLDOWN = 18.75
@@ -39,6 +41,9 @@ onready var character = $Characters
 onready var sprite = character.get_node('Sonic');
 onready var animation = sprite.get_node("CharAnimation");
 onready var audio_player = $AudioPlayer
+onready var main_scene = $"/root/main"
+
+var ring_scene = load("res://Assets/General Objects/Ring.tscn")
 
 var direction : Vector2 = Vector2.ZERO;
 var gsp : float
@@ -56,12 +61,14 @@ var has_jumped : bool
 var is_floating : bool
 var is_rolling : bool
 var is_braking : bool
+var was_damaged : bool
 var is_wall_left : bool
 var is_wall_right : bool
 var is_pushing : bool
 var is_looking_down : bool
 var is_looking_up : bool
 var has_pushed : bool
+var invulnerable : bool;
 
 func _ready():
 	control_unlock_timer = control_unlock_time
@@ -189,3 +196,57 @@ func get_ground_ray():
 		return left_ground
 	else:
 		return right_ground
+
+func damage():
+	emit_signal("damaged");
+	was_damaged = true;
+	invulnerable = true;
+	var timer = Timer.new();
+	timer.connect("timeout", self, "vunerable_again", [timer])
+	add_child(timer);
+	timer.start(2)
+	timer_ivun_start(.1)
+	if main_scene:
+		var n = false;
+		var droped:int = 32;
+		var droped_rings = droped if (main_scene.ring >= droped) else main_scene.ring;
+		var angle = 101.25
+		var drop_speed = 150;
+		main_scene.ring = 0;
+		drop_rings(droped_rings/2, angle, drop_speed, n);
+		drop_rings(droped_rings/2, angle, drop_speed/2, n);
+
+func drop_rings(quantity:int, angle:float, drop_speed:float, n:bool):
+	for i in quantity:
+		var instance_ring:KinematicBody2D = ring_scene.instance();
+		get_parent().add_child(instance_ring)
+		instance_ring.speed.x = cos(angle) * drop_speed;
+		instance_ring.speed.y = sin(angle) * drop_speed;
+		if n:
+			instance_ring.speed.x *= -1
+			angle += 22.5;
+		n = !n;
+		instance_ring.physical = true
+		instance_ring.position = global_position;
+		instance_ring.pick_box.set_deferred("disabled", was_damaged)
+
+func timer_ivun_start(time:float):
+	var timer_ivun = Timer.new();
+	timer_ivun.connect("timeout", self, "toogle_visible", [timer_ivun])
+	add_child(timer_ivun);
+	timer_ivun.start(time);
+
+func toogle_visible(timer:Timer):
+	timer.queue_free();
+	character.visible = !character.visible;
+	if invulnerable:
+		if character.visible:
+			timer_ivun_start(0.1);
+		else:
+			timer_ivun_start(0.025)
+	else:
+		character.visible = true
+
+func vunerable_again(timer:Timer):
+	timer.queue_free();
+	invulnerable = false;

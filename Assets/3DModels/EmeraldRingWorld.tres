@@ -3,6 +3,7 @@
 [resource]
 background_color = Color( 0, 0, 0, 0 )
 fog_sun_color = Color( 1, 0.901961, 0.701961, 1 )
-glow_enabled = true
-glow_intensity = 0.18
+glow_intensity = 1.44
+glow_strength = 1.29
 glow_blend_mode = 0
+glow_hdr_threshold = 0.99

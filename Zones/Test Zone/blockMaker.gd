@@ -6,32 +6,32 @@ export var object:PackedScene setget setScene, getScene;
 export var columns:int = 1 setget setBlockCol, getBlockCol;
 export var rows:int = 1 setget setBlockRow, getBlockRow;
 
-func _ready():
-	print(columns, ":" ,rows)
-
 func erase():
 	var children = get_children();
 	for i in children:
 		i.queue_free();
 
-func setBlockCol(valueCol:int):
-	if valueCol < 100 && valueCol >= 0 :
-		columns = valueCol;
+func setBlockCol(value:int):
+	if value < 100 && value >= 0 && (value * rows) <= 100:
+		columns = value;
 		_makeAll();
 
 func setBlockRow(value:int):
-	if value < 100 && value >= 0 :
+	if value < 100 && value >= 0 && (value * columns) <= 100:
 		rows = value;
 		_makeAll();
 
 func _makeAll():
 	erase();
+	var parent:Node2D = Node2D.new();
+	parent.position = Vector2.ZERO;
+	.add_child(parent);
 	if object != null:
 		if columns > 0 && rows > 0:
 			for y in range(0, rows):
 				for x in range(0, columns):
 					var objInstance:Node2D = object.instance()
-					add_child(objInstance);
+					parent.add_child(objInstance);
 					objInstance.position = Vector2(x, y) * size;
 
 func getBlockRow():

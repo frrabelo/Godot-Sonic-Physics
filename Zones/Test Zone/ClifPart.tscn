@@ -1,12 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/Scripts/TestZoneGimmicks/Breaked.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/block64x64_top.bmp" type="Texture" id=2]
-
-
-
-
-
+[ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/block64x64-white.bmp" type="Texture" id=2]
 
 [node name="ClifPart" type="Node2D"]
 script = ExtResource( 1 )

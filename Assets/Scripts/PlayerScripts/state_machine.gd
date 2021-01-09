@@ -23,12 +23,15 @@ func _physics_process(delta):
 		sin(host.rotation) * 1,\
 		-cos(host.rotation) * 1\
 	);
+	
+	
 	host.velocity = host.move_and_slide(\
 		host.velocity,\
 		top_collide,\
 		false,\
-		deg2rad(100),\
-		true
+		4,
+		deg2rad(75),\
+		false
 	)
 	states[current_state].animation_step(host, host.animation)
 	if host.player_camera != null:
@@ -42,6 +45,3 @@ func change_state(state_name):
 	previous_state = current_state
 	current_state = state_name
 	states[current_state].enter(host)
-
-func _on_CharAnimation_animation_finished(anim_name):
-	states[current_state]._on_animation_finished(anim_name)

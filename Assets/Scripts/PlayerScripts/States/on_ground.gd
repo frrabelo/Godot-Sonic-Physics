@@ -209,11 +209,9 @@ func _on_CharAnimation_animation_finished(anim_name):
 			if (host.gsp != 0 ||\
 			host.direction.x == -gsp_dir) &&\
 			host.direction.x != 0:
-				print ("BrakeLoop");
 				anim_name = 'PostBrakReturn'
 			elif host.direction.x == 0 ||\
 			host.direction.x == gsp_dir:
-				print ("BackToWalking");
 				is_braking = false;
 				idle_anim = 'Idle';
 			

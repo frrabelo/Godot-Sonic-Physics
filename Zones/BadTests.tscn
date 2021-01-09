@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Zones/Test Zone/Badniks/MotoBug.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scripts/TestZone/Badniks/ChangeSpotMoto.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Zones/Test Zone/BlockGenerator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Zones/Test Zone/topBlock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Zones/Test Zone/blockWCurve.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Zones/Test Zone/BiggerSlope.tscn" type="PackedScene" id=6]
+
+[node name="BadTests" type="Node2D"]
+
+[node name="Badnik" parent="." instance=ExtResource( 1 )]
+position = Vector2( 235, 86 )
+id_badnik = "motobug"
+
+[node name="Camera2D" type="Camera2D" parent="Badnik"]
+position = Vector2( 5, 12 )
+current = true
+
+[node name="ChangeSpot" parent="." instance=ExtResource( 2 )]
+position = Vector2( -111, 340 )
+
+[node name="ChangeSpot2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1024, 336 )
+to_right = false
+
+[node name="ChangeSpot4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 44, 101 )
+
+[node name="BlockGen" parent="." instance=ExtResource( 3 )]
+position = Vector2( 33, 163 )
+size = Vector2( 64, 64 )
+object = ExtResource( 4 )
+columns = 5
+rows = 1
+
+[node name="BlockGen3" parent="." instance=ExtResource( 3 )]
+position = Vector2( -128, 402 )
+size = Vector2( 64, 64 )
+object = ExtResource( 4 )
+columns = 19
+rows = 1
+
+[node name="BlockGen2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 481, 196 )
+size = Vector2( 64, 64 )
+object = ExtResource( 4 )
+columns = 2
+rows = 1
+
+[node name="blockWCurve" parent="BlockGen2" instance=ExtResource( 6 )]
+position = Vector2( 160, 8 )
+
+[node name="BlockGen4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 737, 260 )
+size = Vector2( 64, 64 )
+object = ExtResource( 4 )
+columns = 2
+rows = 1
+
+[node name="blockWCurve" parent="." instance=ExtResource( 5 )]
+position = Vector2( 385, 156 )

@@ -1,0 +1,34 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0002.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0005.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0006.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0000.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0003.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0009.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0013.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0011.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0012.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Scripts/GeneralScripts/TemporaryObject.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0010.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0004.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0007.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0008.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/TileSets/Badniks/Explosion/Explode0001.png" type="Texture" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 12 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "default",
+"speed": 60.0
+} ]
+
+[node name="BadnikDestruct" type="Node2D"]
+script = ExtResource( 10 )
+node_path = "AnimExplosion"
+anim_name = "default"
+
+[node name="AnimExplosion" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+[connection signal="animation_finished" from="AnimExplosion" to="." method="when_anim_ends"]

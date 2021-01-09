@@ -3,9 +3,6 @@
 [ext_resource path="res://Assets/Scripts/GeneralScripts/Spring.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/TileSets/General Objects/RedSprings.png" type="Texture" id=3]
 
-
-
-
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
 region = Rect2( 224, 0, 32, 32 )
@@ -164,6 +161,8 @@ __meta__ = {
 shape = SubResource( 12 )
 
 [node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 25
+collision_mask = 25
 
 [node name="HitBox" type="CollisionShape2D" parent="Body"]
 position = Vector2( 0, 7 )

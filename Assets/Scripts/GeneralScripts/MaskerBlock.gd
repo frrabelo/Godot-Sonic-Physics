@@ -17,10 +17,10 @@ func setLoop(value:int):
 	if $Body/Sprite != null && loop_sprite[collision_layer]:
 		$Body/Sprite.texture = loop_sprite[collision_layer]
 	if $Body != null:
-		$Body.set_collision_layer_bit(0, false);
-		$Body.set_collision_layer_bit(1, false);
-		$Body.set_collision_layer_bit(2, false);
+		for i in range(0, 3):
+			$Body.set_collision_layer_bit(i, false);
+			$Body.set_collision_mask_bit(i, false);
 		$Body.set_collision_layer_bit(collision_layer, true);
-
+		$Body.set_collision_mask_bit(collision_layer, true);
 func getLoop():
 	return collision_layer;
