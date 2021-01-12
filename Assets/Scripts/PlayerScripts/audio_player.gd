@@ -13,7 +13,11 @@ onready var audios = {
 	'peel_out_charge' : $PeelOutCharge,
 	'peel_out_release' : $PeelOutRelease,
 	'insta_shield' : $InstaShield,
-	'ring' : $Ring
+	'ring' : $Ring,
+	'ring_loss': $RingLose,
+	'hurt': $Hurt,
+	'spike_hurt': $SpikeHurt,
+	'hyper_ring': $HyperRing, 
 }
 
 func play(audio_name : String):

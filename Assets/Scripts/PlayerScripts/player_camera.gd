@@ -45,12 +45,12 @@ func camera_step(player : PlayerPhysics, delta : float):
 		vertical_scrolling(player, delta);
 		$CameraScroll/Camera2D.rotating = rotateWithPlayer;
 		if rotateWithPlayer:
-			var playerRot = fmod(player.rotation, 3.14)
+			var playerRot = fmod(player.rotation_degrees, 360)
 			if player.rotation != rotation:
-				rotation = lerp_angle(rotation, player.rotation, 0.25)
-	else:
-		move_local_x((position.y - object_to_stuck.position.y)/4);
-		move_local_x((position.y - object_to_stuck.position.y)/4);
+				var rot = player.rotation_degrees - rotation_degrees;
+				var max_speed = 30;
+				rot = max(min(rot / 5, max_speed), -max_speed) + max(min(rot, 1), -1)
+				rotation_degrees += rot
 
 func horizontal_border(player : PlayerPhysics):
 	if follow:

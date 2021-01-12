@@ -43,7 +43,7 @@ onready var animation = sprite.get_node("CharAnimation");
 onready var audio_player = $AudioPlayer
 onready var main_scene = $"/root/main"
 
-var ring_scene = load("res://Assets/General Objects/Ring.tscn")
+var ring_scene = preload("res://Assets/General Objects/Ring.tscn")
 
 var direction : Vector2 = Vector2.ZERO;
 var gsp : float
@@ -197,7 +197,8 @@ func get_ground_ray():
 	else:
 		return right_ground
 
-func damage():
+func damage(type="normal"):
+	var have_rings:bool = false;
 	emit_signal("damaged");
 	was_damaged = true;
 	invulnerable = true;
@@ -207,29 +208,46 @@ func damage():
 	timer.start(2)
 	timer_ivun_start(.1)
 	if main_scene:
-		var n = false;
-		var droped:int = 32;
-		var droped_rings = droped if (main_scene.ring >= droped) else main_scene.ring;
-		var angle = 101.25
-		var drop_speed = 150;
-		main_scene.ring = 0;
-		drop_rings(droped_rings/2, angle, drop_speed, n);
-		drop_rings(droped_rings/2, angle, drop_speed/2, n);
-
-func drop_rings(quantity:int, angle:float, drop_speed:float, n:bool):
-	for i in quantity:
-		var instance_ring:KinematicBody2D = ring_scene.instance();
-		get_parent().add_child(instance_ring)
-		instance_ring.speed.x = cos(angle) * drop_speed;
-		instance_ring.speed.y = sin(angle) * drop_speed;
-		if n:
-			instance_ring.speed.x *= -1
-			angle += 22.5;
-		n = !n;
-		instance_ring.physical = true
-		instance_ring.position = global_position;
-		instance_ring.pick_box.set_deferred("disabled", was_damaged)
-
+		if main_scene.ring > 0:
+			have_rings = true;
+			var n = false;
+			var droped:int = 32;
+			var droped_rings = droped if (main_scene.ring >= droped) else main_scene.ring;
+			var angle = 101.25
+			var drop_speed = 200;
+			main_scene.ring = 0;
+			var parent = get_parent().get_node("Level")
+			var last_rings = [];
+			for i in droped_rings:
+				var instance_ring:KinematicBody2D = ring_scene.instance();
+				instance_ring.position = global_position;
+				instance_ring.position.y -= 10
+				instance_ring.speed.x = cos(angle) * drop_speed;
+				instance_ring.speed.y = sin(angle) * drop_speed;
+				if n:
+					instance_ring.speed.x *= -1
+					angle += 22.5;
+				n = !n;
+				if i == droped_rings / 2:
+					drop_speed /= 2
+					angle = 101.25
+				instance_ring.physical = true
+				instance_ring.pick_box.set_deferred("disabled", was_damaged)
+				last_rings.append(instance_ring);
+			for c in last_rings:
+				for e in last_rings:
+					c.add_collision_exception_with(e);
+					
+			for r in last_rings:
+				parent.add_child(r);
+	if have_rings:
+		audio_player.play("ring_loss")
+	else:
+		match type:
+			"normal":
+				audio_player.play("hurt");
+			"spike":
+				audio_player.play("spike_hurt")
 func timer_ivun_start(time:float):
 	var timer_ivun = Timer.new();
 	timer_ivun.connect("timeout", self, "toogle_visible", [timer_ivun])
@@ -250,3 +268,9 @@ func toogle_visible(timer:Timer):
 func vunerable_again(timer:Timer):
 	timer.queue_free();
 	invulnerable = false;
+
+func get_class() -> String:
+	return "PlayerPhysics"
+
+func is_class(name:String) -> bool:
+	return name == get_class();
