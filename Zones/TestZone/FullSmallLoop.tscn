@@ -5,7 +5,8 @@
 [ext_resource path="res://Assets/General Objects/MaskSetterBlue.res" type="PackedScene" id=3]
 [ext_resource path="res://Assets/General Objects/MaskSetterInvert.res" type="PackedScene" id=4]
 [ext_resource path="res://Assets/General Objects/MaskSetterRed.res" type="PackedScene" id=6]
-[ext_resource path="res://Zones/Test Zone/SmallLoopPart.res" type="PackedScene" id=7]
+[ext_resource path="res://Zones/TestZone/SmallLoopPart.res" type="PackedScene" id=7]
+
 
 [sub_resource type="StreamTexture" id=1]
 load_path = "res://.import/smallramp.png-f36c8bf4681d5be4a240188022333e40.stex"

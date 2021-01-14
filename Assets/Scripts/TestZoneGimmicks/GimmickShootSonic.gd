@@ -1,5 +1,5 @@
 extends Node2D
-const bullet_scene = preload("res://Zones/Test Zone/BulletImpulsor.tscn");
+const bullet_scene = preload("res://Zones/TestZone/BulletImpulsor.tscn");
 
 func _on_Area_body_entered(body):
 	if body.name == "Player":

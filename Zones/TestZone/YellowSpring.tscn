@@ -2,7 +2,8 @@
 
 [ext_resource path="res://Assets/Scripts/GeneralScripts/Spring.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/TileSets/General Objects/YellowSprings.png" type="Texture" id=2]
-[ext_resource path="res://Zones/Test Zone/SpringCollisions.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Zones/TestZone/SpringCollisions.tscn" type="PackedScene" id=3]
+
 
 
 

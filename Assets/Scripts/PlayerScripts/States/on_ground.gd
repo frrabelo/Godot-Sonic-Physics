@@ -144,10 +144,16 @@ func animation_step(host, animator):
 			anim_name = 'Rolling'
 			anim_speed = -((5.0 / 60.0) - (abs(host.gsp) / 120.0))
 		else:
-			if abs(host.rotation_degrees) < 45:
-				host.character.global_rotation = 0
+			var host_char = host.character
+			var char_rotation = host_char.rotation_degrees;
+			var host_rotation = host.rotation_degrees
+			var abs_crot = abs(host_rotation)
+			if abs_crot < 20:
+				if abs_crot < 10:
+					host_char.global_rotation = 0;
+				host_char.rotation_degrees += host.smooth_rotate(char_rotation, -host_rotation, 1.0)
 			else:
-				host.character.rotation += lerp_angle(host.character.rotation, 0, 1.5);
+				host_char.rotation_degrees += host.smooth_rotate(char_rotation, 0, 360.0)
 			anim_speed = max(-(8.0 / 60.0 - (abs_gsp / 120.0)), 1.0)
 		
 		

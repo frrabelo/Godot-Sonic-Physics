@@ -1,52 +1,53 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://Assets/Scripts/GeneralScripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Assets/General Objects/Player/PlayerCamera.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/General Objects/Player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Zones/Test Zone/FullLoop.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Zones/Test Zone/FullCircle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Zones/Test Zone/blockMaker.gd" type="Script" id=6]
-[ext_resource path="res://Zones/Test Zone/LoopBlockBlue.res" type="PackedScene" id=7]
+[ext_resource path="res://Assets/General Objects/Player/PlayerObj.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Zones/TestZone/FullLoop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Zones/TestZone/FullCircle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Scripts/GeneralScripts/blockMaker.gd" type="Script" id=6]
+[ext_resource path="res://Zones/TestZone/LoopBlockBlue.res" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Sprites/TileSets/TestZone/Background 1.png" type="Texture" id=8]
 [ext_resource path="res://Assets/General Objects/MaskSetterBlue.res" type="PackedScene" id=9]
 [ext_resource path="res://Assets/General Objects/MaskSetterRed.res" type="PackedScene" id=10]
 [ext_resource path="res://Assets/General Objects/MaskSetterInvert.res" type="PackedScene" id=11]
-[ext_resource path="res://Zones/Test Zone/LoopBlockRed.res" type="PackedScene" id=12]
+[ext_resource path="res://Zones/TestZone/LoopBlockRed.res" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Sprites/TileSets/TestZone/Background 2.png" type="Texture" id=13]
-[ext_resource path="res://Zones/Test Zone/blockWCurve.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Zones/Test Zone/BiggerSlope.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Zones/TestZone/blockWCurve.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Zones/TestZone/BiggerSlope.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Assets/Classes/AudioChain.gd" type="Script" id=16]
 [ext_resource path="res://Assets/Audio/musics/07 Endless Mine Loop.ogg" type="AudioStream" id=17]
-[ext_resource path="res://Zones/Test Zone/RedSpring.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Zones/TestZone/RedSpring.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Assets/Audio/musics/07 Endless MineBegin.ogg" type="AudioStream" id=19]
-[ext_resource path="res://Zones/Test Zone/FullCircleWLine.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Zones/TestZone/FullCircleWLine.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/block64x64_top.bmp" type="Texture" id=21]
-[ext_resource path="res://Zones/Test Zone/topBlock.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Zones/Test Zone/loop_part.res" type="PackedScene" id=23]
-[ext_resource path="res://Zones/Test Zone/BreakableBlock.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Zones/Test Zone/FullSmallLoop.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Zones/TestZone/topBlock.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Zones/TestZone/loop_part.res" type="PackedScene" id=23]
+[ext_resource path="res://Zones/TestZone/BreakableBlock.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Zones/TestZone/FullSmallLoop.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/DecorationBlock.png" type="Texture" id=26]
-[ext_resource path="res://Zones/Test Zone/CirclePartWithLine.tscn" type="PackedScene" id=27]
-[ext_resource path="res://Zones/Test Zone/YellowSpring.tscn" type="PackedScene" id=28]
-[ext_resource path="res://Zones/Test Zone/block.tscn" type="PackedScene" id=29]
-[ext_resource path="res://Zones/Test Zone/GimmickShootSonic.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Zones/TestZone/CirclePartWithLine.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Zones/TestZone/YellowSpring.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Zones/TestZone/block.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Zones/TestZone/GimmickShootSonic.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Assets/Scripts/GeneralScripts/OneWayPlatform.gd" type="Script" id=31]
-[ext_resource path="res://Zones/Test Zone/Clif.tscn" type="PackedScene" id=32]
-[ext_resource path="res://Zones/Test Zone/Badniks/MotoBug.tscn" type="PackedScene" id=33]
-[ext_resource path="res://Zones/Test Zone/BlockGenerator.tscn" type="PackedScene" id=34]
-[ext_resource path="res://Zones/Test Zone/RedSpringFromSolid.tscn" type="PackedScene" id=35]
+[ext_resource path="res://Zones/TestZone/Clif.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Zones/TestZone/Badniks/MotoBug.tscn" type="PackedScene" id=33]
+[ext_resource path="res://Zones/TestZone/BlockGenerator.tscn" type="PackedScene" id=34]
+[ext_resource path="res://Zones/TestZone/RedSpringFromSolid.tscn" type="PackedScene" id=35]
 [ext_resource path="res://Assets/General Objects/Ring.tscn" type="PackedScene" id=36]
-[ext_resource path="res://Zones/Test Zone/Platform.tscn" type="PackedScene" id=37]
-[ext_resource path="res://Zones/Test Zone/Fan.tscn" type="PackedScene" id=38]
-[ext_resource path="res://Assets/Scripts/TestZone/Badniks/ChangeSpotMoto.tscn" type="PackedScene" id=39]
-[ext_resource path="res://Zones/Test Zone/FanFromWall.tscn" type="PackedScene" id=40]
+[ext_resource path="res://Zones/TestZone/Platform.tscn" type="PackedScene" id=37]
+[ext_resource path="res://Zones/TestZone/Fan.tscn" type="PackedScene" id=38]
+[ext_resource path="res://Zones/TestZone/Badniks/ChangeSpotMoto.tscn" type="PackedScene" id=39]
+[ext_resource path="res://Zones/TestZone/FanFromWall.tscn" type="PackedScene" id=40]
 [ext_resource path="res://Assets/Audio/sfx/Cliff break.wav" type="AudioStream" id=41]
 [ext_resource path="res://Assets/3DModels/EmeraldRingIn2D.tscn" type="PackedScene" id=42]
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/chr007.png" type="Texture" id=43]
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/chr008.png" type="Texture" id=44]
 [ext_resource path="res://Assets/Audio/sfx/Destroy.wav" type="AudioStream" id=45]
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/block64x64_top_purple.bmp" type="Texture" id=46]
-[ext_resource path="res://Zones/Test Zone/RotateCamTrigger.tscn" type="PackedScene" id=47]
+[ext_resource path="res://Zones/TestZone/RotateCamTrigger.tscn" type="PackedScene" id=47]
+[ext_resource path="res://Assets/Scripts/BGParallaxExtension.gd" type="Script" id=48]
 
 [sub_resource type="StreamTexture" id=1]
 load_path = "res://.import/chr006.png-c88cd651f1d86059415b98ab1a2a1d1e.stex"
@@ -71,8 +72,10 @@ __meta__ = {
 scroll_offset = Vector2( 300, 300 )
 scroll_limit_begin = Vector2( -5000, 5000 )
 scroll_limit_end = Vector2( 5000, 5000 )
+scroll_ignore_camera_zoom = true
+script = ExtResource( 48 )
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="BG/BGParallax"]
+[node name="Base" type="ParallaxLayer" parent="BG/BGParallax"]
 motion_scale = Vector2( 0.025, 0.1 )
 motion_offset = Vector2( -500, 0 )
 motion_mirroring = Vector2( 760, 0 )
@@ -80,10 +83,10 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="BG/BGParallax/ParallaxLayer"]
+[node name="BG1" type="Sprite" parent="BG/BGParallax/Base"]
 texture = ExtResource( 8 )
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="BG/BGParallax"]
+[node name="LayerBack" type="ParallaxLayer" parent="BG/BGParallax"]
 position = Vector2( 384, 64 )
 motion_scale = Vector2( 0.1, 0.3 )
 motion_offset = Vector2( -500, 0 )
@@ -92,10 +95,10 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="BG/BGParallax/ParallaxLayer2"]
+[node name="Sprite" type="Sprite" parent="BG/BGParallax/LayerBack"]
 texture = ExtResource( 13 )
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="BG/BGParallax"]
+[node name="LayerBack2" type="ParallaxLayer" parent="BG/BGParallax"]
 position = Vector2( 385, 67 )
 motion_scale = Vector2( 0.3, 0.5 )
 motion_offset = Vector2( -500, 300 )
@@ -104,14 +107,15 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="BG/BGParallax/ParallaxLayer3"]
+[node name="Sprite" type="Sprite" parent="BG/BGParallax/LayerBack2"]
 texture = ExtResource( 13 )
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 2 )]
+vertical_offset = 0.0
 rotateWithPlayer = false
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 70, 348 )
+position = Vector2( 81, 348 )
 
 [node name="BackDecorations" type="Node2D" parent="."]
 z_index = -10
@@ -203,9 +207,6 @@ position = Vector2( -20, -18 )
 texture = ExtResource( 26 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 5000, 2000 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="BGCave5" type="Sprite" parent="BackDecorations/BGCave"]
 position = Vector2( 392, -1026 )
@@ -367,10 +368,10 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 144, 128 )
 
 [node name="BG16" type="Sprite" parent="BackDecorations/Bacj2"]
-position = Vector2( 95, -15 )
+position = Vector2( 95, 1 )
 texture = ExtResource( 26 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 288, 176 )
+region_rect = Rect2( 0, 0, 288, 192 )
 
 [node name="BG17" type="Sprite" parent="BackDecorations/Bacj2"]
 position = Vector2( -121, 3 )
@@ -423,13 +424,13 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="BG32" type="Sprite" parent="BackDecorations/Bacj2"]
-position = Vector2( -377, 87 )
+position = Vector2( -377, 88 )
 texture = ExtResource( 26 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="BG33" type="Sprite" parent="BackDecorations/Bacj2"]
-position = Vector2( -393, 87 )
+position = Vector2( -393, 88 )
 texture = ExtResource( 26 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -562,21 +563,27 @@ __meta__ = {
 
 [node name="FullLoop" type="Node2D" parent="Level"]
 position = Vector2( 1248, 464 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="loop_part" parent="Level/FullLoop" instance=ExtResource( 23 )]
 position = Vector2( -56, -56 )
-rotation = 1.5708
+rotation = 1.5697
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part2" parent="Level/FullLoop" instance=ExtResource( 23 )]
 position = Vector2( 56, -56 )
 rotation = 3.14159
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part3" parent="Level/FullLoop" instance=ExtResource( 23 )]
 position = Vector2( 56, 56 )
 rotation = 4.71239
 z_index = 2
+collision_layer = 0
 
 [node name="LoopBlockBlue" parent="Level/FullLoop" instance=ExtResource( 7 )]
 position = Vector2( -128, 64 )
@@ -736,49 +743,60 @@ position = Vector2( 1360, 288 )
 [node name="loop_part4" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 1192, 824 )
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part14" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 1464, 1720 )
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part16" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4424, 1720 )
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part20" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 5304, 888 )
 rotation = 4.71239
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part21" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 5304, 776 )
 rotation = 3.14159
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part27" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 5064, 504 )
 rotation = 3.14159
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part28" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4712, 536 )
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part17" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4280, 1720 )
 rotation = 4.71239
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part15" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 1464, 1352 )
 rotation = 1.5708
 z_index = 2
+collision_layer = 0
 
 [node name="block208" parent="Level" instance=ExtResource( 29 )]
 position = Vector2( 1120, 368 )
 
 [node name="YellowSpring" parent="Level" instance=ExtResource( 28 )]
 position = Vector2( 3698, -382 )
+direction = 0
+push_force = 500
 
 [node name="MaskSetterBlue3" parent="Level" instance=ExtResource( 9 )]
 position = Vector2( 2978, 1267 )
@@ -804,78 +822,96 @@ position = Vector2( 2944, 872 )
 position = Vector2( 3224, 824 )
 rotation = 4.71239
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part6" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3256, 1368 )
 rotation = 4.71239
+collision_layer = 0
 
 [node name="loop_part26" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3048, 1400 )
+collision_layer = 0
 
 [node name="loop_part22" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3448, 1272 )
 rotation = 4.71239
+collision_layer = 0
 
 [node name="loop_part23" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3448, 1000 )
 rotation = 3.14159
+collision_layer = 0
 
 [node name="loop_part24" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 2632, 1256 )
 rotation = 1.5708
+collision_layer = 0
 
 [node name="loop_part25" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 2904, 1352 )
 rotation = 4.71239
+collision_layer = 0
 
 [node name="loop_part5" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 2952, 984 )
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part3" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4120, -184 )
 rotation = 4.71239
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part12" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4968, -216 )
 z_index = 3
+collision_layer = 0
 
 [node name="loop_part13" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 5080, -216 )
 rotation = 4.71239
 z_index = 3
+collision_layer = 0
 
 [node name="loop_part7" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3944, -88 )
 rotation = 4.71239
+collision_layer = 0
 
 [node name="loop_part8" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3848, 680 )
 rotation = 4.71239
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part29" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3880, 984 )
 rotation = 1.5708
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part30" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 4568, 984 )
 rotation = 3.14159
 z_index = 1
+collision_layer = 0
 
 [node name="loop_part9" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3848, 568 )
 rotation = 3.14159
+collision_layer = 0
 
 [node name="loop_part10" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3848, 296 )
 rotation = 4.71239
+collision_layer = 0
 
 [node name="loop_part11" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3848, 184 )
 rotation = 3.14159
+collision_layer = 0
 
 [node name="block8" parent="Level" instance=ExtResource( 14 )]
 position = Vector2( 1632, 856 )
@@ -952,6 +988,7 @@ position = Vector2( 3040, -337 )
 
 [node name="loop_part" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 760, 504 )
+collision_layer = 0
 
 [node name="loop_part19" parent="Level" instance=ExtResource( 23 )]
 position = Vector2( 3048, 1256 )
@@ -968,6 +1005,7 @@ collision_layer = 1
 
 [node name="RedSpring3" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 2557, 848 )
+direction = 0
 
 [node name="RedSpring9" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 4928, 463 )
@@ -976,9 +1014,11 @@ direction = 2
 
 [node name="RedSpring8" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 3952, 1508 )
+direction = 0
 
 [node name="RedSpring4" parent="Level" instance=ExtResource( 18 )]
-position = Vector2( 1617, 290 )
+position = Vector2( 1617, 289 )
+direction = 0
 
 [node name="RedSpring7" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 1083, 59 )
@@ -987,6 +1027,7 @@ direction = 1
 
 [node name="RedSpring6" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 4016, -142 )
+direction = 0
 
 [node name="RedSpring5" parent="Level" instance=ExtResource( 18 )]
 position = Vector2( 1488, 848 )
@@ -1071,10 +1112,12 @@ rows = 2
 position = Vector2( -136, 40 )
 rotation = -1.5708
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part6" parent="Level/Ramp" instance=ExtResource( 23 )]
 position = Vector2( 136, 40 )
 z_index = 2
+collision_layer = 0
 
 [node name="Ramp2" type="Node2D" parent="Level"]
 position = Vector2( 5648, -352 )
@@ -1107,10 +1150,12 @@ rows = 2
 position = Vector2( -136, 40 )
 rotation = -1.5708
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part6" parent="Level/Ramp2" instance=ExtResource( 23 )]
 position = Vector2( 136, 40 )
 z_index = 2
+collision_layer = 0
 
 [node name="Ramp3" type="Node2D" parent="Level"]
 position = Vector2( 6032, -352 )
@@ -1143,10 +1188,12 @@ rows = 2
 position = Vector2( -136, 40 )
 rotation = -1.5708
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part6" parent="Level/Ramp3" instance=ExtResource( 23 )]
 position = Vector2( 136, 40 )
 z_index = 2
+collision_layer = 0
 
 [node name="Ramp4" type="Node2D" parent="Level"]
 position = Vector2( 6416, -352 )
@@ -1179,10 +1226,12 @@ rows = 2
 position = Vector2( -136, 40 )
 rotation = -1.5708
 z_index = 2
+collision_layer = 0
 
 [node name="loop_part6" parent="Level/Ramp4" instance=ExtResource( 23 )]
 position = Vector2( 136, 40 )
 z_index = 2
+collision_layer = 0
 
 [node name="BlockGen" parent="Level" instance=ExtResource( 34 )]
 position = Vector2( 32, 464 )
@@ -2007,6 +2056,7 @@ rows = 2
 [node name="loop_part" parent="Level/GreatLoop" instance=ExtResource( 23 )]
 position = Vector2( -56, -152 )
 rotation = 1.5708
+collision_layer = 0
 
 [node name="loop_part3" parent="Level/GreatLoop" instance=ExtResource( 23 )]
 position = Vector2( -56, 136 )
@@ -2015,6 +2065,7 @@ collision_layer = 1
 [node name="loop_part2" parent="Level/GreatLoop" instance=ExtResource( 23 )]
 position = Vector2( 56, -152 )
 rotation = 3.14159
+collision_layer = 0
 
 [node name="BallLoop" type="Node2D" parent="Level"]
 position = Vector2( 3088, 143 )
@@ -2137,6 +2188,7 @@ position = Vector2( 4816, 1748 )
 [node name="FromWall" parent="Level" instance=ExtResource( 40 )]
 position = Vector2( 4848, 1572 )
 z_index = 1
+quantity = 1
 triggers_x = -128.0
 triggers_w = 112.0
 
@@ -2173,13 +2225,8 @@ position = Vector2( 96, 400 )
 
 [node name="MotoBug" type="Node2D" parent="Level"]
 position = Vector2( 2765, 848 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Badnik" parent="Level/MotoBug" instance=ExtResource( 33 )]
-max_speed = Vector2( 50, 0 )
-id_badnik = "motobug"
 
 [node name="ChangeSpot" parent="Level/MotoBug" instance=ExtResource( 39 )]
 position = Vector2( 124, -13 )
@@ -2192,44 +2239,18 @@ position = Vector2( -135, -15 )
 collision_layer = 8
 collision_mask = 8
 
-[node name="MotoBug2" type="Node2D" parent="Level"]
-position = Vector2( 461, 352 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Badnik" parent="Level/MotoBug2" instance=ExtResource( 33 )]
-max_speed = Vector2( 50, 0 )
-id_badnik = "motobug"
-
-[node name="ChangeSpot" parent="Level/MotoBug2" instance=ExtResource( 39 )]
-position = Vector2( 124, -13 )
-collision_layer = 8
-collision_mask = 8
-to_right = false
-
-[node name="ChangeSpot2" parent="Level/MotoBug2" instance=ExtResource( 39 )]
-position = Vector2( -135, -15 )
-collision_layer = 8
-collision_mask = 8
-
 [node name="EmeraldRingIn2D" parent="Level" instance=ExtResource( 42 )]
 position = Vector2( 4366, 1120 )
 
 [node name="RotateCamTrigger" parent="Level" instance=ExtResource( 47 )]
-position = Vector2( 998, -69 )
-rotate_cam = true
-
-[node name="RotateCamTrigger2" parent="Level" instance=ExtResource( 47 )]
-position = Vector2( 1125, 59 )
+position = Vector2( 997, 57 )
+inverse = false
 
 [node name="ForeDecoration" type="Node2D" parent="."]
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
-
-[node name="Sprite" type="Sprite" parent="ForeDecoration"]
 
 [node name="LevelSFX" type="Node" parent="."]
 

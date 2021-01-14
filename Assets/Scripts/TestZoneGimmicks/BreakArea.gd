@@ -1,5 +1,5 @@
 extends Node2D
-const block_scene = preload("res://Zones/Test Zone/Breaked.tscn");
+const block_scene = preload("res://Zones/TestZone/Breaked.tscn");
 onready var breakingSound:AudioStreamPlayer = $"/root/main/LevelSFX/WallBreak";
 onready var hitBox = $"Body/HitBox"
 onready var player = $"../../Player"

@@ -17,12 +17,12 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Badnik",
 "language": "GDScript",
-"path": "res://Assets/Scripts/TestZone/Badniks/Badnik.gd"
+"path": "res://Assets/Scripts/TestZoneScripts/Badniks/Badnik.gd"
 }, {
 "base": "Node2D",
 "class": "BlockGen",
 "language": "GDScript",
-"path": "res://Zones/Test Zone/blockMaker.gd"
+"path": "res://Assets/Scripts/GeneralScripts/blockMaker.gd"
 }, {
 "base": "AnimationPlayer",
 "class": "CharacterAnimator",
@@ -93,7 +93,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Global="*res://Assets/Scripts/GeneralScripts/Global.gd"
+Global="res://Assets/Classes/GlobalScript.gd"
 
 [display]
 

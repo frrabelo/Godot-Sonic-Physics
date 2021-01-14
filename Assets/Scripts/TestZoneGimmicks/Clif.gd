@@ -1,7 +1,7 @@
 extends Node2D
 
 var timer:Timer;
-var block:PackedScene = preload("res://Zones/Test Zone/ClifPart.tscn");
+var block:PackedScene = preload("res://Zones/TestZone/ClifPart.tscn");
 
 func _on_Area_body_entered(body):
 	if (body.name == "Player"):

@@ -15,7 +15,8 @@
 [ext_resource path="res://Assets/Sprites/TileSets/Badniks/Motobug/Flipping/flipping0004.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sprites/TileSets/Badniks/Motobug/Moving/moving0008.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Sprites/TileSets/Badniks/Motobug/Flipping/flipping0002.png" type="Texture" id=15]
-[ext_resource path="res://Assets/Scripts/TestZone/Badniks/Motobug.gd" type="Script" id=16]
+[ext_resource path="res://Assets/Scripts/TestZoneScripts/Badniks/Motobug.gd" type="Script" id=16]
+
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {

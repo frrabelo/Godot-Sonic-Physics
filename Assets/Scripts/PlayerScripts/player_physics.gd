@@ -197,7 +197,7 @@ func get_ground_ray():
 	else:
 		return right_ground
 
-func damage(type="normal"):
+func damage(sound_to_play:String = "hurt"):
 	var have_rings:bool = false;
 	emit_signal("damaged");
 	was_damaged = true;
@@ -208,46 +208,52 @@ func damage(type="normal"):
 	timer.start(2)
 	timer_ivun_start(.1)
 	if main_scene:
-		if main_scene.ring > 0:
-			have_rings = true;
-			var n = false;
-			var droped:int = 32;
-			var droped_rings = droped if (main_scene.ring >= droped) else main_scene.ring;
-			var angle = 101.25
-			var drop_speed = 200;
-			main_scene.ring = 0;
-			var parent = get_parent().get_node("Level")
-			var last_rings = [];
-			for i in droped_rings:
-				var instance_ring:KinematicBody2D = ring_scene.instance();
-				instance_ring.position = global_position;
-				instance_ring.position.y -= 10
-				instance_ring.speed.x = cos(angle) * drop_speed;
-				instance_ring.speed.y = sin(angle) * drop_speed;
-				if n:
-					instance_ring.speed.x *= -1
-					angle += 22.5;
-				n = !n;
-				if i == droped_rings / 2:
-					drop_speed /= 2
-					angle = 101.25
-				instance_ring.physical = true
-				instance_ring.pick_box.set_deferred("disabled", was_damaged)
-				last_rings.append(instance_ring);
-			for c in last_rings:
-				for e in last_rings:
-					c.add_collision_exception_with(e);
-					
-			for r in last_rings:
-				parent.add_child(r);
+		var rings = main_scene.ring
+		main_scene.ring = 0;
+		if rings > 0:
+			have_rings = true
+			drop_rings(rings);
 	if have_rings:
 		audio_player.play("ring_loss")
 	else:
-		match type:
-			"normal":
-				audio_player.play("hurt");
-			"spike":
-				audio_player.play("spike_hurt")
+		audio_player.play(sound_to_play)
+
+func drop_rings(rings:int = 0):
+	var n = false;
+	var drop_max:int = 32;
+	var drop_real:int = min(drop_max, rings); 
+	var angle = 101.25
+	var drop_speed = 200;
+	var parent = get_parent().get_node("Level")
+	var last_rings:Array = [];
+		
+	# Add all rings instances to last_rings
+	for i in drop_real:
+		var instance_ring:KinematicBody2D = ring_scene.instance();
+		instance_ring.position = global_position;
+		instance_ring.position.y -= 10
+		instance_ring.speed.x = cos(angle) * drop_speed;
+		instance_ring.speed.y = sin(angle) * drop_speed;
+		if n:
+			instance_ring.speed.x *= -1
+			angle += 22.5;
+		n = !n;
+		if i == drop_real / 2:
+			drop_speed /= 2
+			angle = 101.25
+		instance_ring.physical = true
+		instance_ring.pick_box.set_deferred("disabled", was_damaged)
+		last_rings.append(instance_ring);
+		
+	# Make all rings ignore each other collisions
+	for c in last_rings:
+		for e in last_rings:
+			c.add_collision_exception_with(e);
+		
+	# Add all rings on level
+	for r in last_rings:
+		parent.add_child(r);
+
 func timer_ivun_start(time:float):
 	var timer_ivun = Timer.new();
 	timer_ivun.connect("timeout", self, "toogle_visible", [timer_ivun])
@@ -274,3 +280,10 @@ func get_class() -> String:
 
 func is_class(name:String) -> bool:
 	return name == get_class();
+
+func smooth_rotate(from:float, to:float, max_speed:float) -> float:
+	if from == null || to == null || max_speed == null:
+		return 0.0;
+	var rot = to - from;
+	rot = max(min(rot / 5, max_speed), -max_speed) + max(min(rot, 1), -1)
+	return rot;

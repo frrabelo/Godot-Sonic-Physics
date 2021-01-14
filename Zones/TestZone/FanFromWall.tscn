@@ -2,7 +2,8 @@
 
 [ext_resource path="res://Assets/Sprites/TileSets/Template Tileset/chr011.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Scripts/TestZoneGimmicks/FromWall.gd" type="Script" id=4]
-[ext_resource path="res://Zones/Test Zone/Fan.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Zones/TestZone/Fan.tscn" type="PackedScene" id=5]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 100, 90 )

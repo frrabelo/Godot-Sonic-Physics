@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Zones/Test Zone/CirclePartWithLine.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Zones/TestZone/CirclePartWithLine.tscn" type="PackedScene" id=2]
+
 
 
 [node name="FullCircleStand" type="Node2D"]
