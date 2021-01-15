@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game_assets/game_sprites/levels_sprites/test_zone_assets/test_zone_gimmicks_sprites/speed_booster_sprite.png" type="Texture" id=1]
+[ext_resource path="res://game_assets/game_scripts/test_zone_scripts/gimmicks_scripts/GimmickShootSonic.gd" type="Script" id=2]
+[ext_resource path="res://zones/test_zone_objects/speed_booster_bullet_object.tscn" type="PackedScene" id=3]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 4 )
+
+[node name="SonicBooster" type="Node2D"]
+script = ExtResource( 2 )
+bullet_scene = ExtResource( 3 )
+
+[node name="Area" type="Area2D" parent="."]
+visible = false
+
+[node name="AreaCollide" type="CollisionShape2D" parent="Area"]
+position = Vector2( 0, 2 )
+shape = SubResource( 1 )
+
+[node name="Base" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_rect = Rect2( 606, 1974, 64, 24 )
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

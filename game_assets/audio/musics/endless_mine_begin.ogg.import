@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/endless_mine_begin.ogg-28367ae58490f598fc073cece3c0de46.oggstr"
+
+[deps]
+
+source_file="res://game_assets/audio/musics/endless_mine_begin.ogg"
+dest_files=[ "res://.import/endless_mine_begin.ogg-28367ae58490f598fc073cece3c0de46.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

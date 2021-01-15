@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ring_catch.wav-2fb57d5ba01c455c603aeac2562ce550.sample"
+
+[deps]
+
+source_file="res://game_assets/audio/sfx/ring_catch.wav"
+dest_files=[ "res://.import/ring_catch.wav-2fb57d5ba01c455c603aeac2562ce550.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
