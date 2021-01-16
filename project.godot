@@ -12,57 +12,57 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "AudioPlayer",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/player_scripts/audio_player.gd"
+"path": "res://game-assets/game-scripts/player-scripts/audio-player.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Badnik",
 "language": "GDScript",
-"path": "res://game_assets/game_classes/badnik_script.gd"
+"path": "res://game-assets/game-classes/badnik-script.gd"
 }, {
 "base": "Node2D",
 "class": "BlockGen",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/general_scripts/block_generator_script.gd"
+"path": "res://game-assets/game-scripts/general-scripts/block-generator-script.gd"
 }, {
 "base": "AnimationPlayer",
 "class": "CharacterAnimator",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/player_scripts/character_animator.gd"
+"path": "res://game-assets/game-scripts/player-scripts/character-animator.gd"
 }, {
 "base": "SpriteFrames",
 "class": "ImprovedSpriteFrames",
 "language": "GDScript",
-"path": "res://game_assets/game_classes/improved_sprite_frames_scripts.gd"
+"path": "res://game-assets/game-classes/improved-sprite-frames-scripts.gd"
 }, {
 "base": "Node2D",
 "class": "NumCounter",
 "language": "GDScript",
-"path": "res://game_assets/game_classes/NumDigit.gd"
+"path": "res://game-assets/game-classes/num-digit.gd"
 }, {
 "base": "Node2D",
 "class": "PlayerCamera",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/player_scripts/player_camera.gd"
+"path": "res://game-assets/game-scripts/player-scripts/player-camera.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PlayerPhysics",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/player_scripts/player_physics.gd"
+"path": "res://game-assets/game-scripts/player-scripts/player-physics.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Ring",
 "language": "GDScript",
-"path": "res://game_assets/game_classes/ring_script.gd"
+"path": "res://game-assets/game-classes/ring-script.gd"
 }, {
 "base": "AudioStreamPlayer",
 "class": "SFXPlayer",
 "language": "GDScript",
-"path": "res://game_assets/game_classes/sfx_player.gd"
+"path": "res://game-assets/game-classes/sfx-player.gd"
 }, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
-"path": "res://game_assets/game_scripts/player_scripts/state.gd"
+"path": "res://game-assets/game-scripts/player-scripts/state.gd"
 } ]
 _global_script_class_icons={
 "AudioPlayer": "",
@@ -81,13 +81,10 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot the Hedgehog"
-run/main_scene="res://zones/test_zone_act_1_scene.tscn"
+run/main_scene="res://zones/test-zone-act-1-scene.tscn"
+config/use_custom_user_dir=true
 boot_splash/fullsize=false
 config/icon="res://icon.png"
-
-[autoload]
-
-Global="res://game_assets/game_classes/global_script.gd"
 
 [debug]
 
@@ -188,4 +185,4 @@ ui_jump={
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://default-env.tres"

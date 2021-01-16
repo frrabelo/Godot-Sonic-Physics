@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/spring-from-wall-script.gd" type="Script" id=1]
+[ext_resource path="res://zones/test-zone-objects/red-spring-object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/spring-platform-from-wall-sprite.png" type="Texture" id=3]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 120 )
+
+[node name="RedSpringFromSolid" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+trigger_position = 0.0
+trigger_width = 10.0
+final_angle = 0.0
+
+[node name="SpPlat" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Platform" type="Sprite" parent="SpPlat"]
+position = Vector2( -16, 16 )
+rotation = -1.5708
+texture = ExtResource( 3 )
+region_rect = Rect2( 1076, 2562, 32, 32 )
+
+[node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
+position = Vector2( -16, -16 )
+
+[node name="ShowTrigger" type="Area2D" parent="."]
+position = Vector2( 0, -80 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="CollisionTrigger" type="CollisionShape2D" parent="ShowTrigger"]
+shape = SubResource( 1 )
+[connection signal="script_changed" from="." to="." method="_on_RedSpringFromSolid_script_changed"]
+[connection signal="body_entered" from="ShowTrigger" to="." method="_on_ShowTrigger_body_entered"]
+[connection signal="body_exited" from="ShowTrigger" to="." method="_on_ShowTrigger_body_exited"]

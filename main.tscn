@@ -1,11 +1,18 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://game_assets/game_sprites/logo_sprites/SEGA.png" type="Texture" id=1]
-[ext_resource path="res://game_assets/audio/sfx/sega_spelling.wav" type="AudioStream" id=2]
-[ext_resource path="res://game_assets/game_scripts/general_scripts/presentation_screen.gd" type="Script" id=3]
-[ext_resource path="res://game_assets/game_fonts/sonic-hud-font.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://game_assets/game_sprites/logo_sprites/SonicWorlds.png" type="Texture" id=5]
-[ext_resource path="res://game_assets/game_sprites/logo_sprites/github.png" type="Texture" id=6]
+[ext_resource path="res://game-assets/game-sprites/logo-sprites/retro-sega-logo.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/audio/sfx/sega-spelling.wav" type="AudioStream" id=2]
+[ext_resource path="res://game-assets/game-scripts/general-scripts/presentation-screen.gd" type="Script" id=3]
+[ext_resource path="res://game-assets/game-fonts/sonic-hud-font.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://game-assets/game-sprites/logo-sprites/sonic-worlds-logo.png" type="Texture" id=5]
+[ext_resource path="res://game-assets/game-sprites/logo-sprites/github-logo.png" type="Texture" id=6]
+
+
+
+
+
+
+
 
 
 

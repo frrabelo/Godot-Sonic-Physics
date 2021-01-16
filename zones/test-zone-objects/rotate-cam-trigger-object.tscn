@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/rotate-cam-trigger-script.gd" type="Script" id=1]
+
+
+
+
+
+
+
+
+
+
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 100.0
+
+[node name="RotateCamTrigger" type="Area2D"]
+script = ExtResource( 1 )
+radius = 100.0
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_RotateCamTrigger_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_RotateCamTrigger_body_exited"]
+[connection signal="script_changed" from="." to="." method="_prepare"]
+[connection signal="tree_entered" from="." to="." method="_prepare"]
