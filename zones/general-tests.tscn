@@ -1,53 +1,18 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://zones/test-zone-objects/badnik-objects/motobug-object.tscn" type="PackedScene" id=1]
-[ext_resource path="res://zones/test-zone-objects/badnik-objects/motobug-side-switch.tscn" type="PackedScene" id=2]
+[ext_resource path="res://general-objects/players-objects/another-player-test.tscn" type="PackedScene" id=1]
 [ext_resource path="res://zones/test-zone-objects/block-generator-object.tscn" type="PackedScene" id=3]
 [ext_resource path="res://zones/test-zone-objects/top-block-object.tscn" type="PackedScene" id=4]
 [ext_resource path="res://zones/test-zone-objects/block-with-slope-object.tscn" type="PackedScene" id=5]
 [ext_resource path="res://zones/test-zone-objects/bigger-slope.tscn" type="PackedScene" id=6]
-[ext_resource path="res://general-objects/ring-object.tscn" type="PackedScene" id=7]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 [node name="BadTests" type="Node2D"]
 
-[node name="Badnik" parent="." instance=ExtResource( 1 )]
-position = Vector2( 235, 86 )
-id_badnik = "motobug"
+[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 235, 43 )
 
-[node name="ChangeSpot" parent="." instance=ExtResource( 2 )]
-position = Vector2( -111, 340 )
-
-[node name="ChangeSpot2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1024, 336 )
-to_right = false
-
-[node name="ChangeSpot4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 44, 101 )
+[node name="Camera2D" type="Camera2D" parent="KinematicBody2D"]
+current = true
 
 [node name="BlockGen" parent="." instance=ExtResource( 3 )]
 position = Vector2( 33, 163 )
@@ -96,10 +61,3 @@ rows = 1
 
 [node name="blockWCurve" parent="." instance=ExtResource( 5 )]
 position = Vector2( 385, 156 )
-
-[node name="Ring" parent="." instance=ExtResource( 7 )]
-position = Vector2( 614, 70 )
-physical = true
-
-[node name="Camera2D" type="Camera2D" parent="Ring"]
-current = true

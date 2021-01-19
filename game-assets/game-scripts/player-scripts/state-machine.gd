@@ -33,6 +33,7 @@ func _physics_process(delta):
 		deg2rad(75),\
 		false
 	)
+	
 	states[current_state].animation_step(host, host.animation)
 	if host.player_camera != null:
 		host.player_camera.camera_step(host, delta)

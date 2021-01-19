@@ -159,12 +159,13 @@ func animation_step(host, animator):
 		
 		if (host.gsp < 250 && host.gsp > -250) && !host.is_rolling:
 			host.character.scale.x = host.direction.x\
-									if (host.direction.x != 0) else\
-										host.character.scale.x;
+			if (host.direction.x != 0) else\
+				host.character.scale.x;
 		else:
-			host.character.scale.x = (int(host.gsp > 0) - int(host.gsp < 0))\
-									if (host.gsp != 0) else\
-										host.character.scale.x;
+			host.character.scale.x =\
+			(int(host.gsp > 0) - int(host.gsp < 0))\
+			if (host.gsp != 0) else\
+				host.character.scale.x;
 	elif is_braking:
 		if anim_name != 'BrakeLoop' && anim_name != 'PostBrakReturn':
 			anim_name = 'Braking'
@@ -174,7 +175,8 @@ func animation_step(host, animator):
 			'BrakeLoop': 
 				anim_speed = -((5.0 / 60.0) - (abs(host.gsp) / 120.0));
 				play_once = false;
-			'PostBrakReturn': anim_speed = 1;
+			'PostBrakReturn':
+				anim_speed = 1;
 		
 	else:
 		if host.is_looking_down:

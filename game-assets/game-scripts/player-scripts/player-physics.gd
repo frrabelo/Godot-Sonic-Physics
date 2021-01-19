@@ -11,7 +11,7 @@ export(float) var FRC = 4.6875
 export(float) var SLP = 7.5
 export(float) var SLPROLLUP = 4.6875
 export(float) var SLPROLLDOWN = 18.75
-export(float) var TOP = 360
+export(float) var TOP = 460
 export(float) var TOPROLL = 960
 export(float) var JMP = 390
 export(float) var FALL = 150
@@ -81,12 +81,12 @@ func _process(delta):
 	right_ground.position.x = 9 if !roll_anim else 7
 	
 	direction.x = \
-	-int(Input.is_action_pressed("ui_left")) +\
-	int(Input.is_action_pressed("ui_right"))
+	-Input.get_action_strength("ui_left") +\
+	Input.get_action_strength("ui_right")
 	
 	direction.y = \
-	-int(Input.is_action_pressed("ui_up")) +\
-	int(Input.is_action_pressed("ui_down"))
+	-Input.get_action_strength("ui_up") +\
+	Input.get_action_strength("ui_down")
 	
 	if (control_locked and is_grounded) or control_unlock_timer < control_unlock_time:
 		control_unlock_timer -= delta

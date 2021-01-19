@@ -1,0 +1,423 @@
+--------- beginning of crash
+--------- beginning of system
+01-15 23:24:57.861   788   813 W ActivityManager: Slow operation: 58ms so far, now at startProcess: done updating pids map
+01-15 23:24:59.142   788  4998 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:24:59.583   788  4998 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:25:00.685   788   800 I ActivityManager: Process com.google.android.apps.paidtasks (pid 9746) has died: cch+99 CEM 
+01-15 23:25:00.701   788  3090 I ActivityManager: Process com.google.android.apps.docs (pid 9453) has died: cch+99 CEM 
+01-15 23:25:02.055   788   800 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:25:03.134   788   813 I ActivityManager: Start proc 11993:com.whatsapp/u0a169 for backup {com.whatsapp/com.whatsapp.registration.backuptoken.BackupTokenAgentHelper}
+01-15 23:25:05.172   788   813 I ActivityManager: Start proc 12076:com.google.android.apps.docs.editors.docs/u0a235 for backup {com.google.android.apps.docs.editors.docs/com.google.android.apps.docs.editors.kix.backup.KixBackupAgent}
+01-15 23:25:05.276   788  4998 I ActivityManager: Killing 10037:com.google.android.gms.unstable/u0a133 (adj 999): empty #16
+01-15 23:25:05.686   788  3568 W ActivityManager: Background start not allowed: service Intent { act=com.whatsapp.messaging.MessageService.START cmp=com.whatsapp/.messaging.MessageService } to com.whatsapp/.messaging.MessageService from pid=11993 uid=10169 pkg=com.whatsapp startFg?=false
+01-15 23:25:08.188   788   813 I ActivityManager: Start proc 12190:com.google.android.tts/u0a142 for backup {com.google.android.tts/com.google.android.tts.settings.TTSBackupAgent}
+01-15 23:25:08.292   788  2073 I ActivityManager: Killing 10447:com.google.android.youtube/u0a144 (adj 999): empty #16
+01-15 23:25:09.373   788  1420 I ActivityManager: Killing 11268:com.google.android.apps.tachyon/u0a150 (adj 999): empty #16
+01-15 23:25:14.551   788  9533 I ActivityManager: Killing 9547:com.fastemulator.sync/u0a207 (adj 999): empty #16
+01-15 23:25:15.815   788   813 I ActivityManager: Start proc 12315:com.android.chrome/u0a146 for backup {com.android.chrome/org.chromium.chrome.browser.ChromeBackupAgent}
+01-15 23:25:17.575   788   813 W ActivityManager: Slow operation: 80ms so far, now at startProcess: returned from zygote!
+01-15 23:25:17.576   788   813 W ActivityManager: Slow operation: 81ms so far, now at startProcess: done updating battery stats
+01-15 23:25:17.577   788   813 W ActivityManager: Slow operation: 82ms so far, now at startProcess: building log message
+01-15 23:25:17.577   788   813 I ActivityManager: Start proc 12371:com.google.android.apps.paidtasks/u0a251 for backup {com.google.android.apps.paidtasks/com.google.android.apps.paidtasks.backup.BackupAgent}
+01-15 23:25:17.577   788   813 W ActivityManager: Slow operation: 82ms so far, now at startProcess: starting to update pids map
+01-15 23:25:17.577   788   813 W ActivityManager: Slow operation: 82ms so far, now at startProcess: done updating pids map
+01-15 23:25:17.720   788  1416 I ActivityManager: Killing 11411:com.cloudflare.onedotonedotonedotone/u0a183 (adj 999): empty #16
+01-15 23:25:19.455   788  9533 I ActivityManager: Killing 11327:com.android.vending:download_service/u0a130 (adj 999): empty #16
+01-15 23:25:20.724   788   813 I ActivityManager: Start proc 12447:com.google.android.apps.photos/u0a171 for backup {com.google.android.apps.photos/com.google.android.apps.photos.kvbackup.PhotosBackupAgent}
+--------- beginning of main
+01-15 23:25:21.782   788   813 I ActivityManager: Start proc 12483:com.android.documentsui/u0a49 for backup {com.android.documentsui/com.android.documentsui.prefs.BackupAgent}
+01-15 23:25:21.986   788  6174 I ActivityManager: Killing 9376:com.google.android.apps.nbu.files/u0a131 (adj 999): empty #16
+01-15 23:25:22.320   788  3568 I ActivityManager: Killing 11544:com.discord/u0a176 (adj 999): empty #16
+01-15 23:25:22.333   788   813 I ActivityManager: Start proc 12510:com.google.android.gm/u0a147 for backup {com.google.android.gm/com.google.android.gm.persistence.GmailBackupAgent}
+01-15 23:25:22.339   788   813 W ActivityManager: Slow operation: 54ms so far, now at startProcess: done updating pids map
+01-15 23:25:22.481   788  5430 W ActivityManager: wait for provider publish: waiters=1 callerApp=ProcessRecord{77bf096 12483:com.android.documentsui/u0a49} cpr=ContentProviderRecord{d175417 u0 com.google.android.apps.docs/.storagebackend.StorageBackendContentProvider}
+01-15 23:25:22.530   788   813 W ActivityManager: Slow operation: 51ms so far, now at startProcess: building log message
+01-15 23:25:22.531   788   813 I ActivityManager: Start proc 12531:com.google.android.apps.docs/u0a145 for content provider {com.google.android.apps.docs/com.google.android.apps.docs.storagebackend.StorageBackendContentProvider}
+01-15 23:25:22.531   788   813 W ActivityManager: Slow operation: 51ms so far, now at startProcess: starting to update pids map
+01-15 23:25:22.532   788   813 W ActivityManager: Slow operation: 52ms so far, now at startProcess: done updating pids map
+01-15 23:25:22.712   788  3423 I ActivityManager: Killing 9395:com.google.android.apps.youtube.music/u0a116 (adj 999): empty #16
+01-15 23:25:22.785   788  4998 I ActivityManager: Killing 11688:com.google.android.videos/u0a138 (adj 999): empty #16
+01-15 23:25:24.109   788  5430 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.icing.APP_INDEXING_SERVICE pkg=com.google.android.gms } U=0: not found
+01-15 23:25:24.156   788  5430 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@4250e06
+01-15 23:25:25.913   788  6174 W ActivityManager: Unable to start service Intent { cmp=com.google.android.gm/com.android.email.service.AttachmentService } U=0: not found
+01-15 23:25:26.665   788  1195 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.icing.APP_INDEXING_SERVICE pkg=com.google.android.gms } U=0: not found
+01-15 23:25:26.666   788  1195 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@7877cd4
+01-15 23:25:27.606   788   812 I ActivityManager: Force stopping com.opensource.godotTheHedgehogExample appid=10312 user=-1: deletePackageX
+01-15 23:25:29.897   788  1402 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:25:29.937   788   852 I ActivityManager: Force stopping com.opensource.godotTheHedgehogExample appid=10312 user=0: pkg removed
+01-15 23:25:30.251   788   836 W ActivityManager: wait for provider publish: waiters=1 callerApp=ProcessRecord{982f4c1 788:system/1000} cpr=ContentProviderRecord{dff1fac u0 com.samsung.android.sm.go/.database.SmProvider}
+01-15 23:25:30.359   788   813 W ActivityManager: Slow operation: 125ms so far, now at startProcess: returned from zygote!
+01-15 23:25:30.360   788   813 W ActivityManager: Slow operation: 126ms so far, now at startProcess: done updating battery stats
+01-15 23:25:30.360   788   813 W ActivityManager: Slow operation: 126ms so far, now at startProcess: building log message
+01-15 23:25:30.360   788   813 I ActivityManager: Start proc 12898:com.android.keychain/1000 for service {com.android.keychain/com.android.keychain.KeyChainService}
+01-15 23:25:30.360   788   813 W ActivityManager: Slow operation: 126ms so far, now at startProcess: starting to update pids map
+01-15 23:25:30.360   788   813 W ActivityManager: Slow operation: 126ms so far, now at startProcess: done updating pids map
+01-15 23:25:30.360   788   813 W ActivityManager: Slow operation: 113ms so far, now at startProcess: asking zygote to start proc
+01-15 23:25:30.632   788   813 W ActivityManager: Slow operation: 385ms so far, now at startProcess: returned from zygote!
+01-15 23:25:30.952   788  5430 W ActivityManager: Slow operation: 395ms so far, now at attachApplicationLocked: after mServices.attachApplicationLocked
+01-15 23:25:30.960   788   813 W ActivityManager: Slow operation: 714ms so far, now at startProcess: done updating battery stats
+01-15 23:25:30.961   788   813 W ActivityManager: Slow operation: 714ms so far, now at startProcess: building log message
+01-15 23:25:30.961   788   813 I ActivityManager: Start proc 12926:com.samsung.android.sm.provider/1000 for content provider {com.samsung.android.sm.go/com.samsung.android.sm.go.database.SmProvider}
+01-15 23:25:30.961   788   813 W ActivityManager: Slow operation: 714ms so far, now at startProcess: starting to update pids map
+01-15 23:25:30.963   788   813 W ActivityManager: Slow operation: 716ms so far, now at startProcess: done updating pids map
+01-15 23:25:30.970   788  1300 I ActivityManager: Process com.google.android.play.games (pid 11761) has died: cch+99 CEM 
+01-15 23:25:30.981   788   958 I ActivityManager: Process com.vanced.android.apps.youtube.music (pid 11804) has died: cch+99 CEM 
+01-15 23:25:30.991   788  3090 I ActivityManager: Process com.google.android.permissioncontroller (pid 11515) has died: cch+99 CEM 
+01-15 23:25:31.009   788  1269 I ActivityManager: Process com.android.vending (pid 7807) has died: cch+99 CEM 
+01-15 23:25:31.232   788   813 W ActivityManager: Slow operation: 173ms so far, now at startProcess: returned from zygote!
+01-15 23:25:31.233   788   813 W ActivityManager: Slow operation: 174ms so far, now at startProcess: done updating battery stats
+01-15 23:25:31.233   788   813 W ActivityManager: Slow operation: 174ms so far, now at startProcess: building log message
+01-15 23:25:31.233   788   813 I ActivityManager: Start proc 12952:com.google.android.permissioncontroller/u0a67 for service {com.google.android.permissioncontroller/com.android.packageinstaller.role.service.RoleControllerServiceImpl}
+01-15 23:25:31.233   788   813 W ActivityManager: Slow operation: 174ms so far, now at startProcess: starting to update pids map
+01-15 23:25:31.240   788   813 W ActivityManager: Slow operation: 181ms so far, now at startProcess: done updating pids map
+01-15 23:25:33.170   788   813 W ActivityManager: Slow operation: 86ms so far, now at startProcess: returned from zygote!
+01-15 23:25:33.177   788   813 W ActivityManager: Slow operation: 93ms so far, now at startProcess: done updating battery stats
+01-15 23:25:33.177   788   813 W ActivityManager: Slow operation: 93ms so far, now at startProcess: building log message
+01-15 23:25:33.177   788   813 I ActivityManager: Start proc 12986:com.android.vending/u0a130 for broadcast {com.android.vending/com.google.android.finsky.packagemanager.impl.PackageMonitorReceiverImpl$RegisteredReceiver}
+01-15 23:25:33.177   788   813 W ActivityManager: Slow operation: 94ms so far, now at startProcess: starting to update pids map
+01-15 23:25:33.182   788   813 W ActivityManager: Slow operation: 98ms so far, now at startProcess: done updating pids map
+01-15 23:25:33.522   788  1269 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.icing.APP_INDEXING_SERVICE pkg=com.google.android.gms } U=0: not found
+01-15 23:25:33.538   788  1195 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@99c5431
+01-15 23:25:37.331   788   813 I ActivityManager: Start proc 13108:com.facebook.appmanager/u0a108 for broadcast {com.facebook.appmanager/com.facebook.oxygen.common.packages.event.manifest.ManifestPackageEventReceiver}
+01-15 23:25:37.943   788   813 W ActivityManager: Slow operation: 60ms so far, now at startProcess: returned from zygote!
+01-15 23:25:37.944   788   813 W ActivityManager: Slow operation: 61ms so far, now at startProcess: done updating battery stats
+01-15 23:25:37.944   788   813 W ActivityManager: Slow operation: 61ms so far, now at startProcess: building log message
+01-15 23:25:37.944   788   813 I ActivityManager: Start proc 13139:com.android.vending:download_service/u0a130 for service {com.android.vending/com.google.android.finsky.ipcservers.downloadservice.DownloadServiceGrpcServerAndroidService}
+01-15 23:25:37.944   788   813 W ActivityManager: Slow operation: 61ms so far, now at startProcess: starting to update pids map
+01-15 23:25:37.946   788   813 W ActivityManager: Slow operation: 63ms so far, now at startProcess: done updating pids map
+01-15 23:25:38.108   788   813 W ActivityManager: Slow operation: 94ms so far, now at startProcess: returned from zygote!
+01-15 23:25:38.108   788   813 W ActivityManager: Slow operation: 94ms so far, now at startProcess: done updating battery stats
+01-15 23:25:38.110   788   813 W ActivityManager: Slow operation: 96ms so far, now at startProcess: building log message
+01-15 23:25:38.110   788   813 I ActivityManager: Start proc 13165:com.google.android.apps.maps/u0a141 for broadcast {com.google.android.apps.maps/com.google.android.libraries.social.peoplekit.thirdparty.viewcontrollers.ThirdPartyReceiver}
+01-15 23:25:38.111   788   813 W ActivityManager: Slow operation: 97ms so far, now at startProcess: starting to update pids map
+01-15 23:25:38.111   788   813 W ActivityManager: Slow operation: 97ms so far, now at startProcess: done updating pids map
+01-15 23:25:39.223   788  1195 I ActivityManager: Killing 11825:com.android.calllogbackup/u0a44 (adj 999): empty #16
+01-15 23:25:39.280   788   813 W ActivityManager: Slow operation: 62ms so far, now at startProcess: returned from zygote!
+01-15 23:25:39.280   788   813 W ActivityManager: Slow operation: 63ms so far, now at startProcess: done updating battery stats
+01-15 23:25:39.281   788   813 W ActivityManager: Slow operation: 63ms so far, now at startProcess: building log message
+01-15 23:25:39.281   788   813 I ActivityManager: Start proc 13226:com.google.android.apps.wellbeing/u0a134 for broadcast {com.google.android.apps.wellbeing/com.google.android.apps.wellbeing.appconfig.sync.impl.AppSyncPackageRemovedBroadcastReceiver_Receiver}
+01-15 23:25:39.281   788   813 W ActivityManager: Slow operation: 63ms so far, now at startProcess: starting to update pids map
+01-15 23:25:39.287   788   813 W ActivityManager: Slow operation: 69ms so far, now at startProcess: done updating pids map
+01-15 23:25:39.584   788   813 I ActivityManager: Start proc 13247:com.google.android.youtube/u0a144 for backup {com.google.android.youtube/com.google.android.apps.youtube.app.application.backup.YouTubeBackupAgent}
+01-15 23:25:41.442   788  1417 I ActivityManager: Killing 12076:com.google.android.apps.docs.editors.docs/u0a235 (adj 999): empty #16
+01-15 23:25:44.643   788  3090 I ActivityManager: Process com.google.android.apps.docs (pid 12531) has died: cch+99 CEM 
+01-15 23:25:44.932   788   813 W ActivityManager: Slow operation: 72ms so far, now at startProcess: returned from zygote!
+01-15 23:25:44.933   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: done updating battery stats
+01-15 23:25:44.933   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: building log message
+01-15 23:25:44.933   788   813 I ActivityManager: Start proc 13437:com.android.settings/1000 for backup {com.android.settings/com.android.settings.backup.SettingsBackupHelper}
+01-15 23:25:44.933   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: starting to update pids map
+01-15 23:25:44.943   788   813 W ActivityManager: Slow operation: 83ms so far, now at startProcess: done updating pids map
+01-15 23:25:45.819   788   813 W ActivityManager: Slow operation: 75ms so far, now at startProcess: building log message
+01-15 23:25:45.819   788   813 I ActivityManager: Start proc 13464:com.google.android.calendar/u0a139 for backup {com.google.android.calendar/com.google.android.calendar.backup.CalendarBackupAgent}
+01-15 23:25:45.819   788   813 W ActivityManager: Slow operation: 75ms so far, now at startProcess: starting to update pids map
+01-15 23:25:45.820   788   813 W ActivityManager: Slow operation: 76ms so far, now at startProcess: done updating pids map
+01-15 23:25:48.078   788  4998 W ActivityManager: wait for provider publish: waiters=1 callerApp=ProcessRecord{17a1371 13464:com.google.android.calendar/u0a139} cpr=ContentProviderRecord{d7fec48 u0 com.android.providers.calendar/.CalendarProvider2}
+01-15 23:25:48.139   788   813 W ActivityManager: Slow operation: 64ms so far, now at startProcess: returned from zygote!
+01-15 23:25:48.139   788   813 W ActivityManager: Slow operation: 64ms so far, now at startProcess: done updating battery stats
+01-15 23:25:48.139   788   813 W ActivityManager: Slow operation: 64ms so far, now at startProcess: building log message
+01-15 23:25:48.139   788   813 I ActivityManager: Start proc 13512:com.android.providers.calendar/u0a54 for content provider {com.android.providers.calendar/com.android.providers.calendar.CalendarProvider2}
+01-15 23:25:48.139   788   813 W ActivityManager: Slow operation: 64ms so far, now at startProcess: starting to update pids map
+01-15 23:25:48.142   788   813 W ActivityManager: Slow operation: 68ms so far, now at startProcess: done updating pids map
+01-15 23:25:49.366   788  1420 I ActivityManager: Killing 11993:com.whatsapp/u0a169 (adj 999): empty #16
+01-15 23:25:49.484   788   813 W ActivityManager: Slow operation: 121ms so far, now at startProcess: returned from zygote!
+01-15 23:25:49.485   788   813 W ActivityManager: Slow operation: 122ms so far, now at startProcess: done updating battery stats
+01-15 23:25:49.485   788   813 W ActivityManager: Slow operation: 122ms so far, now at startProcess: building log message
+01-15 23:25:49.485   788   813 I ActivityManager: Start proc 13578:com.sec.spp.push/u0a52 for broadcast {com.sec.spp.push/com.sec.spp.push.receiver.PackageInfoChangeReceiver}
+01-15 23:25:49.485   788   813 W ActivityManager: Slow operation: 122ms so far, now at startProcess: starting to update pids map
+01-15 23:25:49.486   788   813 W ActivityManager: Slow operation: 123ms so far, now at startProcess: done updating pids map
+01-15 23:25:50.313   788  3552 I ActivityManager: Killing 12190:com.google.android.tts/u0a142 (adj 999): empty #16
+01-15 23:25:50.358   788   813 W ActivityManager: Slow operation: 53ms so far, now at startProcess: returned from zygote!
+01-15 23:25:50.358   788   813 W ActivityManager: Slow operation: 53ms so far, now at startProcess: done updating battery stats
+01-15 23:25:50.358   788   813 W ActivityManager: Slow operation: 54ms so far, now at startProcess: building log message
+01-15 23:25:50.359   788   813 I ActivityManager: Start proc 13619:com.sec.unifiedwfc/u0a89 for broadcast {com.sec.unifiedwfc/com.sprint.ms.smf.ConfigurationReceiver}
+01-15 23:25:50.359   788   813 W ActivityManager: Slow operation: 54ms so far, now at startProcess: starting to update pids map
+01-15 23:25:50.359   788   813 W ActivityManager: Slow operation: 54ms so far, now at startProcess: done updating pids map
+01-15 23:25:50.848   788   801 I ActivityManager: Killing 12371:com.google.android.apps.paidtasks/u0a251 (adj 999): empty #16
+01-15 23:25:51.372   788   801 I ActivityManager: Killing 12510:com.google.android.gm/u0a147 (adj 999): empty #16
+01-15 23:25:51.523   788   813 W ActivityManager: Slow operation: 83ms so far, now at startProcess: returned from zygote!
+01-15 23:25:51.524   788   813 W ActivityManager: Slow operation: 83ms so far, now at startProcess: done updating battery stats
+01-15 23:25:51.524   788   813 W ActivityManager: Slow operation: 83ms so far, now at startProcess: building log message
+01-15 23:25:51.524   788   813 I ActivityManager: Start proc 13648:com.sec.android.provider.badge/u0a55 for broadcast {com.sec.android.provider.badge/com.sec.android.provider.badge.BadgeCountReceiver}
+01-15 23:25:51.524   788   813 W ActivityManager: Slow operation: 83ms so far, now at startProcess: starting to update pids map
+01-15 23:25:51.526   788   813 W ActivityManager: Slow operation: 85ms so far, now at startProcess: done updating pids map
+01-15 23:25:56.869   788  6102 I ActivityManager: Killing 12898:com.android.keychain/1000 (adj 999): empty #16
+01-15 23:25:57.251   788  1007 I ActivityManager: Killing 12926:com.samsung.android.sm.provider/1000 (adj 999): empty #16
+01-15 23:26:01.189   788   813 I ActivityManager: Start proc 13694:com.vanced.android.apps.youtube.music/u0a205 for service {com.vanced.android.apps.youtube.music/androidx.work.impl.background.systemjob.SystemJobService}
+01-15 23:26:02.230   788  6102 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:26:02.485   788  3090 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:26:02.791   788  1343 I ActivityManager: Killing 12315:com.android.chrome/u0a146 (adj 999): empty #16
+01-15 23:26:03.980   788  1343 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:26:07.346   788  1414 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.ads.identifier.service.START pkg=com.mgoogle.android.gms } U=0: not found
+01-15 23:26:10.598   788  1343 I ActivityManager: Killing 12483:com.android.documentsui/u0a49 (adj 999): empty #16
+01-15 23:26:13.580   788   836 W ActivityManager: wait for provider publish: waiters=1 callerApp=ProcessRecord{982f4c1 788:system/1000} cpr=ContentProviderRecord{82111a7 u0 com.samsung.android.sm.go/.database.SmProvider}
+01-15 23:26:13.630   788   813 W ActivityManager: Slow operation: 52ms so far, now at startProcess: done updating battery stats
+01-15 23:26:13.631   788   813 W ActivityManager: Slow operation: 52ms so far, now at startProcess: building log message
+01-15 23:26:13.631   788   813 I ActivityManager: Start proc 13869:com.samsung.android.sm.provider/1000 for content provider {com.samsung.android.sm.go/com.samsung.android.sm.go.database.SmProvider}
+01-15 23:26:13.631   788   813 W ActivityManager: Slow operation: 52ms so far, now at startProcess: starting to update pids map
+01-15 23:26:13.631   788   813 W ActivityManager: Slow operation: 53ms so far, now at startProcess: done updating pids map
+01-15 23:26:13.993   788  2989 W ActivityManager: Slow operation: 278ms so far, now at attachApplicationLocked: after mServices.attachApplicationLocked
+01-15 23:26:14.014   788  2989 W ActivityManager: Slow operation: 299ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+01-15 23:26:14.196   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: returned from zygote!
+01-15 23:26:14.196   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: done updating battery stats
+01-15 23:26:14.196   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: building log message
+01-15 23:26:14.196   788   813 I ActivityManager: Start proc 13903:com.opensource.godotTheHedgehogExample/u0a313 for activity {com.opensource.godotTheHedgehogExample/com.godot.game.GodotApp}
+01-15 23:26:14.196   788   813 W ActivityManager: Slow operation: 73ms so far, now at startProcess: starting to update pids map
+01-15 23:26:14.197   788   813 W ActivityManager: Slow operation: 74ms so far, now at startProcess: done updating pids map
+01-15 23:26:14.488   788  2988 W ActivityManager: Slow operation: 63ms so far, now at attachApplicationLocked: after mServices.attachApplicationLocked
+01-15 23:26:15.264   788   813 W ActivityManager: Slow operation: 75ms so far, now at startProcess: returned from zygote!
+01-15 23:26:15.265   788   813 W ActivityManager: Slow operation: 76ms so far, now at startProcess: done updating battery stats
+01-15 23:26:15.265   788   813 W ActivityManager: Slow operation: 76ms so far, now at startProcess: building log message
+01-15 23:26:15.265   788   813 I ActivityManager: Start proc 13946:com.google.android.packageinstaller/u0a48 for broadcast {com.google.android.packageinstaller/com.android.packageinstaller.PackageInstalledReceiver}
+01-15 23:26:15.294   788   813 W ActivityManager: Slow operation: 105ms so far, now at startProcess: starting to update pids map
+01-15 23:26:15.311   788   813 W ActivityManager: Slow operation: 123ms so far, now at startProcess: done updating pids map
+01-15 23:26:15.312   788  1300 I ActivityManager: Process com.google.android.apps.maps (pid 13165) has died: cch+99 CEM 
+01-15 23:26:15.379   788  1416 I ActivityManager: Process com.google.android.youtube (pid 13247) has died: cch+99 CEM 
+01-15 23:26:15.425   788  2073 I ActivityManager: Process com.android.settings (pid 13437) has died: cch+99 CEM 
+01-15 23:26:15.727 13903 13960 I godot   : Godot Engine v3.2.3.stable.official - https://godotengine.org
+01-15 23:26:15.760 13903 13960 I godot   : OpenGL ES 2.0 Renderer: PowerVR Rogue GE8100
+01-15 23:26:15.958 13903 13960 I godot   : OpenGL ES 2.0 Batching: ON
+01-15 23:26:15.990   788  1266 W ActivityManager: Slow operation: 246ms so far, now at attachApplicationLocked: before bindApplication
+01-15 23:26:15.990   788  1266 W ActivityManager: Slow operation: 247ms so far, now at attachApplicationLocked: immediately before bindApplication
+01-15 23:26:15.995   788  1266 W ActivityManager: Slow operation: 251ms so far, now at attachApplicationLocked: immediately after bindApplication
+01-15 23:26:15.996   788  1266 W ActivityManager: Slow operation: 252ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+01-15 23:26:15.996   788  1266 W ActivityManager: Slow operation: 252ms so far, now at attachApplicationLocked: after mServices.attachApplicationLocked
+01-15 23:26:16.046 13903 13960 I godot   :  
+01-15 23:26:16.293   788  1266 W ActivityManager: Slow operation: 549ms so far, now at attachApplicationLocked: after sendPendingBroadcastsLocked
+01-15 23:26:16.294   788  1007 I ActivityManager: Process com.android.providers.calendar (pid 13512) has died: cch+95 CEM 
+01-15 23:26:16.305   788  6174 I ActivityManager: Process com.sec.spp.push (pid 13578) has died: cch+85 CEM 
+01-15 23:26:16.315   788  3090 I ActivityManager: Process com.sec.unifiedwfc (pid 13619) has died: cch+75 CEM 
+01-15 23:26:16.323   788  1402 I ActivityManager: Process com.google.android.apps.photos (pid 12447) has died: cch+65 CEM 
+01-15 23:26:16.339   788   801 I ActivityManager: Process com.google.android.calendar (pid 13464) has died: cch+45 CEM 
+01-15 23:26:16.345   788  1343 I ActivityManager: Process com.google.android.apps.wellbeing (pid 13226) has died: cch+35 CEM 
+01-15 23:26:16.383   788  3423 I ActivityManager: Process com.android.vending:download_service (pid 13139) has died: cch+25 CEM 
+01-15 23:26:16.403   788   958 I ActivityManager: Process com.sec.android.provider.badge (pid 13648) has died: cch+25 CEM 
+01-15 23:26:16.855 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:16.856 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:16.857 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:16.857 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:16.857 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:16.857 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:17.287   788  2989 W ActivityManager: Slow operation: 693ms so far, now at getContentProviderImpl: before checkContentProviderPermission
+01-15 23:26:17.287   788  2989 W ActivityManager: Slow operation: 693ms so far, now at getContentProviderImpl: after checkContentProviderPermission
+01-15 23:26:17.287   788  2989 W ActivityManager: Slow operation: 694ms so far, now at getContentProviderImpl: incProviderCountLocked
+01-15 23:26:17.288   788  2989 W ActivityManager: Slow operation: 694ms so far, now at getContentProviderImpl: before updateOomAdj
+01-15 23:26:17.288   788  2989 W ActivityManager: Slow operation: 694ms so far, now at getContentProviderImpl: after updateOomAdj
+01-15 23:26:17.288   788  2989 W ActivityManager: Slow operation: 695ms so far, now at getContentProviderImpl: done!
+01-15 23:26:17.916   788  3090 W ActivityManager: Unable to start service Intent { act=com.google.android.gms.icing.APP_INDEXING_SERVICE pkg=com.google.android.gms } U=0: not found
+01-15 23:26:17.919   788  3090 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@365168a
+01-15 23:26:19.488 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:19.488 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:19.488 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:19.488 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:19.488 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:19.488 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:19.488 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:19.489 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:19.489 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:19.489 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:19.491 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:19.491 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:19.492 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:19.492 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:19.492 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:19.492 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:19.492 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:19.492 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:19.494 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:19.494 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:19.495 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:19.495 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:19.495 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:19.495 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:19.545 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:19.545 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:19.545 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:19.546 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:19.559 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:19.559 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:19.560 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:19.560 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:19.560 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:19.560 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:20.537 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:20.537 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
+01-15 23:26:22.138 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:22.138 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:22.138 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:22.138 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:22.139 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:22.139 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:22.139 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:22.139 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:22.139 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:22.139 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:22.144 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:22.144 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:22.144 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:22.144 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:22.145 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:22.145 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:22.145 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:22.145 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:22.149 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:22.149 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:22.149 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:22.149 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:22.149 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:22.150 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:22.203 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:22.203 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:22.203 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:22.203 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:22.215 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:22.216 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:22.216 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:22.216 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:22.216 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:22.216 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:22.504 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:22.504 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
+01-15 23:26:23.905 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:23.905 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:23.905 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:23.905 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:23.905 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:23.905 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:23.905 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:23.905 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:23.905 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:23.905 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:23.909 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:23.909 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:23.909 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:23.909 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:23.909 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:23.909 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:23.909 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:23.909 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:23.912 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:23.913 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:23.913 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:23.913 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:23.913 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:23.913 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:23.962 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:23.963 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:23.963 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:23.963 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:23.973 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:23.973 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:23.973 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:23.974 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:23.974 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:23.974 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:24.255 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:24.255 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
+01-15 23:26:25.547 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:25.547 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:25.548 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:25.548 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:25.548 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:25.548 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:25.548 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:25.548 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:25.548 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:25.548 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:25.551 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:25.551 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:25.552 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:25.552 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:25.552 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:25.552 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:25.552 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:25.552 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:25.556 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:25.556 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:25.556 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:25.556 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:25.556 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:25.556 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:25.603 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:25.603 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:25.603 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:25.603 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:25.612 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:25.612 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:25.613 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:25.613 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:25.613 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:25.613 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:25.866 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:25.866 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
+01-15 23:26:27.153 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:27.153 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:27.153 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:27.153 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:27.153 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:27.153 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:27.154 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:27.154 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:27.154 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:27.154 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:27.157 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:27.158 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:27.158 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:27.158 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:27.158 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:27.158 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:27.158 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:27.158 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:27.162 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:27.162 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:27.162 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:27.162 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:27.163 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:27.163 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:27.210 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:27.211 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:27.211 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:27.211 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:27.219 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:27.220 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:27.220 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:27.220 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:27.220 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:27.221 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:27.541 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:27.541 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
+01-15 23:26:29.134 13903 13960 E godot   : **ERROR**: Condition "err" is true. Returned: err
+01-15 23:26:29.134 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:829:load_source_code() - Condition "err" is true. Returned: err
+01-15 23:26:29.134 13903 13960 E godot   : **ERROR**: Cannot load source code from file 'res://game-assets/game-classes/badnik-script.gd'.
+01-15 23:26:29.134 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2286:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:29.135 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-classes/badnik-script.gd. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:29.135 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:29.135 13903 13960 E godot   : **SCRIPT ERROR**: Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:29.135 13903 13960 E godot   :    At: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc:1:GDScript::load_byte_code() - Parse Error: The class "Badnik" couldn't be fully loaded (script error or cyclic dependency).
+01-15 23:26:29.135 13903 13960 E godot   : **ERROR**: Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:29.135 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:801:load_byte_code() - Method failed. Returning: ERR_PARSE_ERROR
+01-15 23:26:29.140 13903 13960 E godot   : **ERROR**: Cannot load byte code from file 'res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc'.
+01-15 23:26:29.140 13903 13960 E godot   :    At: modules/gdscript/gdscript.cpp:2282:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:29.140 13903 13960 E godot   : **ERROR**: Failed loading resource: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gdc. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:29.140 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:29.141 13903 13960 E godot   : **ERROR**: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:29.141 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-objects/badnik-objects/motobug-object.tscn:18 - Parse Error: [ext_resource] referenced nonexistent resource at: res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd
+01-15 23:26:29.141 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-objects/badnik-objects/motobug-object.tscn'.
+01-15 23:26:29.141 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:29.145 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:29.145 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:29.145 13903 13960 E godot   : **ERROR**: res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:29.145 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:440:poll() - res://zones/test-zone-act-1-scene.tscn:35 - Parse Error: [ext_resource] referenced nonexistent resource at: res://zones/test-zone-objects/badnik-objects/motobug-object.tscn
+01-15 23:26:29.145 13903 13960 E godot   : **ERROR**: Failed to load resource 'res://zones/test-zone-act-1-scene.tscn'.
+01-15 23:26:29.145 13903 13960 E godot   :    At: core/io/resource_loader.cpp:208:load() - Condition "err != OK" is true. Returned: RES()
+01-15 23:26:29.207 13903 13960 E godot   : **ERROR**: Failed loading resource: res://zones/test-zone-act-1-scene.tscn. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:29.207 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:29.207 13903 13960 E godot   : **ERROR**: Failed loading scene: res://zones/test-zone-act-1-scene.tscn
+01-15 23:26:29.207 13903 13960 E godot   :    At: main/main.cpp:1944:start() - Condition "!scene" is true. Returned: false
+01-15 23:26:29.219 13903 13960 E godot   : **ERROR**: Cannot open file 'res://default-env.tres'.
+01-15 23:26:29.219 13903 13960 E godot   :    At: scene/resources/resource_format_text.cpp:1228:load_interactive() - Condition "err != OK" is true. Returned: Ref<ResourceInteractiveLoader>()
+01-15 23:26:29.220 13903 13960 E godot   : **ERROR**: Failed loading resource: res://default-env.tres. Make sure resources have been imported by opening the project in the editor at least once.
+01-15 23:26:29.220 13903 13960 E godot   :    At: core/io/resource_loader.cpp:279:_load() - Condition "found" is true. Returned: RES()
+01-15 23:26:29.220 13903 13960 E godot   : **ERROR**: Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:29.220 13903 13960 E godot   :    At: scene/main/scene_tree.cpp:2115:SceneTree() - Default Environment as specified in Project Settings (Rendering -> Environment -> Default Environment) could not be loaded.
+01-15 23:26:29.503 13903 13960 E godot   : **ERROR**: Condition "default_certs != __null" is true.
+01-15 23:26:29.503 13903 13960 E godot   :    At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.
