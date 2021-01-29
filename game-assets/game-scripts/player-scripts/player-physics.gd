@@ -23,25 +23,28 @@ export(bool) var dropDash = true;
 export(bool) var spinDash = true;
 
 onready var fsm = $StateMachine
-onready var player_camera = $'../PlayerCamera'
+onready var player_camera = $'../../PlayerCamera'
 onready var player_vfx = $Characters/VFX
 onready var GLOBAL = get_node("/root/Global");
 
-onready var high_collider = $HighCollider
 onready var low_collider = $LowCollider
+onready var ray_collider = $Ray
 
-onready var left_ground = $LeftGroundSensor
-onready var right_ground = $RightGroundSensor
-onready var left_wall = $LeftWallSensor
-onready var right_wall = $RightWallSensor
-onready var left_wall_bottom = $LeftWallSensorBottom
-onready var right_wall_bottom = $RightWallSensorBottom
+onready var left_ground:RayCast2D = $LeftGroundSensor
+onready var right_ground:RayCast2D = $RightGroundSensor
+onready var middle_ground:RayCast2D = $MiddleGroundSensor
+onready var high_sensor = $HighCollider
+onready var left_wall:RayCast2D = $LeftWallSensor
+onready var right_wall:RayCast2D = $RightWallSensor
+onready var left_wall_bottom:RayCast2D = $LeftWallSensorBottom
+onready var right_wall_bottom:RayCast2D = $RightWallSensorBottom
 
 onready var character = $Characters
 onready var sprite = character.get_node('Sonic');
 onready var animation = sprite.get_node("CharAnimation");
 onready var audio_player = $AudioPlayer
 onready var main_scene = $"/root/main"
+var snap_margin = 32.0
 
 var ring_scene = preload("res://general-objects/ring-object.tscn")
 
@@ -69,14 +72,15 @@ var is_looking_down : bool
 var is_looking_up : bool
 var has_pushed : bool
 var invulnerable : bool;
+var constant_roll : bool
 
 func _ready():
 	control_unlock_timer = control_unlock_time
 
 func _process(delta):
 	var roll_anim = animation.current_animation == 'Rolling'
-	high_collider.disabled = roll_anim
-	low_collider.disabled = !roll_anim
+	high_sensor.set_deferred("disabled", roll_anim)
+	low_collider.set_deferred("disabled", !roll_anim)
 	left_ground.position.x = -9 if !roll_anim else -7
 	right_ground.position.x = 9 if !roll_anim else 7
 	
@@ -102,6 +106,15 @@ func physics_step():
 	if is_on_ground():
 		is_grounded = true
 	
+	var can_break = abs(gsp) > 270 && is_rolling
+	
+	var coll = [self, middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
+	
+	for i in coll:
+		i.set_collision_mask_bit(5, !can_break)
+		if !i.is_class("RayCast2D"):
+			i.set_collision_layer_bit(5, !can_break)
+	
 	if is_grounded and is_ray_colliding:
 		ground_point = ground_ray.get_collision_point()
 		ground_normal = ground_ray.get_collision_normal()
@@ -114,6 +127,15 @@ func physics_step():
 	
 	is_wall_left = (left_wall.is_colliding() || left_wall_bottom.is_colliding()) || position.x - 9 <= 0
 	is_wall_right = right_wall.is_colliding() || right_wall_bottom.is_colliding();
+	
+	if constant_roll:
+		control_locked = true
+		control_unlock_timer = 0.1
+		if abs(gsp) < 500:
+			gsp += 100 * character.scale.x
+		is_rolling = true
+		
+		print("const")
 
 func fall_from_ground():
 	if abs(gsp) < FALL and ground_mode != 0:
@@ -131,8 +153,8 @@ func snap_to_ground():
 	velocity += -ground_normal * 150
 
 func ground_reacquisition():
-	var angle = abs(rad2deg(ground_angle()))
 	var ground_angle = ground_angle();
+	var angle = abs(rad2deg(ground_angle))
 	
 	if angle >= 0 and angle < 22.5:
 		gsp = velocity.x
@@ -159,7 +181,7 @@ func is_on_ground():
 		var normal = ground_ray.get_collision_normal()
 		if velocity.y >= 0:
 			if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
-				return position.y + 20 > point.y and velocity.y >= 0
+				return position.y + 25 > point.y
 	
 	return false
 
@@ -197,7 +219,7 @@ func get_ground_ray():
 	else:
 		return right_ground
 
-func damage(sound_to_play:String = "hurt"):
+func damage(side:int = 0, sound_to_play:String = "hurt"):
 	var have_rings:bool = false;
 	emit_signal("damaged");
 	was_damaged = true;
@@ -215,6 +237,11 @@ func damage(sound_to_play:String = "hurt"):
 			drop_rings(rings);
 	if have_rings:
 		audio_player.play("ring_loss")
+		var ground_angle = ground_angle()
+		velocity.x = 150 * side * cos(ground_angle)
+		velocity.y = -150 * cos(ground_angle)
+		position += velocity * 6 * get_physics_process_delta_time()
+		
 	else:
 		audio_player.play(sound_to_play)
 
@@ -224,7 +251,7 @@ func drop_rings(rings:int = 0):
 	var drop_real:int = min(drop_max, rings); 
 	var angle = 101.25
 	var drop_speed = 200;
-	var parent = get_parent().get_node("Level")
+	var parent = get_node("/root/main/Level")
 	var last_rings:Array = [];
 		
 	# Add all rings instances to last_rings

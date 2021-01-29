@@ -23,6 +23,7 @@ func enter(host):
 	is_floating = host.is_floating;
 	if !is_floating:
 		has_pushed = host.has_pushed
+		host.has_pushed = false
 		if !has_pushed:
 			has_jumped = host.has_jumped
 			has_rolled = host.is_rolling
@@ -58,11 +59,13 @@ func step(host, delta):
 		has_rolled = false;
 		roll_jump = false;
 		dropCharging = false;
-	
+
 	if host.is_grounded:
+		#print(host.is_on_floor(), host.is_grounded)
 		host.ground_reacquisition()
-		was_damaged = false;
 		return 'OnGround'
+	
+	#print(host.is_grounded)
 	
 	host.velocity.x = 0 if host.is_wall_left && host.velocity.x < 0 else host.velocity.x
 	host.velocity.x = 0 if host.is_wall_right && host.velocity.x > 0 else host.velocity.x

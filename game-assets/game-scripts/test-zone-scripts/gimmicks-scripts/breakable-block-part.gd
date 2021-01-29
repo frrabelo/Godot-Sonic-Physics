@@ -13,7 +13,7 @@ func _ready():
 	if active:
 		set_physics_process(true);
 	else:
-		get_parent().remove_child(self);
+		queue_free()
 
 func delay(sec:float):
 	canFall = false;
@@ -28,14 +28,14 @@ func canFall():
 	canFall = true;
 
 func _physics_process(delta):
-	var distance_max = 300
+	var distance_max = 2000
 	if position.x - distance_max >= spawnpoint.x || position.y - distance_max >= spawnpoint.y ||\
 		position.x + distance_max <= spawnpoint.x || position.y + distance_max <= spawnpoint.y:
-		get_parent().remove_child(self);
+		queue_free()
 	if (canFall):
 		sprite.rotation += (0 - sprite.rotation) / 10
 		if (speed.x > 50):
-			speed.x -= 100 * delta;
+			speed.x -= 1100 * delta;
 		if (speed.y < 5000):
 			speed.y += 1000 * delta;
 		move_local_x(speed.x * delta);

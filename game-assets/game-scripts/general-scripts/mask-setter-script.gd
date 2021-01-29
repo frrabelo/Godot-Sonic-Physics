@@ -24,8 +24,11 @@ func invert(is_left_activated, is_right_activated):
 
 func _on_Area2D_body_entered(body):
 	if body.name == 'Player':
-		var left = body.get_collision_mask_bit(1)
-		var right = body.get_collision_mask_bit(2)
+		
+		var player:PlayerPhysics = body as PlayerPhysics
+		
+		var left = player.get_collision_mask_bit(1)
+		var right = player.get_collision_mask_bit(2)
 		
 		match SWITCH_MODE:
 			Switch.LEFT_TO_RIGHT:
@@ -34,10 +37,13 @@ func _on_Area2D_body_entered(body):
 				right_to_left()
 			Switch.INVERT:
 				invert(left, right)
+		var collision_masks = [
+			player,
+			player.middle_ground,
+			player.left_ground,
+			player.right_ground
+		]
 		
-		body.set_collision_mask_bit(check_mask, true)
-		body.set_collision_mask_bit(uncheck_mask, false)
-		body.left_ground.set_collision_mask_bit(check_mask, true)
-		body.left_ground.set_collision_mask_bit(uncheck_mask, false)
-		body.right_ground.set_collision_mask_bit(check_mask, true)
-		body.right_ground.set_collision_mask_bit(uncheck_mask, false)
+		for i in collision_masks:
+			i.set_collision_mask_bit(check_mask, true)
+			i.set_collision_mask_bit(uncheck_mask, false)

@@ -2,7 +2,7 @@ extends Node2D
 export var bullet_scene:PackedScene
 
 func _on_Area_body_entered(body):
-	if body.name == "Player":
+	if body.is_class("PlayerPhysics"):
 		var dir = -int(body.gsp < 0) + int(body.gsp>0)
 		if body.is_grounded:
 			spawnBullet(\

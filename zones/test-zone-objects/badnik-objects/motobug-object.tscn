@@ -17,30 +17,6 @@
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/badniks-sprites/motobug/flipping-frames/flipping0002.png" type="Texture" id=15]
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/badniks-scripts/motobug-script.gd" type="Script" id=16]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 14 ), ExtResource( 2 ) ],
@@ -48,14 +24,14 @@ animations = [ {
 "name": "Impulse",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 12 ) ],
-"loop": true,
-"name": "Moving",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 1 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "Flipping",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "Moving",
 "speed": 5.0
 } ]
 
@@ -179,8 +155,8 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 0 ) ]
 }
 
-[sub_resource type="RayShape2D" id=5]
-length = 15.0
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 14, 11 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 17, 13 )
@@ -192,7 +168,6 @@ script = ExtResource( 16 )
 __meta__ = {
 "_edit_group_": true
 }
-id_badnik = "motobug"
 
 [node name="Motobug" type="AnimatedSprite" parent="."]
 scale = Vector2( -1, 1 )
@@ -207,22 +182,14 @@ anims/Impulsing = SubResource( 3 )
 anims/Moving = SubResource( 4 )
 
 [node name="RayShape" type="CollisionShape2D" parent="."]
+modulate = Color( 0, 0.345098, 1, 1 )
+position = Vector2( 0, 3 )
 shape = SubResource( 5 )
-one_way_collision = true
-
-[node name="LeftRay" type="RayCast2D" parent="."]
-position = Vector2( -11, 0 )
-enabled = true
-cast_to = Vector2( 0, 20 )
-
-[node name="RightRay" type="RayCast2D" parent="."]
-position = Vector2( 11, 0 )
-enabled = true
-cast_to = Vector2( 0, 20 )
 
 [node name="HitArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 0, 1 )
 shape = SubResource( 6 )
 [connection signal="animation_finished" from="Motobug/MotobugAnim" to="." method="_on_MotobugAnim_animation_finished"]

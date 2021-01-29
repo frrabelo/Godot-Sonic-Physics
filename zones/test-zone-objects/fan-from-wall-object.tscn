@@ -4,39 +4,29 @@
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/from-wall-script.gd" type="Script" id=4]
 [ext_resource path="res://zones/test-zone-objects/fan-object.tscn" type="PackedScene" id=5]
 
+[sub_resource type="RectangleShape2D" id=5]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 100, 90 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 100, 3 )
+[sub_resource type="Animation" id=4]
+resource_local_to_scene = true
+resource_name = "FromAtoB"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("FanContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 64, 0 ) ]
+}
 
 [node name="FromWall" type="Node2D"]
 script = ExtResource( 4 )
+triggers_size = Vector2( 10, 10 )
+final_pos = Vector2( 64, 0 )
 
 [node name="FanContainer" type="Node2D" parent="."]
 
@@ -48,36 +38,20 @@ texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 16, 0, 32, 16 )
 
-[node name="Appear" type="Area2D" parent="."]
+[node name="ShowTrigger" type="Area2D" parent="."]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Collide" type="CollisionShape2D" parent="Appear"]
+[node name="CollisionTrigger" type="CollisionShape2D" parent="ShowTrigger"]
+modulate = Color( 0.862745, 0.0431373, 0.447059, 1 )
 position = Vector2( 0, -25 )
-shape = SubResource( 1 )
+shape = SubResource( 5 )
 
-[node name="DisappearTop" type="Area2D" parent="."]
-visible = false
-position = Vector2( 0, -272 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Collide" type="CollisionShape2D" parent="DisappearTop"]
-shape = SubResource( 2 )
-
-[node name="DisappearBottom" type="Area2D" parent="."]
-visible = false
-position = Vector2( 0, 100 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Collide" type="CollisionShape2D" parent="DisappearBottom"]
-shape = SubResource( 2 )
+[node name="Anim" type="AnimationPlayer" parent="."]
+playback_speed = 6.0
+anims/FromAtoB = SubResource( 4 )
 [connection signal="script_changed" from="." to="." method="_on_FromWall_script_changed"]
 [connection signal="tree_entered" from="." to="." method="_on_FromWall_tree_entered"]
-[connection signal="body_entered" from="Appear" to="." method="_on_Appear_body_entered"]
-[connection signal="body_entered" from="DisappearTop" to="." method="_on_Disappear_body_entered"]
-[connection signal="body_entered" from="DisappearBottom" to="." method="_on_Disappear_body_entered"]
+[connection signal="body_entered" from="ShowTrigger" to="." method="_on_ShowTrigger_body_entered"]
+[connection signal="body_exited" from="ShowTrigger" to="." method="_on_ShowTrigger_body_exited"]

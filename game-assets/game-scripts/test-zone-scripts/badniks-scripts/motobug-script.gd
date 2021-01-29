@@ -91,16 +91,20 @@ func _on_HitArea_body_entered(body):
 		player.animation.current_animation == "SpinDashCharge"
 		
 		if !player.invulnerable && !player_is_rolling:
-			player.velocity.x = 150 * (int(global_position.x < player.position.x) - int(global_position.x >= player.position.x));
-			player.velocity.y = -250 * cos(rotation_degrees)
-			player.is_grounded = false;
-			player.damage();
-			player.fsm.change_state("OnAir")
+			push_player(player)
 		elif player_is_rolling:
 			explode_audio_player.play(0);
 			if player.fsm.current_state == "OnAir":
-				player.velocity.y = -(player.velocity.y * 0.85) * cos(ground_angle)
+				var angle = position.angle_to(player.position)
+				player.velocity.y = -(player.velocity.y * 0.85) * cos(angle)
+				player.velocity.x = -(player.velocity.x * 0.85) * sin(angle)
 			var explode_instance = explode.instance();
 			explode_instance.position = global_position;
 			$"/root/main/Level".add_child(explode_instance);
 			get_parent().queue_free()
+
+func get_class():
+	return "Badnik"
+
+func is_class(class_name_value:String):
+	return class_name_value == get_class()

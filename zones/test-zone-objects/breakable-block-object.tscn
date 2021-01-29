@@ -4,46 +4,39 @@
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/break-area.gd" type="Script" id=2]
 [ext_resource path="res://zones/test-zone-objects/breaked-block-object.tscn" type="PackedScene" id=3]
 
-
-
-
-
-
-
-
-
-
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 14 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 24 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 24, 15 )
 
 [node name="BreakableBlock" type="Node2D"]
 script = ExtResource( 2 )
 block_scene = ExtResource( 3 )
 
-[node name="Body" type="StaticBody2D" parent="."]
-collision_mask = 0
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="Body"]
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 32, 48 )
 
-[node name="HitBox" type="CollisionShape2D" parent="Body"]
-shape = SubResource( 1 )
-
-[node name="BreakArea" type="Area2D" parent="Body"]
+[node name="BreakArea" type="Area2D" parent="."]
 gravity_vec = Vector2( 0, 0 )
 linear_damp = 0.0
 angular_damp = 0.0
 
-[node name="Area" type="CollisionShape2D" parent="Body/BreakArea"]
+[node name="Area" type="CollisionShape2D" parent="BreakArea"]
+modulate = Color( 0.494118, 0.823529, 0.87451, 1 )
 rotation = 1.5708
 shape = SubResource( 2 )
-[connection signal="body_entered" from="Body/BreakArea" to="." method="_on_BreakArea_body_entered"]
+
+[node name="Body" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HitBox" type="CollisionShape2D" parent="Body"]
+modulate = Color( 0.694118, 0.470588, 0.470588, 1 )
+shape = SubResource( 1 )
+[connection signal="body_entered" from="BreakArea" to="." method="_on_BreakArea_body_entered"]

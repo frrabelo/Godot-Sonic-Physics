@@ -7,20 +7,6 @@
 [ext_resource path="res://game-assets/game-sprites/logo-sprites/sonic-worlds-logo.png" type="Texture" id=5]
 [ext_resource path="res://game-assets/game-sprites/logo-sprites/github-logo.png" type="Texture" id=6]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.316129 )
 colors = PoolColorArray( 1, 1, 1, 1 )

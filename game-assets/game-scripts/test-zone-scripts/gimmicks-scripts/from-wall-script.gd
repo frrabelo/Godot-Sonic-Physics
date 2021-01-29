@@ -3,15 +3,15 @@ extends Node2D
 
 onready var fan:Node2D = get_node("FanContainer");
 var side:int
-export var quantity: int=1;
-export(float) var triggers_x=0 setget setTriggerPos, getTriggerPos
-export(float) var triggers_w=100 setget setTriggerW, getTriggerW;
+export(Vector2) var triggers_pos=Vector2(0, 0) setget setTriggerPos, get_trigger_pos
+export(Vector2) var triggers_size=Vector2(100, 100) setget set_trigger_size, get_trigger_size;
+export(Vector2) var final_pos setget set_final, get_final
 var rect:RectangleShape2D = RectangleShape2D.new();
-var appearRect:RectangleShape2D = RectangleShape2D.new()
-var maxMove:int;
 var show_trigger:Area2D;
-var hide_bottom:Area2D
-var hide_top:Area2D;
+export(Vector2) var init_pos setget set_init_pos, get_init_pos
+onready var anim = $Anim
+var editor_anim
+var animation = Animation.new()
 
 func _enter_tree():
 	_prepare()
@@ -19,77 +19,68 @@ func _enter_tree():
 func _on_FromWall_script_changed():
 	_prepare()
 
-func _ready():
-	maxMove = 32 * quantity
 
-func _physics_process(delta):
-	
-	var step = maxMove / 10;
-	var is_on_side = -int(fan.position.x < 0) + int (fan.position.x > 0)
-	if fan != null:
-		if side == 0:
-			if fan.position.x != 0:
-				fan.move_local_x(-is_on_side * step);
-			else:
-				set_physics_process(false)
-		else:
-			if abs(fan.position.x) < maxMove:
-				fan.move_local_x(side * step);
-			else:
-				print("limit")
-				set_physics_process(false)
-
-func _on_Appear_body_entered(body):
-	if body.name == "Player":
-		var player:PlayerPhysics = body;
-		if side == 0:
-			side = - int(player.position.x < position.x) + int(player.position.x > position.x)
-			set_physics_process(true)
-
-func _on_Disappear_body_entered(body):
-	if body.name == "Player":
-		if side != 0:
-			side = 0;
-			set_physics_process(true)
 
 func setTriggers():
-	if has_node("Appear"):
-		show_trigger = $Appear;
-	if has_node("DisappearBottom"):
-		hide_bottom = $DisappearBottom
-	if has_node("DisappearTop"):
-		hide_top = $DisappearTop
+	if has_node("ShowTrigger"):
+		show_trigger = $ShowTrigger;
+	
 
 func _prepare():
 	setTriggers()
-	appearRect.extents.y = 90
-	rect.extents.y = 3
-	show_trigger.get_node("Collide").shape = appearRect;
-	hide_top.get_node("Collide").shape = rect;
-	hide_bottom.get_node("Collide").shape = rect;
+	editor_anim = $Anim
+	show_trigger.get_node("CollisionTrigger").shape = rect;
 
-func setTriggerPos(pos:float):
+func setTriggerPos(pos:Vector2):
 	if show_trigger == null:
 		setTriggers()
 	if show_trigger != null:
-		show_trigger.position.x = pos;
-		hide_top.position.x = pos;
-		hide_bottom.position.x = pos;
+		show_trigger.position = pos;
 
-func getTriggerPos():
+func get_trigger_pos():
 	if show_trigger == null:
 		setTriggers()
 	if show_trigger != null:
-		return $Appear.position.x
+		return show_trigger.position
 	return 0
 
-func setTriggerW(size:float):
-	rect.extents.x = size
-	appearRect.extents.x = size;
+func set_trigger_size(size):
+	if show_trigger:
+		show_trigger.get_child(0).shape = rect
+	rect.extents = size
 
-func getTriggerW():
-	return rect.extents.x
+func get_trigger_size():
+	return rect.extents
 
+func set_final(pos:Vector2 = Vector2.ZERO):
+	if editor_anim:
+		editor_anim.get_animation("FromAtoB").track_set_key_value(0, 1, pos)
+
+func set_init_pos(pos:Vector2 = Vector2.ZERO):
+	if editor_anim:
+		editor_anim.get_animation("FromAtoB").track_set_key_value(0, 0, pos)
+
+func get_final():
+	if editor_anim:
+		return editor_anim.get_animation("FromAtoB").track_get_key_value(0, 1)
+
+func get_init_pos():
+	if editor_anim:
+		return editor_anim.get_animation("FromAtoB").track_get_key_value(0, 0)
 
 func _on_FromWall_tree_entered():
 	_prepare();
+
+
+func _on_ShowTrigger_body_entered(body):
+	if body.is_class("PlayerPhysics"):
+		print("player_enter")
+		if anim:
+			anim.play("FromAtoB", -1, 1)
+
+
+func _on_ShowTrigger_body_exited(body):
+	if body.is_class("PlayerPhysics"):
+		print("player_exit")
+		if anim:
+			anim.play_backwards("FromAtoB", -1)

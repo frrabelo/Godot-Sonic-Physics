@@ -3,14 +3,6 @@
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/breakable-block-part.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/BreakableBlock.png" type="Texture" id=2]
 
-
-
-
-
-
-
-
-
 [node name="Breaked" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {

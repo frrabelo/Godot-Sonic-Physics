@@ -28,3 +28,7 @@ func _process(delta):
 		$PlayerCamera/CameraScroll/HUD/TimeCounter.text = time;
 	if Input.is_action_just_pressed("ui_full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen
+
+
+func _prepare():
+	pass

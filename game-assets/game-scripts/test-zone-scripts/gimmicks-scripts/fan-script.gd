@@ -9,11 +9,12 @@ func _ready ():
 	set_process(false);
 
 func _on_areaStart_body_entered(body):
-	if body.name == "Player":
+	if body.is_class("PlayerPhysics"):
 		player = body;
 		player.is_grounded = false;
 		player.fsm.change_state("OnAir");
-		player.velocity.y -= 25;
+		if player.velocity.y > -16:
+			player.velocity.y += -16 * get_physics_process_delta_time();
 		player.has_jumped = false;
 		player.has_pushed = false;
 		player.is_floating = true;
@@ -28,14 +29,19 @@ func _on_areaStart_body_exited(body):
 func _process(delta):
 	if inside == true:
 		if player != null:
-			if player.velocity.y > -150:
-				player.velocity.y -= 25;
+			if player.is_grounded:
+				player.is_grounded = false
+				player.velocity.y = - 25
+			if player.velocity.y > -100:
+				player.velocity.y -= 25
+			else:
+				player.velocity.y = -100
 			player.is_grounded = false;
 		if anim.get_playing_speed() < 5:
 			anim.playback_speed += 0.1;
 	else:
-		if anim.get_playing_speed() > 0:
-			anim.playback_speed -= 0.1;
+		if anim.get_playing_speed() > 0.1:
+			anim.playback_speed -= 0.05;
 		else:
 			anim.stop(false);
 			set_process(false);

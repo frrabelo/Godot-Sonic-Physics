@@ -3,64 +3,49 @@
 [ext_resource path="res://game-assets/game-scripts/general-scripts/spring-script.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/general-sprites/RedSprings.png" type="Texture" id=3]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 3 )
-region = Rect2( 224, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 3 )
 region = Rect2( 192, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 224, 0, 32, 32 )
+
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 1 ) ],
-"loop": false,
-"name": "Normal",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": false,
 "name": "Push",
 "speed": 35.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": false,
+"name": "Normal",
+"speed": 5.0
 } ]
 
 [sub_resource type="Animation" id=10]
@@ -147,7 +132,7 @@ tracks/2/keys = {
 extents = Vector2( 16, 13 )
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 16, 9 )
+extents = Vector2( 16, 8 )
 
 [sub_resource type="RectangleShape2D" id=14]
 extents = Vector2( 16, 3 )
@@ -173,6 +158,7 @@ __meta__ = {
 }
 
 [node name="ActivateTrigger" type="CollisionShape2D" parent="ActivateArea"]
+modulate = Color( 0.894118, 0.54902, 0.882353, 1 )
 shape = SubResource( 12 )
 
 [node name="Body" type="StaticBody2D" parent="."]
@@ -180,12 +166,14 @@ collision_layer = 25
 collision_mask = 25
 
 [node name="HitBox" type="CollisionShape2D" parent="Body"]
-position = Vector2( 0, 7 )
+modulate = Color( 0.556863, 0.945098, 0.909804, 1 )
+position = Vector2( 0, 8 )
 shape = SubResource( 13 )
 
 [node name="JumpArea" type="Area2D" parent="Body"]
 
 [node name="JumpCollide" type="CollisionShape2D" parent="Body/JumpArea"]
+modulate = Color( 1, 0.494118, 0, 1 )
 position = Vector2( 0, -3 )
 shape = SubResource( 14 )
 disabled = true

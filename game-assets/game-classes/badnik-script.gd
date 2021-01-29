@@ -14,3 +14,7 @@ func uselessSetter(useless_value):
 
 func direction():
 	return (-int(!to_right) + int(to_right));
+
+func push_player(player:PlayerPhysics):
+	var direction = int(global_position.x < player.position.x) - int(global_position.x >= player.position.x)
+	player.damage(direction);

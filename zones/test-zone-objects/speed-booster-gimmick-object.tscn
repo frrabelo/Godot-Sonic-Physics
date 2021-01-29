@@ -4,37 +4,11 @@
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/gimmick-speed-booster.gd" type="Script" id=2]
 [ext_resource path="res://zones/test-zone-objects/speed-booster-bullet-object.tscn" type="PackedScene" id=3]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 4 )
 
 [node name="SonicBooster" type="Node2D"]
+z_index = 2
 script = ExtResource( 2 )
 bullet_scene = ExtResource( 3 )
 

@@ -8,28 +8,6 @@
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/fan-sprites/Fan0001.png" type="Texture" id=6]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/fan-sprites/Fan0000.png" type="Texture" id=7]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 106 )
 
@@ -63,6 +41,7 @@ script = ExtResource( 2 )
 [node name="Trigger" type="Area2D" parent="."]
 
 [node name="StartFan" type="CollisionShape2D" parent="Trigger"]
+modulate = Color( 0.309804, 0.858824, 0.705882, 1 )
 position = Vector2( 0, -94 )
 shape = SubResource( 1 )
 

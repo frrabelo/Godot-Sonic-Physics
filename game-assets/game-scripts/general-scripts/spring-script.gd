@@ -26,22 +26,22 @@ func _on_JumpArea_body_entered(body):
 		player.audio_player.play('spring');
 		var ground_angle = player.ground_angle();
 		if abs_rot == 0 || abs_rot == 180:
-			player.has_pushed = true;
-			player.velocity.x -= push_force * sin(rotation);
-			player.velocity.y -= push_force * cos(rotation);
 			player.rotation_degrees = 0
+			player.velocity.y = -push_force * cos(rotation);
+			player.position += player.velocity * 1.5 * get_physics_process_delta_time()
 			player.is_grounded = false
 			player.has_jumped = false
+			player.is_floating = false
 			player.has_pushed = true
 			player.fsm.change_state('OnAir');
 		elif abs_rot == 90 || abs_rot == 270:
-			print(player.ground_mode)
 			if player.is_grounded:
 				if player.ground_mode == 0:
 					player.gsp = push_force*1.5 * sin(rotation);
 				else:
 					if abs(player.ground_mode) == 1:
 						player.velocity.x = push_force * -player.ground_mode;
+						player.position.x += player.velocity.x * get_physics_process_delta_time()
 						player.velocity.y = 0;
 					player.is_grounded = false;
 					player.fsm.change_state("OnAir")
