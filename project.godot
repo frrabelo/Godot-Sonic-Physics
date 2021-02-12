@@ -86,6 +86,10 @@ config/use_custom_user_dir=true
 boot_splash/fullsize=false
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalScript="*res://game-assets/game-classes/global-script.gd"
+
 [debug]
 
 gdscript/completion/autocomplete_setters_and_getters=true

@@ -164,6 +164,8 @@
 [ext_resource path="res://game-assets/audio/sfx/lose-rings.wav" type="AudioStream" id=162]
 [ext_resource path="res://game-assets/audio/sfx/hyper-ring.wav" type="AudioStream" id=163]
 
+
+
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 27 ) ],

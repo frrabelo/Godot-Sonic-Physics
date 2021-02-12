@@ -83,6 +83,7 @@ func _process(delta):
 	low_collider.set_deferred("disabled", !roll_anim)
 	left_ground.position.x = -9 if !roll_anim else -7
 	right_ground.position.x = 9 if !roll_anim else 7
+	ray_collider.set_deferred("disabled", roll_anim && fsm.current_state == 'OnAir')
 	
 	direction.x = \
 	-Input.get_action_strength("ui_left") +\
@@ -134,8 +135,6 @@ func physics_step():
 		if abs(gsp) < 500:
 			gsp += 100 * character.scale.x
 		is_rolling = true
-		
-		print("const")
 
 func fall_from_ground():
 	if abs(gsp) < FALL and ground_mode != 0:
