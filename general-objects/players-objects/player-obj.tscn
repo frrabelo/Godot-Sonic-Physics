@@ -166,16 +166,6 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 152 ), ExtResource( 153 ), ExtResource( 155 ), ExtResource( 154 ), ExtResource( 150 ), ExtResource( 138 ), ExtResource( 139 ), ExtResource( 142 ), ExtResource( 141 ), ExtResource( 135 ), ExtResource( 136 ), ExtResource( 149 ), ExtResource( 134 ), ExtResource( 151 ), ExtResource( 133 ), ExtResource( 148 ), ExtResource( 144 ), ExtResource( 147 ), ExtResource( 132 ), ExtResource( 140 ), ExtResource( 146 ), ExtResource( 145 ), ExtResource( 137 ), ExtResource( 143 ) ],
-"loop": true,
-"name": "Rotating",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 102 ), ExtResource( 104 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 101 ), ExtResource( 97 ), ExtResource( 96 ), ExtResource( 95 ), ExtResource( 98 ), ExtResource( 103 ) ],
-"loop": true,
-"name": "DropCharge",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
 "loop": true,
 "name": "Down",
@@ -186,9 +176,54 @@ animations = [ {
 "name": "Idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 160 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 157 ), ExtResource( 156 ) ],
+"loop": true,
+"name": "Hurt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 108 ), ExtResource( 106 ), ExtResource( 107 ), ExtResource( 105 ) ],
+"loop": true,
+"name": "SuperPeelOut",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 87 ), ExtResource( 84 ), ExtResource( 90 ), ExtResource( 92 ), ExtResource( 89 ), ExtResource( 85 ), ExtResource( 91 ) ],
+"loop": true,
+"name": "Braking",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 86 ), ExtResource( 93 ) ],
+"loop": true,
+"name": "BrakeLoop",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 94 ), ExtResource( 88 ), ExtResource( 83 ) ],
+"loop": true,
+"name": "ReturnPostBraking",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 119 ), ExtResource( 112 ), ExtResource( 115 ), ExtResource( 113 ), ExtResource( 118 ), ExtResource( 111 ), ExtResource( 110 ), ExtResource( 114 ), ExtResource( 117 ), ExtResource( 116 ) ],
 "loop": true,
 "name": "SpringJump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 80 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 76 ), ExtResource( 81 ), ExtResource( 82 ), ExtResource( 74 ), ExtResource( 75 ), ExtResource( 77 ) ],
+"loop": true,
+"name": "Spindash",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 125 ), ExtResource( 126 ), ExtResource( 122 ), ExtResource( 123 ), ExtResource( 124 ), ExtResource( 127 ), ExtResource( 121 ), ExtResource( 128 ), ExtResource( 129 ), ExtResource( 130 ) ],
+"loop": true,
+"name": "Pushing",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 152 ), ExtResource( 153 ), ExtResource( 155 ), ExtResource( 154 ), ExtResource( 150 ), ExtResource( 138 ), ExtResource( 139 ), ExtResource( 142 ), ExtResource( 141 ), ExtResource( 135 ), ExtResource( 136 ), ExtResource( 149 ), ExtResource( 134 ), ExtResource( 151 ), ExtResource( 133 ), ExtResource( 148 ), ExtResource( 144 ), ExtResource( 147 ), ExtResource( 132 ), ExtResource( 140 ), ExtResource( 146 ), ExtResource( 145 ), ExtResource( 137 ), ExtResource( 143 ) ],
+"loop": true,
+"name": "Rotating",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 73 ), ExtResource( 70 ) ],
+"loop": true,
+"name": "UpToIdle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 72 ), ExtResource( 28 ), ExtResource( 56 ), ExtResource( 49 ), ExtResource( 69 ) ],
@@ -201,34 +236,14 @@ animations = [ {
 "name": "Running",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 80 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 76 ), ExtResource( 81 ), ExtResource( 82 ), ExtResource( 74 ), ExtResource( 75 ), ExtResource( 77 ) ],
-"loop": true,
-"name": "Spindash",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 160 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 157 ), ExtResource( 156 ) ],
-"loop": true,
-"name": "Hurt",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 87 ), ExtResource( 84 ), ExtResource( 90 ), ExtResource( 92 ), ExtResource( 89 ), ExtResource( 85 ), ExtResource( 91 ) ],
-"loop": true,
-"name": "Braking",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 24 ), ExtResource( 22 ), ExtResource( 32 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ), ExtResource( 29 ), ExtResource( 40 ), ExtResource( 44 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ) ],
 "loop": true,
 "name": "Walking",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 86 ), ExtResource( 93 ) ],
+"frames": [ ExtResource( 102 ), ExtResource( 104 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 101 ), ExtResource( 97 ), ExtResource( 96 ), ExtResource( 95 ), ExtResource( 98 ), ExtResource( 103 ) ],
 "loop": true,
-"name": "BrakeLoop",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 63 ), ExtResource( 57 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 34 ), ExtResource( 50 ), ExtResource( 36 ), ExtResource( 64 ), ExtResource( 53 ), ExtResource( 68 ) ],
-"loop": true,
-"name": "Jogging",
+"name": "DropCharge",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 37 ), ExtResource( 67 ), ExtResource( 35 ), ExtResource( 39 ), ExtResource( 38 ), ExtResource( 46 ), ExtResource( 45 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 60 ) ],
@@ -236,24 +251,9 @@ animations = [ {
 "name": "Jumping_Rolling",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 73 ), ExtResource( 70 ) ],
+"frames": [ ExtResource( 63 ), ExtResource( 57 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 34 ), ExtResource( 50 ), ExtResource( 36 ), ExtResource( 64 ), ExtResource( 53 ), ExtResource( 68 ) ],
 "loop": true,
-"name": "UpToIdle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 108 ), ExtResource( 106 ), ExtResource( 107 ), ExtResource( 105 ) ],
-"loop": true,
-"name": "SuperPeelOut",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 125 ), ExtResource( 126 ), ExtResource( 122 ), ExtResource( 123 ), ExtResource( 124 ), ExtResource( 127 ), ExtResource( 121 ), ExtResource( 128 ), ExtResource( 129 ), ExtResource( 130 ) ],
-"loop": true,
-"name": "Pushing",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 94 ), ExtResource( 88 ), ExtResource( 83 ) ],
-"loop": true,
-"name": "ReturnPostBraking",
+"name": "Jogging",
 "speed": 5.0
 } ]
 script = ExtResource( 21 )
@@ -997,11 +997,11 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=22]
-extents = Vector2( 10, 11 )
 
 [sub_resource type="RectangleShape2D" id=23]
 
 [sub_resource type="RayShape2D" id=24]
+length = 19.0
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
@@ -1138,7 +1138,7 @@ stream = ExtResource( 164 )
 
 [node name="HighCollider" type="CollisionShape2D" parent="."]
 modulate = Color( 0, 0.52549, 0.988235, 1 )
-position = Vector2( 0, -3 )
+position = Vector2( 0, -5 )
 shape = SubResource( 22 )
 
 [node name="LowCollider" type="CollisionShape2D" parent="."]
@@ -1153,37 +1153,45 @@ light_mask = 0
 shape = SubResource( 24 )
 
 [node name="LeftGroundSensor" type="RayCast2D" parent="."]
+visible = false
 modulate = Color( 0.0901961, 1, 0.0117647, 1 )
 position = Vector2( -9, 0 )
 enabled = true
 cast_to = Vector2( 0, 35 )
 
 [node name="MiddleGroundSensor" type="RayCast2D" parent="."]
+visible = false
 modulate = Color( 0.0901961, 1, 0.0117647, 1 )
 enabled = true
 cast_to = Vector2( 0, 35 )
 
 [node name="RightGroundSensor" type="RayCast2D" parent="."]
+visible = false
 modulate = Color( 0.0901961, 1, 0.0117647, 1 )
 position = Vector2( 9, 0 )
 enabled = true
 cast_to = Vector2( 0, 35 )
 
 [node name="RightWallSensor" type="RayCast2D" parent="."]
+visible = false
 enabled = true
 cast_to = Vector2( 12, 0 )
 
 [node name="LeftWallSensor" type="RayCast2D" parent="."]
+visible = false
 enabled = true
 cast_to = Vector2( -12, 0 )
 
 [node name="RightWallSensorBottom" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 enabled = true
 cast_to = Vector2( 12, 0 )
 
 [node name="LeftWallSensorBottom" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 enabled = true
 cast_to = Vector2( -12, 0 )
+
 [connection signal="animation_finished" from="Characters/Sonic/CharAnimation" to="StateMachine/OnGround" method="_on_CharAnimation_animation_finished"]

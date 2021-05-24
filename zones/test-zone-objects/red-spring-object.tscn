@@ -152,6 +152,7 @@ anims/Push = SubResource( 10 )
 anims/Stop = SubResource( 11 )
 
 [node name="ActivateArea" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, -20 )
 __meta__ = {
 "_edit_group_": true
@@ -160,6 +161,7 @@ __meta__ = {
 [node name="ActivateTrigger" type="CollisionShape2D" parent="ActivateArea"]
 modulate = Color( 0.894118, 0.54902, 0.882353, 1 )
 shape = SubResource( 12 )
+disabled = true
 
 [node name="Body" type="StaticBody2D" parent="."]
 collision_layer = 25
@@ -171,13 +173,12 @@ position = Vector2( 0, 8 )
 shape = SubResource( 13 )
 
 [node name="JumpArea" type="Area2D" parent="Body"]
+position = Vector2( 0, -4 )
 
 [node name="JumpCollide" type="CollisionShape2D" parent="Body/JumpArea"]
 modulate = Color( 1, 0.494118, 0, 1 )
-position = Vector2( 0, -3 )
 shape = SubResource( 14 )
-disabled = true
-one_way_collision = true
+
 [connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="ActivateArea" to="." method="_on_ActivateArea_body_entered"]
 [connection signal="body_exited" from="ActivateArea" to="." method="_on_ActivateArea_body_exited"]

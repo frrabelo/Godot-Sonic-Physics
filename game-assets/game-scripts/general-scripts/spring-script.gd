@@ -1,7 +1,6 @@
 tool
-extends Node2D
+extends StaticNode2D
 
-export var direction:int = 0 setget setRot, getRot;
 export var push_force = 500;
 onready var sprite = $Sprite;
 onready var jump_collide = $Body/JumpArea/JumpCollide
@@ -11,40 +10,36 @@ signal pushed_by_spring
 func _ready():
 	rotation_degrees = floor(rotation_degrees);
 
-func setRot(value:int):
-	direction = value%4
-	rotation_degrees = [0, 90, 180, 270][direction];
-
-func getRot():
-	return direction;
-
 func _on_JumpArea_body_entered(body):
 	if body is PlayerPhysics:
 		var player:PlayerPhysics = body;
-		var abs_rot:float = abs(fmod(rotation_degrees, 360))
+		var abs_rot:float = abs(rotation_n)
 		animplayer.play("Push", -1, 2);
 		player.audio_player.play('spring');
-		var ground_angle = player.ground_angle();
-		if abs_rot == 0 || abs_rot == 180:
-			player.rotation_degrees = 0
-			player.velocity.y = -push_force * cos(rotation);
-			player.position += player.velocity * 1.5 * get_physics_process_delta_time()
-			player.is_grounded = false
-			player.has_jumped = false
-			player.is_floating = false
-			player.has_pushed = true
-			player.fsm.change_state('OnAir');
-		elif abs_rot == 90 || abs_rot == 270:
+		#var ground_angle = player.ground_angle();
+		var vel : float = -push_force * cos(rotation);
+		player.velocity.y = vel
+		if abs_rot == 0 or abs_rot == 2:
 			if player.is_grounded:
-				if player.ground_mode == 0:
-					player.gsp = push_force*1.5 * sin(rotation);
-				else:
-					if abs(player.ground_mode) == 1:
-						player.velocity.x = push_force * -player.ground_mode;
-						player.position.x += player.velocity.x * get_physics_process_delta_time()
-						player.velocity.y = 0;
-					player.is_grounded = false;
-					player.fsm.change_state("OnAir")
+				player.snap_margin = 0
+				player.is_grounded = false
+				player.has_jumped = false
+				player.is_floating = false
+				player.fsm.change_state("OnAir")
+			player.rotation = 0
+			player.has_pushed = true
+		elif abs_rot == 1 or abs_rot == 3:
+			if player.is_grounded:
+				match player.ground_mode:
+					0:
+						player.gsp = push_force*1.5 * sin(rotation);
+					_:
+						if abs(player.ground_mode) == 1:
+							player.velocity.x = push_force * -player.ground_mode;
+							player.position.x += player.velocity.x * get_physics_process_delta_time()
+							player.velocity.y = 0;
+						player.is_grounded = false;
+						player.fsm.change_state("OnAir")
 			else:
 				player.velocity.x = push_force*1.5 * sin(rotation);
 

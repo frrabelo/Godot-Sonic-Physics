@@ -18,6 +18,9 @@ func setRing(value:int):
 func getRings():
 	return ring;
 
+func get_global_mouse_position() -> Vector2:
+	return Node2D.new().get_global_mouse_position()
+
 func _process(delta):
 	count += delta;
 	seconds = int(count) % 60;

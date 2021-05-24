@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-class_name PlayerPhysics
-
 signal damaged
 
 export(float) var ACC = 4.6875
@@ -102,24 +100,16 @@ func _process(delta):
 
 func physics_step():
 	position.x = max(position.x, 9.0)
-	var ground_ray = get_ground_ray()
-	is_ray_colliding = (ground_ray != null)
 	
-	if is_on_ground():
+	if is_on_floor():
 		is_grounded = true
 	
 	var can_break = abs(gsp) > 270 && is_rolling
 	
 	var coll = [self, middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
 	
-	for i in coll:
-		i.set_collision_mask_bit(5, !can_break)
-		if !i.is_class("RayCast2D"):
-			i.set_collision_layer_bit(5, !can_break)
-	
-	if is_grounded && ground_ray:
-		ground_point = ground_ray.get_collision_point()
-		ground_normal = ground_ray.get_collision_normal()
+	if is_grounded:
+		ground_normal = get_floor_normal()
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
 		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
 	else:
@@ -198,51 +188,6 @@ func ground_reacquisition():
 
 func ground_angle():
 	return ground_normal.angle_to(Vector2(0, -1))
-
-func is_on_ground():
-	var ground_ray = get_ground_ray()
-	if ground_ray != null:
-		var point = ground_ray.get_collision_point()
-		var normal = ground_ray.get_collision_normal()
-		if velocity.y >= 0:
-			if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
-				return position.y + 25 > point.y
-	
-	return false
-
-func get_ground_ray():
-	can_fall = true
-	
-	if !left_ground.is_colliding() && !right_ground.is_colliding():
-		return null
-	elif !left_ground.is_colliding() && right_ground.is_colliding():
-		return right_ground
-	elif !right_ground.is_colliding() && left_ground.is_colliding():
-		return left_ground
-	
-	can_fall = false
-	
-	var left_point : float
-	var right_point : float
-	
-	match ground_mode:
-		0:
-			left_point = -left_ground.get_collision_point().y
-			right_point = -right_ground.get_collision_point().y
-		1:
-			left_point = -left_ground.get_collision_point().x
-			right_point = -right_ground.get_collision_point().x
-		2:
-			left_point = left_ground.get_collision_point().y
-			right_point = right_ground.get_collision_point().y
-		-1:
-			left_point = left_ground.get_collision_point().x
-			right_point = right_ground.get_collision_point().x
-	
-	if left_point >= right_point:
-		return left_ground
-	else:
-		return right_ground
 
 func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	var have_rings:bool = false;

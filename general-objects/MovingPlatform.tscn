@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/chr011.png" type="Texture" id=1]
-[ext_resource path="res://game-assets/game-scripts/general-scripts/moving-platform-script.gd" type="Script" id=2]
+[ext_resource path="res://addons/MovingPlatformTool/moving-platform-object-script.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -10,7 +10,7 @@ extents = Vector2( 40, 16 )
 [sub_resource type="Animation" id=2]
 resource_local_to_scene = true
 resource_name = "Moving"
-length = 2.5
+length = 2.0
 step = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("MovingPlatform:position")
@@ -19,15 +19,18 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.5, 2 ),
+"times": PoolRealArray( 0.5, 1.5 ),
 "transitions": PoolRealArray( -1.46409, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 219, 97 ) ]
 }
 
 [node name="PlatformContainer" type="Node2D"]
+scale = Vector2( 0.902001, 0.951601 )
 script = ExtResource( 2 )
-time = 1.5
+loop = true
+speed = 400.0
+preview_color = Color( 0.00784314, 0.87451, 0.87451, 0.498039 )
 
 [node name="MovingPlatform" type="KinematicBody2D" parent="."]
 collision/safe_margin = 1.0
@@ -42,6 +45,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 80, 32 )
 
 [node name="Coll" type="CollisionShape2D" parent="MovingPlatform"]
+visible = false
 modulate = Color( 0, 0.529412, 0.996078, 1 )
 shape = SubResource( 1 )
 one_way_collision = true
@@ -49,5 +53,5 @@ one_way_collision = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Moving"
 anims/Moving = SubResource( 2 )
-[connection signal="tree_entered" from="." to="." method="_prepare"]
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

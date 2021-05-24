@@ -1,26 +1,43 @@
 extends Area2D
+tool
 
 enum Switch { LEFT_TO_RIGHT, RIGHT_TO_LEFT, INVERT }
-export(Switch) var SWITCH_MODE = Switch.LEFT_TO_RIGHT
+export(Switch) var SWITCH_MODE = Switch.LEFT_TO_RIGHT setget _set_switch_mode
 
 var check_mask : int
 var uncheck_mask : int
 
 func left_to_right():
-	check_mask = 2
-	uncheck_mask = 1
-
-func right_to_left():
-	check_mask = 1
-	uncheck_mask = 2
-
-func invert(is_left_activated, is_right_activated):
-	if is_left_activated :
+	if !Engine.editor_hint:
 		check_mask = 2
 		uncheck_mask = 1
-	elif is_right_activated :
+
+func right_to_left():
+	if !Engine.editor_hint:
 		check_mask = 1
 		uncheck_mask = 2
+
+func invert(is_left_activated, is_right_activated):
+	if !Engine.editor_hint:
+		if is_left_activated :
+			check_mask = 2
+			uncheck_mask = 1
+		elif is_right_activated :
+			check_mask = 1
+			uncheck_mask = 2
+
+func _set_switch_mode(val):
+	SWITCH_MODE = val
+	update()
+
+func _draw() -> void:
+	match SWITCH_MODE:
+		Switch.LEFT_TO_RIGHT:
+			modulate = Color.red
+		Switch.RIGHT_TO_LEFT:
+			modulate = Color(0.1, 0.5, 0.7)
+		Switch.INVERT:
+			modulate = Color.purple
 
 func _on_Area2D_body_entered(body):
 	if body.name == 'Player':
@@ -39,9 +56,9 @@ func _on_Area2D_body_entered(body):
 				invert(left, right)
 		var collision_masks = [
 			player,
-			player.middle_ground,
 			player.left_ground,
-			player.right_ground
+			player.right_ground,
+			player.middle_ground
 		]
 		
 		for i in collision_masks:

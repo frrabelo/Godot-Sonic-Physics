@@ -1,16 +1,17 @@
 extends Node
 
-export onready var states = {
-	'OnGround' : $OnGround,
-	'OnAir' : $OnAir,
-	'SpinDash' : $SpinDash,
-	'SuperPeelOut' : $SuperPeelOut,
-}
+onready var states:Dictionary
 
 onready var host = get_parent();
 
 var current_state = 'OnGround'
 var previous_state = null
+
+func _ready() -> void:
+	for i in get_children():
+		if i.is_class("State"):
+			states[i.name] = i
+	print(states)
 
 func _physics_process(delta):
 	host.physics_step()
@@ -26,11 +27,13 @@ func _physics_process(delta):
 	);
 	
 	var bottom_snap:Vector2 = -top_collide * host.snap_margin
-	
-	host.velocity = host.move_and_slide(\
+#	print(bottom_snap)
+	#print_debug(bottom_snap)
+	host.velocity = host.move_and_slide_with_snap(\
 		host.velocity,\
-		top_collide,\
-		false,\
+		bottom_snap,
+		host.up_direction,\
+		true,\
 		4,
 		deg2rad(75),\
 		true

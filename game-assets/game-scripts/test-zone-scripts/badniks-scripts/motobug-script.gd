@@ -14,7 +14,7 @@ func uselessSetter(useless_value):
 	pass
 
 func direction():
-	return (-int(!to_right) + int(to_right));
+	return Utils.sign_bool(to_right);
 
 func _ready():
 	speed.x = max_speed.x * direction()

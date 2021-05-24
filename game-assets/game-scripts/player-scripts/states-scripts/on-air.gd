@@ -12,13 +12,14 @@ var dropCharging : bool
 var dropDust : PackedScene = preload("res://general-objects/players-objects/drop-dash-dust.tscn");
 var is_floating
 var override_anim : String
+var post_damage:bool
 
 func enter(host):
 	host.character.rotation = 0;
 	dropPress = true;
 	was_damaged = host.was_damaged;
+	host.snap_margin = 0
 	if was_damaged:
-		host.invulnerable = true;
 		host.control_locked = true;
 	is_floating = host.is_floating;
 	if !is_floating:
@@ -43,27 +44,36 @@ func enter(host):
 
 func step(host, delta):
 	
-	if host.is_on_ceiling():
-		host.velocity.y = 0;
-	
-	if host.is_floating:
-		is_floating = true
-		has_pushed = false;
-		has_jumped = false;
-		roll_jump = false;
-		dropCharging = false;
-	
 	if host.has_pushed:
 		has_pushed = true;
 		has_jumped = false;
 		has_rolled = false;
 		roll_jump = false;
 		dropCharging = false;
-
+	
+	if !host.was_damaged && !host.is_grounded:
+		was_damaged = false
+	
+	if host.was_damaged || host.is_floating:
+		has_pushed = false;
+		has_jumped = false;
+		roll_jump = false;
+		dropCharging = false;
+		was_damaged = host.was_damaged
+		if host.is_floating:
+			is_floating = false
+			was_damaged = false
+	
+	if host.is_on_ceiling() && !has_pushed:
+		host.velocity.y = 0;
+	elif host.is_on_ceiling() && has_pushed:
+		has_pushed = false
+	#print(-Vector2(0, -1).floor())
 	if host.is_grounded:
 		#print(host.is_on_floor(), host.is_grounded)
-		host.ground_reacquisition()
-		return 'OnGround'
+		if host.velocity.sign().y == -host.up_direction.sign().y:
+			host.ground_reacquisition()
+			return 'OnGround'
 	
 	#print(host.is_grounded)
 	

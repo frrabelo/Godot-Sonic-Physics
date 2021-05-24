@@ -17,3 +17,9 @@ func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
 
 func _on_animation_finished(anim_name: String):
 	pass
+
+func get_class():
+	return "State"
+
+func is_class(name:String):
+	return get_class() == name || .is_class(name)

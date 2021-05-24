@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://game-assets/game-classes/improved-sprite-frames-scripts.gd"
 }, {
 "base": "Node2D",
+"class": "MovingPlatformObject",
+"language": "GDScript",
+"path": "res://addons/MovingPlatformTool/moving-platform-object-script.gd"
+}, {
+"base": "Node2D",
 "class": "NumCounter",
 "language": "GDScript",
 "path": "res://game-assets/game-classes/num-digit.gd"
@@ -63,6 +68,16 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/player-scripts/state.gd"
+}, {
+"base": "Node2D",
+"class": "StaticNode2D",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/general-scripts/4way-rotation.gd"
+}, {
+"base": "Reference",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://addons/Utils/utils.gd"
 } ]
 _global_script_class_icons={
 "AudioPlayer": "",
@@ -70,12 +85,15 @@ _global_script_class_icons={
 "BlockGen": "",
 "CharacterAnimator": "",
 "ImprovedSpriteFrames": "",
+"MovingPlatformObject": "",
 "NumCounter": "",
 "PlayerCamera": "",
 "PlayerPhysics": "",
 "Ring": "",
 "SFXPlayer": "",
-"State": ""
+"State": "",
+"StaticNode2D": "",
+"Utils": ""
 }
 
 [application]
@@ -106,6 +124,10 @@ window/size/test_height=540
 window/handheld/orientation="sensor_landscape"
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/MovingPlatformTool/plugin.cfg" )
 
 [importer_defaults]
 
