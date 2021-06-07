@@ -95,9 +95,9 @@ func _on_HitArea_body_entered(body):
 		elif player_is_rolling:
 			explode_audio_player.play(0);
 			if player.fsm.current_state == "OnAir":
-				var angle = position.angle_to(player.position)
-				player.velocity.y = -(player.velocity.y * 0.85) * cos(angle)
-				player.velocity.x = -(player.velocity.x * 0.85) * sin(angle)
+				var angle = rotation
+				player.speed.y -= (player.speed.y * 1.85) * cos(angle)
+				player.speed.x -= (player.speed.x * 1.85) * sin(angle)
 			var explode_instance = explode.instance();
 			explode_instance.position = global_position;
 			$"/root/main/Level".add_child(explode_instance);

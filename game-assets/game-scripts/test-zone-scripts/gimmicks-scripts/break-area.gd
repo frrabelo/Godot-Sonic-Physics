@@ -4,7 +4,7 @@ onready var breakingSound:AudioStreamPlayer = $"/root/main/LevelSFX/WallBreak";
 onready var breakingSound2:AudioStreamPlayer = $"/root/main/LevelSFX/CliffBreaking";
 onready var level = $"/root/main/Level"
 onready var hitBox = $"Body/HitBox"
-var min_speed = 270;
+var min_speed = 250;
 func spawnBlock(pos:Vector2, speed:Vector2, body):
 	var block:Node2D = block_scene.instance();
 	block.speed = speed;
@@ -13,15 +13,18 @@ func spawnBlock(pos:Vector2, speed:Vector2, body):
 	level.add_child(block);
 
 func _on_BreakArea_body_entered(body):
+
 	if body.is_class("PlayerPhysics"):
+		print("e")
 		var player:PlayerPhysics = body
 		if player.is_grounded:
 			if player.is_rolling:
+				print("e")
 				if abs(player.gsp) > min_speed:
 					breakingSound.play()
 					breakingSound2.play()
 					var speed:Vector2
-					speed = player.velocity
+					speed = player.speed
 					for i in range(0, 3):
 						for j in 2:
 							speed.x += j * 20
@@ -33,4 +36,3 @@ func _on_BreakArea_body_entered(body):
 							)
 					queue_free()
 					
-

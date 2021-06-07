@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://general-objects/ring-object.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/CircleObjectManipulator/ObjectsCircle.gd" type="Script" id=2]
+
+[node name="CircleObjects" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+scene = ExtResource( 1 )
+radius = 61.2046
+object_count = 8
+blank_position = "11111"
+rotate = true
+rotation_speed = 2.0

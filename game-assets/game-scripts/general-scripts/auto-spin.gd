@@ -10,6 +10,6 @@ func _on_AutoSpin_body_entered(body):
 		var player:PlayerPhysics = body
 		if impulse:
 			if !player.constant_roll:
-				player.gsp += 300 * player.character.scale.x
+				player.gsp += 300 * player.selected_character.scale.x
 		if spin:
 			player.constant_roll = !player.constant_roll

@@ -3,95 +3,101 @@ extends '../state.gd'
 var was_damaged : bool
 var has_jumped : bool
 var has_rolled : bool
-var has_pushed : bool
+var spring_loaded : bool
 var roll_jump : bool
 var can_attack : bool
-var dropTimer : Timer;
-var dropPress : bool;
-var dropCharging : bool
-var dropDust : PackedScene = preload("res://general-objects/players-objects/drop-dash-dust.tscn");
 var is_floating
 var override_anim : String
 var post_damage:bool
+var prev_frame_state:PoolStringArray = []
 
-func enter(host):
-	host.character.rotation = 0;
-	dropPress = true;
+func enter(host, prev_state):
+	prev_frame_state.push_back(prev_state)
+	#print(prev_state)
+	host.characters.rotation = 0;
 	was_damaged = host.was_damaged;
-	host.snap_margin = 0
+	#print(was_damaged)
 	if was_damaged:
 		host.control_locked = true;
 	is_floating = host.is_floating;
 	if !is_floating:
-		has_pushed = host.has_pushed
-		host.has_pushed = false
-		if !has_pushed:
+		spring_loaded = host.spring_loaded
+	#	print(spring_loaded)
+		if !spring_loaded:
 			has_jumped = host.has_jumped
 			has_rolled = host.is_rolling
 		else:
 			has_jumped = false
 			has_rolled = false
 	else:
-		has_pushed = false;
+		spring_loaded = false;
+		has_jumped = false
+		has_rolled = false
 		
 	host.sprite.offset = Vector2(0, 6) if (has_rolled || has_jumped) else host.sprite.offset
 	can_attack = has_jumped
 	host.has_jumped = false
 	host.is_rolling = false
-	host.has_pushed = false;
+	host.spring_loaded = false;
 	host.is_floating = false;
 	roll_jump = has_jumped && has_rolled
+	#print(host.has_jumped)
+	if host.selected_character.states.has(name):
+		var to_return = host.selected_character.states[name].exit(host, prev_state, self)
+		if to_return:
+			return to_return
 
 func step(host, delta):
+	if host.is_floating:
+		has_jumped = false
+		spring_loaded = false
+		has_rolled = false
+		is_floating = true
 	
-	if host.has_pushed:
-		has_pushed = true;
-		has_jumped = false;
-		has_rolled = false;
-		roll_jump = false;
-		dropCharging = false;
+	if host.spring_loaded:
+		spring_loaded = true
+		has_jumped = false
+		has_rolled = false
+		is_floating = false
 	
-	if !host.was_damaged && !host.is_grounded:
-		was_damaged = false
+	#print(spring_loaded, is_floating)
 	
-	if host.was_damaged || host.is_floating:
-		has_pushed = false;
-		has_jumped = false;
-		roll_jump = false;
-		dropCharging = false;
-		was_damaged = host.was_damaged
-		if host.is_floating:
-			is_floating = false
-			was_damaged = false
-	
-	if host.is_on_ceiling() && !has_pushed:
-		host.velocity.y = 0;
-	elif host.is_on_ceiling() && has_pushed:
-		has_pushed = false
+	if host.is_on_ceiling() && !spring_loaded:
+		if host.speed.y < 0:
+			host.speed.y = 0;
 	#print(-Vector2(0, -1).floor())
-	if host.is_grounded:
-		#print(host.is_on_floor(), host.is_grounded)
-		if host.velocity.sign().y == -host.up_direction.sign().y:
-			host.ground_reacquisition()
-			return 'OnGround'
 	
-	#print(host.is_grounded)
-	
-	host.velocity.x = 0 if host.is_wall_left && host.velocity.x < 0 else host.velocity.x
-	host.velocity.x = 0 if host.is_wall_right && host.velocity.x > 0 else host.velocity.x
+	host.speed.x = 0 if host.is_wall_left && host.speed.x < 0 else host.speed.x
+	host.speed.x = 0 if host.is_wall_right && host.speed.x > 0 else host.speed.x
 
 	var can_move = true if !host.control_locked && !roll_jump else false
 	var no_rotation = has_jumped or has_rolled
 	host.rotation_degrees = int(lerp(host.rotation_degrees, 0, .2)) if !no_rotation else 0
 	
+	#print(prev_frame_state)
+	if host.is_grounded:
+		if prev_frame_state[0] != "OnGround":
+	#	if host.speed.y >= -50:
+			host.spring_loaded = false
+			host.ground_reacquisition()
+			return 'OnGround'
+	
+	prev_frame_state.push_back("OnAir")
+	if prev_frame_state.size() > 25:
+		prev_frame_state.remove(0)
+	if prev_frame_state[0] != "OnGround":
+		host.set_rays(true)
+	#print(prev_frame_state)
+	
+	
 	if host.direction.x < 0 && can_move:
-		if host.velocity.x > -host.TOP:
-			host.velocity.x -= host.AIR
+		if host.speed.x > -host.TOP:
+			host.speed.x -= host.AIR
 	elif host.direction.x > 0 && can_move:
-		if host.velocity.x < host.TOP:
-			host.velocity.x += host.AIR;
-	if !has_pushed:
-		if host.instaShield:
+		if host.speed.x < host.TOP:
+			host.speed.x += host.AIR;
+	if !spring_loaded:
+		if host.selected_character.instaShield:
 			if Input.is_action_just_pressed("ui_jump") and\
 			can_attack:
 				host.player_vfx.play('InstaShield', true)
@@ -99,61 +105,34 @@ func step(host, delta):
 				can_attack = false
 				roll_jump = false
 		if has_jumped:
-			if host.dropDash:
-				if Input.is_action_pressed("ui_jump") && !dropPress:
-					dropPress = true;
-					dropTimer = Timer.new();
-					self.add_child(dropTimer);
-					dropTimer.start(0.325);
-					dropTimer.connect("timeout", self, "_dropTimeOut", [host, delta]);
-				if Input.is_action_just_released("ui_jump"):
-					dropPress = false;
-					if (dropTimer != null):
-						dropTimer.stop();
-						if has_node(dropTimer.name):
-							self.remove_child(dropTimer);
-						dropTimer = null;
-					dropCharging = false;
-				if Input.is_action_just_released("ui_jump"): # has jumped
-					if host.velocity.y < -240.0: # set min jump height
-						host.velocity.y = -240.0
-	if host.velocity.y < 0 and host.velocity.y > -240:
-		host.velocity.x -= int(host.velocity.x / 7.5) /15360
-	host.velocity.y += host.GRV
-
-func _dropTimeOut(host, delta):
-	dropCharging = true;
-	host.audio_player.play('drop_dash_charge');
-	dropTimer.stop();
-	pass
+			if Input.is_action_just_released("ui_jump"): # has jumped
+				if host.speed.y < -240.0: # set min jump height
+					host.speed.y = -240.0
+	if host.speed.y < 0 and host.speed.y > -240:
+		host.speed.x -= int(host.speed.x / 7.5) /15360
+	
+	host.speed.y += host.GRV
+	
+	if host.selected_character.states.has(name):
+		var to_return = host.selected_character.states[name].step(host, delta, self)
+		if to_return:
+			return to_return
+	#print(host.speed)
 
 func exit(host, next_state):
+	prev_frame_state = []
 	is_floating = false;
 	host.is_floating = false;
 	if next_state == 'OnGround' || host.is_grounded:
 		if host.was_damaged:
 			host.control_locked = false
-			host.velocity.x = 0;
-			host.gsp = 0;
-		host.was_damaged = false;
-		if (dropCharging):
-			var dust:Node2D = dropDust.instance();
-			add_child(dust);
-			dust.position = host.position;
-			dust.get_child(0).scale.x = host.character.scale.x
-			if abs(host.gsp) < 480:
-				host.player_camera.delay(0.25);
-			if abs(host.gsp) < 560:
-				host.gsp = \
-					560 * host.character.scale.x;
-			dropCharging = false;
-			host.is_rolling = true;
-			host.audio_player.play("spin_dash_release")
-		if dropTimer != null:
-			dropTimer.queue_free();
-			dropPress = false;
-			dropTimer.stop();
-			dropTimer = null;
+			host.speed.x = 0
+			host.gsp = 0
+			host.was_damaged = false
+	if host.selected_character.states.has(name):
+		var to_return = host.selected_character.states[name].exit(host, next_state, self)
+		if to_return:
+			return to_return
 
 func animation_step(host, animator):
 	var anim_name = animator.current_animation
@@ -170,20 +149,22 @@ func animation_step(host, animator):
 			anim_name = "Rotating"
 			anim_speed = 3;
 		else:
-			if has_pushed:
+			if spring_loaded:
 				anim_name = "SpringJump"
 				anim_speed = 3;
 			else:
 				if has_jumped or has_rolled:
-					if !dropCharging:
-						anim_name = 'Rolling';
-						anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
-					else:
-						anim_name = 'DropCharge';
-						anim_speed = 4.5;
+					anim_name = 'Rolling';
+					anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
 	
-	host.character.scale.x = host.direction.x if host.direction.x != 0 else host.character.scale.x
+	if host.selected_character.states.has(name):
+		var dic = host.selected_character.states[name].animation_step(host, animator, self, [anim_name, anim_speed])
+		if dic:
+			anim_name = dic.anim_name
+			anim_speed = dic.anim_speed
+	
+	host.characters.scale.x = host.direction.x if host.direction.x != 0 else host.characters.scale.x
 	animator.animate(anim_name, anim_speed, true)
 
 func when_pushed_by_spring():
-	has_pushed = true;
+	spring_loaded = true;

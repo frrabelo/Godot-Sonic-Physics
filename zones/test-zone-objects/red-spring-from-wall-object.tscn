@@ -1,34 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/spring-from-wall-script.gd" type="Script" id=1]
-[ext_resource path="res://zones/test-zone-objects/red-spring-object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://general-objects/spring-object.tscn" type="PackedScene" id=2]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/spring-platform-from-wall-sprite.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 165 )
-
-[sub_resource type="Animation" id=2]
-resource_local_to_scene = true
-resource_name = "FromAtoB"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("SpPlat:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -180.0, 0.0 ]
-}
 
 [node name="RedSpringFromSolid" type="Node2D"]
 script = ExtResource( 1 )
-trigger_position = -9.0
-trigger_width = 10.0
+trigger_position = Vector2( -9, -166 )
+trigger_size = Vector2( 10, 165 )
 initial_angle = -180.0
+rotate_speed = 7.0
 
 [node name="SpPlat" type="Node2D" parent="."]
 rotation = -3.14159
@@ -43,7 +27,7 @@ texture = ExtResource( 3 )
 region_rect = Rect2( 1076, 2562, 32, 32 )
 
 [node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
-position = Vector2( -16, -16 )
+position = Vector2( -16, 0 )
 
 [node name="ShowTrigger" type="Area2D" parent="."]
 position = Vector2( -9, -166 )
@@ -53,11 +37,10 @@ __meta__ = {
 
 [node name="CollisionTrigger" type="CollisionShape2D" parent="ShowTrigger"]
 modulate = Color( 0.0117647, 0.988235, 0.827451, 1 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_speed = 5.0
-anims/FromAtoB = SubResource( 2 )
+[node name="Tween" type="Tween" parent="."]
+
 [connection signal="script_changed" from="." to="." method="_on_RedSpringFromSolid_script_changed"]
 [connection signal="body_entered" from="ShowTrigger" to="." method="_on_ShowTrigger_body_entered"]
 [connection signal="body_exited" from="ShowTrigger" to="." method="_on_ShowTrigger_body_exited"]

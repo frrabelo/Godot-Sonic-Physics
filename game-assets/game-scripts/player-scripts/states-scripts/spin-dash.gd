@@ -2,7 +2,7 @@ extends '../state.gd'
 
 var p : float # spin dash release power
 
-func enter(host):
+func enter(host, prev_state):
 	p = 0
 	host.player_vfx.play('ChargeDust', false)
 	host.audio_player.play('spin_dash_charge')
@@ -23,7 +23,7 @@ func step(host, delta):
 
 func exit(host, next_state):
 	host.is_rolling = true
-	host.gsp = (480 + (floor(p) / 2)) * host.character.scale.x
+	host.gsp = (480 + (floor(p) / 2)) * host.characters.scale.x
 	host.player_vfx.stop('ChargeDust')
 	host.audio_player.stop('spin_dash_charge')
 	host.audio_player.play('spin_dash_release')

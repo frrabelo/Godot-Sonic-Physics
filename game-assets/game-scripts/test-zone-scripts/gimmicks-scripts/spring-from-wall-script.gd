@@ -1,28 +1,26 @@
 tool
 extends Node2D
 var showTrigger:Area2D;
-export(float) var trigger_position = 80 setget setTriggerPos, getTriggerPos;
-export(float) var trigger_width = 80 setget setTriggerWidth, getTriggerWidth
+export(Vector2) var trigger_position = Vector2(80, 0) setget setTriggerPos, getTriggerPos;
+export(Vector2) var trigger_size = Vector2(80, 0) setget setTriggerSize, getTriggerSize
 var show_rect:RectangleShape2D = RectangleShape2D.new();
-export var initial_angle : float = 180 setget setInitAngle, getInitAngle;
-export var final_angle : float = 0 setget setFinalAngle, getFinalAngle;
+export var initial_angle : float = 180
+export var final_angle : float = 0
 var activate:bool = false;
-var anim_player : AnimationPlayer;
 var sp_plat : Node2D
+var duration : float =0.5
+var players_inside : Array = []
+var inside : bool = false
 
-func _ready():
-	$SpPlat.rotation_degrees = initial_angle;
-	if anim_player:
-		anim_player.playback_speed = 5.0
+func _ready() -> void:
+	set_process(false)
 
 func _enter_tree():
 	_prepare();
+	set_process(false)
 
 func _prepare():
 	setShowTrigger()
-	show_rect.extents.y = 165
-	set_physics_process(false)
-	anim_player = $AnimationPlayer
 	$ShowTrigger/CollisionTrigger.shape = show_rect;
 	sp_plat = $SpPlat
 
@@ -30,19 +28,12 @@ func setInitAngle(value:float):
 	initial_angle = fmod(value, 360);
 	if sp_plat:
 		sp_plat.rotation_degrees = initial_angle;
-	if anim_player:
-		anim_player.get_animation("FromAtoB").track_set_key_value(0, 0, value)
-		print(anim_player.get_animation("FromAtoB").track_get_key_value(0, 0))
 
 func getInitAngle():
 	return initial_angle;
 
 func setFinalAngle(value:float):
 	final_angle = fmod(value, 360)
-	if anim_player:
-		anim_player.get_animation("FromAtoB").track_set_key_value(0, 1, final_angle)
-		print(anim_player.get_animation("FromAtoB").track_get_key_value(0, 1))
-	pass
 
 func getFinalAngle():
 	return final_angle
@@ -51,32 +42,40 @@ func setShowTrigger():
 	if has_node("ShowTrigger"):
 		showTrigger = $ShowTrigger;
 
-func setTriggerPos(value: float):
+func setTriggerPos(value: Vector2):
 	if showTrigger == null:
 		setShowTrigger();
 	if showTrigger != null:
-		showTrigger.position.x = value;
+		showTrigger.position = value;
 
 func getTriggerPos():
 	if showTrigger == null:
 		setShowTrigger();
 	if (showTrigger != null):
-		return showTrigger.position.x;
+		return showTrigger.position;
 	return 0;
 
-func setTriggerWidth(value:float):
-	show_rect.extents.x = value;
+func setTriggerSize(value:Vector2):
+	show_rect.extents = value;
 
-func getTriggerWidth():
-	return show_rect.extents.x
+func getTriggerSize():
+	return show_rect.extents
 
 func _on_ShowTrigger_body_entered(body):
 	if body.is_class("PlayerPhysics"):
-		anim_player.play("FromAtoB", -1)
-
+		if !players_inside.has(body):
+			players_inside.append(body)
+		if players_inside.size() > 0:
+			inside = true
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation, final_angle, duration, Tween.TRANS_LINEAR)
+			$Tween.start()
 func _on_ShowTrigger_body_exited(body):
 	if body.is_class("PlayerPhysics"):
-		anim_player.play_backwards("FromAtoB", -1)
-
+		if players_inside.has(body):
+			players_inside.remove(players_inside.find(body))
+		if players_inside.size() < 1:
+			inside = false
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation, initial_angle, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween.start()
 func _on_RedSpringFromSolid_script_changed():
 	_prepare();

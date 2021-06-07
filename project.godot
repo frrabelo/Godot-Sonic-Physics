@@ -29,10 +29,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/player-scripts/character-animator.gd"
 }, {
+"base": "Node",
+"class": "CharacterProperties",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/player-scripts/char_script.gd"
+}, {
+"base": "Node2D",
+"class": "CircleObjects",
+"language": "GDScript",
+"path": "res://addons/CircleObjectManipulator/ObjectsCircle.gd"
+}, {
 "base": "SpriteFrames",
 "class": "ImprovedSpriteFrames",
 "language": "GDScript",
 "path": "res://game-assets/game-classes/improved-sprite-frames-scripts.gd"
+}, {
+"base": "PanelContainer",
+"class": "JsonDock",
+"language": "GDScript",
+"path": "res://addons/json_editor/json_dock.gd"
 }, {
 "base": "Node2D",
 "class": "MovingPlatformObject",
@@ -54,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/player-scripts/player-physics.gd"
 }, {
+"base": "Node2D",
+"class": "RectManipulate2D",
+"language": "GDScript",
+"path": "res://addons/rect-extent/rect-manipulate-2d.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Ring",
 "language": "GDScript",
@@ -68,6 +88,11 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/player-scripts/state.gd"
+}, {
+"base": "Node",
+"class": "StateChar",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/player-scripts/state-char.gd"
 }, {
 "base": "Node2D",
 "class": "StaticNode2D",
@@ -84,29 +109,39 @@ _global_script_class_icons={
 "Badnik": "",
 "BlockGen": "",
 "CharacterAnimator": "",
+"CharacterProperties": "",
+"CircleObjects": "",
 "ImprovedSpriteFrames": "",
+"JsonDock": "",
 "MovingPlatformObject": "",
 "NumCounter": "",
 "PlayerCamera": "",
 "PlayerPhysics": "",
+"RectManipulate2D": "",
 "Ring": "",
 "SFXPlayer": "",
 "State": "",
+"StateChar": "",
 "StaticNode2D": "",
 "Utils": ""
 }
 
+[android]
+
+stdout/verbose_stdout=true
+
 [application]
 
 config/name="Godot the Hedgehog"
-run/main_scene="res://zones/test-zone-act-1-scene.tscn"
-config/use_custom_user_dir=true
+run/main_scene="res://main.tscn"
+config/custom_user_dir_name="soneco-directory"
 boot_splash/fullsize=false
 config/icon="res://icon.png"
 
 [autoload]
 
 GlobalScript="*res://game-assets/game-classes/global-script.gd"
+AdvancedBackgroundLoader="*res://addons/Advanced Background Loader/background_load.gd"
 
 [debug]
 
@@ -118,16 +153,15 @@ shapes/collision/shape_color=Color( 1, 1, 1, 0.501961 )
 
 window/size/width=480
 window/size/height=270
-window/size/resizable=false
 window/size/test_width=960
 window/size/test_height=540
 window/handheld/orientation="sensor_landscape"
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/MovingPlatformTool/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/CircleObjectManipulator/plugin.cfg", "res://addons/MovingPlatformTool/plugin.cfg", "res://addons/json_editor/plugin.cfg", "res://addons/rect-extent/plugin.cfg", "res://addons/tile_spawner/plugin.cfg" )
 
 [importer_defaults]
 
@@ -204,6 +238,11 @@ ui_jump={
 2d_render/layer_1="Player1 Layer"
 2d_physics/layer_1="Player1 Layer"
 
+[logging]
+
+file_logging/enable_file_logging=true
+file_logging/max_log_files=1
+
 [physics]
 
 2d/default_linear_damp=0.0
@@ -212,4 +251,6 @@ ui_jump={
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
-environment/default_environment="res://default-env.tres"
+quality/directional_shadow/size.mobile=1024
+quality/filters/anisotropic_filter_level=1
+environment/default_environment="res://default_env.tres"

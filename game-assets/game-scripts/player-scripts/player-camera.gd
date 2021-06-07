@@ -32,6 +32,9 @@ var secondary_target:Node2D;
 
 onready var camera_scroll = $CameraScroll
 
+func camera_ready(player : PlayerPhysics) -> void:
+	position = player.position
+
 func can_scroll(delta : float):
 	if scroll_timer > 0:
 		scroll_timer -= delta
@@ -73,7 +76,7 @@ func vertical_border(player : PlayerPhysics):
 		if player.is_grounded:
 			if (realPos + 16 - position.y) != 0:
 				var playerPosCam = (player.position.y + 16) - realPos;
-				var playerLt360 = abs(player.velocity.y) <= 360;
+				var playerLt360 = abs(player.speed.y) <= 360;
 				vel = \
 					max(playerPosCam,\
 						-6 - (10 * int(!playerLt360)\

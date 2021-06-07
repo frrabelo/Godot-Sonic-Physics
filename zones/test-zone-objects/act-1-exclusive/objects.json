@@ -1,0 +1,38 @@
+{
+  "MaskBlue": {
+    "scene": "res://general-objects/mask-setter-blue.tscn"
+  },
+  "MaskRed": {
+    "scene": "res://general-objects/mask-setter-red.tscn"
+  },
+  "MaskInvert": {
+    "scene": "res://general-objects/mask-setter-invert.tscn"
+  },
+  "RedSpring": {
+    "scene": "res://general-objects/spring-object.tscn",
+    "properties": {
+      "spring_presset": 1
+    }
+  },
+  "YellowSpring": {
+    "scene": "res://general-objects/spring-object.tscn",
+    "properties": {
+      "spring_presset": 0
+    }
+  },
+  "SpeedBooster": {
+    "scene": "res://zones/test-zone-objects/speed-booster-gimmick-object.tscn"
+  },
+  "Ring": {
+    "scene": "res://general-objects/ring-object.tscn"
+  },
+  "Spike": {
+    "scene": "res://general-objects/Spike.tscn"
+  },
+  "Fan": {
+    "scene": "res://zones/test-zone-objects/fan-object.tscn"
+  },
+  "BreakableBlock": {
+    "scene": "res://zones/test-zone-objects/breakable-block-object.tscn"
+  }
+}

@@ -40,13 +40,10 @@ func _draw() -> void:
 			modulate = Color.purple
 
 func _on_Area2D_body_entered(body):
-	if body.name == 'Player':
-		
+	if body.is_class("PlayerPhysics"):
 		var player:PlayerPhysics = body as PlayerPhysics
-		
 		var left = player.get_collision_mask_bit(1)
 		var right = player.get_collision_mask_bit(2)
-		
 		match SWITCH_MODE:
 			Switch.LEFT_TO_RIGHT:
 				left_to_right()
@@ -54,13 +51,5 @@ func _on_Area2D_body_entered(body):
 				right_to_left()
 			Switch.INVERT:
 				invert(left, right)
-		var collision_masks = [
-			player,
-			player.left_ground,
-			player.right_ground,
-			player.middle_ground
-		]
-		
-		for i in collision_masks:
-			i.set_collision_mask_bit(check_mask, true)
-			i.set_collision_mask_bit(uncheck_mask, false)
+		player.set_collision_mask_bit(check_mask, true)
+		player.set_collision_mask_bit(uncheck_mask, false)

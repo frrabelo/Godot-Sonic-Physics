@@ -1,30 +1,27 @@
 extends KinematicBody2D
-
 class_name PlayerPhysics
-
 signal damaged
 
-export(float) var ACC = 4.6875
-export(float) var DEC = 30
-export(float) var ROLLDEC = 7.5
-export(float) var FRC = 4.6875
-export(float) var SLP = 7.5
-export(float) var SLPROLLUP = 4.6875
-export(float) var SLPROLLDOWN = 18.75
-export(float) var TOP = 460
-export(float) var TOPROLL = 960
-export(float) var JMP = 390
-export(float) var FALL = 150
-export(float) var AIR = 5.625
-export(float) var GRV = 13.125
-export(bool) var instaShield = true;
-export(bool) var superPeelOut = true;
-export(bool) var dropDash = true;
+export(int) var CHARACTER_SELECTED = 0 setget _set_character_sel
+var ACC
+var DEC
+var ROLLDEC
+var FRC
+var SLP
+var SLPROLLUP
+var SLPROLLDOWN
+var TOP
+var TOPROLL
+var JMP
+var FALL
+var AIR
+var GRV
 export(bool) var spinDash = true;
 
+onready var selected_character
 onready var fsm = $StateMachine
 onready var player_camera = $'../../PlayerCamera'
-onready var player_vfx = $Characters/VFX
+onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
 onready var low_collider = $LowCollider
@@ -33,24 +30,27 @@ onready var ray_collider = $Ray
 onready var left_ground:RayCast2D = $LeftGroundSensor
 onready var right_ground:RayCast2D = $RightGroundSensor
 onready var middle_ground:RayCast2D = $MiddleGroundSensor
-onready var high_sensor = $HighCollider
+onready var main_sensor:CollisionShape2D = $MainCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
 onready var left_wall_bottom:RayCast2D = $LeftWallSensorBottom
 onready var right_wall_bottom:RayCast2D = $RightWallSensorBottom
 
-onready var character = $Characters
-onready var sprite = character.get_node('Sonic');
-onready var animation = sprite.get_node("CharAnimation");
+onready var characters = $Characters
+onready var sprite
+onready var char_stand_collision : RectManipulate2D
+onready var char_low_collision : RectManipulate2D
+onready var animation
 onready var audio_player = $AudioPlayer
-onready var main_scene = $"/root/main"
-var snap_margin = 32.0
+onready var main_scene = get_tree().current_scene
+var snaps : float = 21
+var snap_margin = snaps
 
 var ring_scene = preload("res://general-objects/ring-object.tscn")
 
 var direction : Vector2 = Vector2.ZERO;
 var gsp : float
-var velocity : Vector2
+var speed : Vector2
 var ground_mode : int
 var control_locked : bool
 var control_unlock_time = .5
@@ -70,22 +70,40 @@ var is_wall_right : bool
 var is_pushing : bool
 var is_looking_down : bool
 var is_looking_up : bool
-var has_pushed : bool
+var spring_loaded : bool
 var invulnerable : bool;
 var constant_roll : bool
 var up_direction : Vector2 = Vector2.UP
+var prev_position : Vector2
+var ground_ray : RayCast2D
 
 func _ready():
+	player_camera.camera_ready(self)
+	_set_character_sel(CHARACTER_SELECTED)
 	control_unlock_timer = control_unlock_time
 
+func is_on_floor() -> bool:
+	return .is_on_floor()
+
+func set_rays (val : bool) -> void:
+	for i in [middle_ground, left_ground, right_ground]:
+		(i as RayCast2D).set_deferred("enabled", val)
+
 func _process(delta):
+	#print(speed)
 	var roll_anim = animation.current_animation == 'Rolling'
-	high_sensor.set_deferred("disabled", roll_anim)
-	low_collider.set_deferred("disabled", !roll_anim)
+	assert (char_stand_collision && char_low_collision, "Error: the variables not contains value")
+	var shape = char_stand_collision.get_rectshape_2d() if !roll_anim else char_low_collision.get_rectshape_2d()
+	main_sensor.shape.extents = shape.shape.extents
+	main_sensor.position = shape.position
 	left_ground.position.x = -9 if !roll_anim else -7
 	right_ground.position.x = 9 if !roll_anim else 7
-	ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && velocity.y < 0)
+	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
 	
+	var can_break_wall : bool = !(abs(gsp) > 270 && is_rolling)
+	set_collision_mask_bit(5, can_break_wall)
+	set_collision_layer_bit(5, can_break_wall)
+	#print(get_collision_mask_bit(5))
 	direction.x = \
 	-Input.get_action_strength("ui_left") +\
 	Input.get_action_strength("ui_right")
@@ -100,25 +118,29 @@ func _process(delta):
 			control_unlock_timer = control_unlock_time
 			control_locked = false
 
+func set_collision_mask(val : int) -> void:
+	.set_collision_mask(val)
+	var coll = [middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
+	for i in coll:
+		i.set_collision_mask(val)
+
+func set_collision_mask_bit(val : int, switch : bool) -> void:
+	.set_collision_mask_bit(val, switch)
+	var coll = [middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
+	for i in coll:
+		i.set_collision_mask_bit(val, switch)
+
 func physics_step():
 	position.x = max(position.x, 9.0)
-	var ground_ray = get_ground_ray()
-	is_ray_colliding = (ground_ray != null)
+	ground_ray = get_ground_ray()
+	is_ray_colliding = ground_ray != null
 	
-	if is_on_ground():
+	if is_on_floor():
 		is_grounded = true
 	
 	var can_break = abs(gsp) > 270 && is_rolling
 	
-	var coll = [self, middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
-	
-	for i in coll:
-		i.set_collision_mask_bit(5, !can_break)
-		if !i.is_class("RayCast2D"):
-			i.set_collision_layer_bit(5, !can_break)
-	
 	if is_grounded && ground_ray:
-		ground_point = ground_ray.get_collision_point()
 		ground_normal = ground_ray.get_collision_normal()
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
 		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
@@ -126,6 +148,22 @@ func physics_step():
 		ground_mode = 0
 		ground_normal = Vector2(0, -1)
 		is_grounded = false
+	
+	step_wall_collision()
+	
+	is_wall_left = is_wall_left || position.x - 9 <= 0
+	is_wall_right
+	
+	if constant_roll:
+		control_locked = true
+		control_unlock_timer = 0.1
+		if abs(gsp) < 500:
+			gsp += 100 * characters.scale.x
+		is_rolling = true
+		if !is_grounded:
+			constant_roll = false
+
+func step_wall_collision():
 	var j : int = 0
 	for i in [left_wall, left_wall_bottom, right_wall, right_wall_bottom]:
 		var rs : RayCast2D = i
@@ -136,7 +174,6 @@ func physics_step():
 				var cell = tmap.get_cellv(tmap.world_to_map(rs.get_collision_point()))
 				var shape = rs.get_collider_shape()
 				var tile = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
-				print(tile)
 				if tile:
 					continue
 			if j < 2:
@@ -149,18 +186,6 @@ func physics_step():
 			else:
 				is_wall_right = false
 		j+=1
-	
-	is_wall_left = is_wall_left || position.x - 9 <= 0
-	is_wall_right
-	
-	if constant_roll:
-		control_locked = true
-		control_unlock_timer = 0.1
-		if abs(gsp) < 500:
-			gsp += 100 * character.scale.x
-		is_rolling = true
-		if !is_grounded:
-			constant_roll = false
 
 func fall_from_ground():
 	if abs(gsp) < FALL and ground_mode != 0:
@@ -171,44 +196,33 @@ func fall_from_ground():
 			ground_mode = 0
 			return true
 		
-		return false
+	return false
 
 func snap_to_ground():
 	rotation_degrees = -rad2deg(ground_angle())
-	velocity += -ground_normal * 150
+	speed += -ground_normal * 150
 
 func ground_reacquisition():
 	var ground_angle = ground_angle();
 	var angle = abs(rad2deg(ground_angle))
 	
 	if angle >= 0 and angle < 22.5:
-		gsp = velocity.x
+		gsp = speed.x
 	elif angle >= 22.5 and angle < 45.0:
-		if abs(velocity.x) > velocity.y:
-			gsp = velocity.x
+		if abs(speed.x) > speed.y:
+			gsp = speed.x
 		else:
-			gsp = velocity.y * .5 * -sign(sin(ground_angle))
+			gsp = speed.y * .5 * -sign(sin(ground_angle))
 	elif angle >= 45.0 and angle < 90:
-		if abs(velocity.x) > velocity.y:
-			gsp = velocity.x
+		if abs(speed.x) > speed.y:
+			gsp = speed.x
 		else:
-			gsp = velocity.y * -sign(sin(ground_angle))
+			gsp = speed.y * -sign(sin(ground_angle))
 	
 	rotation_degrees = -rad2deg(ground_angle)
 
 func ground_angle():
 	return ground_normal.angle_to(Vector2(0, -1))
-
-func is_on_ground():
-	var ground_ray = get_ground_ray()
-	if ground_ray != null:
-		var point = ground_ray.get_collision_point()
-		var normal = ground_ray.get_collision_normal()
-		if velocity.y >= 0:
-			if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
-				return position.y + 25 > point.y
-	
-	return false
 
 func get_ground_ray():
 	can_fall = true
@@ -254,8 +268,8 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	timer_ivun_start(.1)
 	
 	if !invulnerable:
-		velocity.x = side.x * 220
-		velocity.y = side.y * 200
+		speed.x = side.x * 220
+		speed.y = side.y * 200
 		snap_margin = 0
 		fsm.change_state("OnAir")
 		control_locked = true
@@ -270,7 +284,7 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 		if have_rings:
 			audio_player.play("ring_loss")
 			var ground_angle = ground_angle()
-			position += velocity * get_physics_process_delta_time()
+			position += speed * get_physics_process_delta_time()
 		
 	else:
 		audio_player.play(sound_to_play)
@@ -320,14 +334,14 @@ func timer_ivun_start(time:float):
 
 func toogle_visible(timer:Timer):
 	timer.queue_free();
-	character.visible = !character.visible;
+	characters.visible = !characters.visible;
 	if invulnerable:
-		if character.visible:
+		if characters.visible:
 			timer_ivun_start(0.1);
 		else:
 			timer_ivun_start(0.025)
 	else:
-		character.visible = true
+		characters.visible = true
 
 func vunerable_again(timer:Timer):
 	timer.queue_free();
@@ -350,3 +364,25 @@ func set_is_rolling(val : bool):
 	if val && !is_rolling:
 		audio_player.play('spin')
 	is_rolling = val
+
+func _set_character_sel(val : int) -> void:
+	var children = characters.get_children()
+	if children is Array:
+		val = val % children.size()
+	else:
+		val = 0
+	CHARACTER_SELECTED = val
+	if children[CHARACTER_SELECTED] is Node2D:
+		var c : Node2D = children[CHARACTER_SELECTED]
+		selected_character = c
+		sprite = selected_character.get_node("Sprite")
+		char_stand_collision = selected_character.get_node("StandBox")
+		char_low_collision = selected_character.get_node("LowBox")
+		animation = sprite.get_node("CharAnimation")
+		var props = [
+			"ACC", "DEC", "ROLLDEC", "FRC", "SLP", "SLPROLLUP",\
+			"SLPROLLDOWN", "TOP", "TOPROLL", "JMP", "FALL", "AIR", "GRV"
+		]
+		for i in props:
+			if !get(i):
+				set(i, c.get(i))

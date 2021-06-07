@@ -1,9 +1,8 @@
-# Interface for states
 extends Node
 
 class_name State
 
-func enter(host: PlayerPhysics):
+func enter(host: PlayerPhysics, prev_state:String):
 	return
 
 func step(host: PlayerPhysics, delta: float):
@@ -14,6 +13,7 @@ func exit(host: PlayerPhysics, next_state:String):
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
 	return
+
 
 func _on_animation_finished(anim_name: String):
 	pass

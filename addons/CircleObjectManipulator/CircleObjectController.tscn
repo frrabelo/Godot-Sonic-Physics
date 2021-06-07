@@ -1,0 +1,41 @@
+[gd_scene format=2]
+
+[node name="CircleObjectController" type="HBoxContainer"]
+anchor_right = 0.219
+anchor_bottom = 0.13
+margin_right = -0.120003
+margin_bottom = -0.100002
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="VSeparator" parent="."]
+margin_right = 4.0
+margin_bottom = 34.0
+
+[node name="Minus" type="Button" parent="."]
+margin_left = 8.0
+margin_right = 50.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator2" type="VSeparator" parent="."]
+margin_left = 54.0
+margin_right = 58.0
+margin_bottom = 34.0
+
+[node name="Plus" type="Button" parent="."]
+margin_left = 62.0
+margin_right = 104.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+"
+__meta__ = {
+"_edit_use_anchors_": false
+}

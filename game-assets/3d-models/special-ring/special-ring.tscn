@@ -4,20 +4,6 @@
 [ext_resource path="res://game-assets/3d-models/special-ring/special-ring-animator.gd" type="Script" id=2]
 [ext_resource path="res://game-assets/3d-models/special-ring/special-ring-enviroment.tres" type="Environment" id=3]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Círculo"
 surfaces/0 = {
@@ -34,7 +20,7 @@ surfaces/0 = {
 "vertex_count": 256
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 3.0
 loop = true
 tracks/0/type = "value"
@@ -50,16 +36,14 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 360, 360, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=7]
 length = 2.0
 
-[sub_resource type="Animation" id=3]
-resource_name = "Idle"
+[sub_resource type="Animation" id=8]
 length = 2.0
 loop = true
 
-[sub_resource type="Animation" id=4]
-resource_name = "Spawn"
+[sub_resource type="Animation" id=5]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("EmeraldRingObj:scale")
@@ -71,14 +55,14 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 1, 1, 1 ) ]
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0.5, 0.5, 0.5 ) ]
 }
 
 [node name="EmeraldRing" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="EmeraldRingObj" type="Spatial" parent="."]
-transform = Transform( 0.541689, 0.706573, -0.455332, 0, 0.541689, 0.840579, 0.840579, -0.455332, 0.293427, 0, 0, 0 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 
 [node name="Círculo" type="MeshInstance" parent="EmeraldRingObj"]
 transform = Transform( 7.54979e-08, 1, 0, -1, 7.54979e-08, 0, 0, 0, 1, 0, 0, 0 )
@@ -88,17 +72,17 @@ material/0 = null
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EmeraldRingObj"]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0, 0, 8 )
+transform = Transform( 1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0, 0, 10.9294 )
 fov = 22.2737
 near = 0.000999987
 
 [node name="Rotation" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 5 )
-anims/Spawn = SubResource( 2 )
+anims/Idle = SubResource( 6 )
+anims/Spawn = SubResource( 7 )
 
 [node name="Scale" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 3 )
-anims/Spawn = SubResource( 4 )
+anims/Idle = SubResource( 8 )
+anims/Spawn = SubResource( 5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 3 )

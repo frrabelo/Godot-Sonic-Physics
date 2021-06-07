@@ -1,4 +1,4 @@
-extends '../state.gd'
+extends StateChar
 
 export(float) var DASH_SPEED = 720
 export(float) var CHARGE_TIME = 1
@@ -6,12 +6,12 @@ export(float) var CHARGE_TIME = 1
 var charge_timer : float
 var animation_speed : float
 
-func enter(host: PlayerPhysics):
+func enter(host: PlayerPhysics, prev_state, main_state):
 	charge_timer = CHARGE_TIME
 	animation_speed = 1.0
 	host.audio_player.play('peel_out_charge')
 
-func step(host: PlayerPhysics, delta):
+func step(host: PlayerPhysics, delta, main_state):
 	charge_timer -= delta
 	animation_speed += (720.0 / pow(CHARGE_TIME, 2.0)) * delta
 	animation_speed = min(animation_speed, 720.0)
@@ -19,15 +19,15 @@ func step(host: PlayerPhysics, delta):
 	if Input.is_action_just_released("ui_up"):
 		return 'OnGround'
 
-func exit(host: PlayerPhysics, next_stage:String):
+func exit(host: PlayerPhysics, next_stage:String, main_state):
 	if charge_timer <= 0:
-		host.gsp = DASH_SPEED * host.character.scale.x
+		host.gsp = DASH_SPEED * host.characters.scale.x
 		host.audio_player.play('peel_out_release')
 		host.player_camera.delay(0.25)
 	else:
 		host.audio_player.stop('peel_out_charge')
 
-func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
+func animation_step(host: PlayerPhysics, animator: CharacterAnimator, main_state, args=[]):
 	var anim_speed = max(-(8.0 / 60.0 - (animation_speed / 120.0)), 1.0)
 	var anim_name = 'Walking'
 	

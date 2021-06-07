@@ -7,7 +7,7 @@ export var to_right:bool = false;
 export(String) var main_anim_name = "none";
 export(float) var init_timer = 1;
 var time:float = init_timer;
-onready var explode_audio_player:AudioStreamPlayer = get_node("/root/main/GlobalSFX/Destroy")
+onready var explode_audio_player:AudioStreamPlayer = $"/root/main/GlobalSFX/Destroy"
 
 func uselessSetter(useless_value):
 	pass

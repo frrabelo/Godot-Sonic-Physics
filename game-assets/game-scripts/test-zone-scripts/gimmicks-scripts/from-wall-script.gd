@@ -5,13 +5,13 @@ onready var fan:Node2D = get_node("FanContainer");
 var side:int
 export(Vector2) var triggers_pos=Vector2(0, 0) setget setTriggerPos, get_trigger_pos
 export(Vector2) var triggers_size=Vector2(100, 100) setget set_trigger_size, get_trigger_size;
-export(Vector2) var final_pos setget set_final, get_final
+export(Vector2) var final_pos
+export(float) var speed: float = 1.0
 var rect:RectangleShape2D = RectangleShape2D.new();
 var show_trigger:Area2D;
-export(Vector2) var init_pos setget set_init_pos, get_init_pos
-onready var anim = $Anim
-var editor_anim
-var animation = Animation.new()
+export(Vector2) var init_pos
+var inside : bool = false
+var players_inside : Array = []
 
 func _enter_tree():
 	_prepare()
@@ -19,6 +19,8 @@ func _enter_tree():
 func _on_FromWall_script_changed():
 	_prepare()
 
+func _ready() -> void:
+	set_process(false)
 
 
 func setTriggers():
@@ -28,7 +30,6 @@ func setTriggers():
 
 func _prepare():
 	setTriggers()
-	editor_anim = $Anim
 	show_trigger.get_node("CollisionTrigger").shape = rect;
 
 func setTriggerPos(pos:Vector2):
@@ -52,22 +53,6 @@ func set_trigger_size(size):
 func get_trigger_size():
 	return rect.extents
 
-func set_final(pos:Vector2 = Vector2.ZERO):
-	if editor_anim:
-		editor_anim.get_animation("FromAtoB").track_set_key_value(0, 1, pos)
-
-func set_init_pos(pos:Vector2 = Vector2.ZERO):
-	if editor_anim:
-		editor_anim.get_animation("FromAtoB").track_set_key_value(0, 0, pos)
-
-func get_final():
-	if editor_anim:
-		return editor_anim.get_animation("FromAtoB").track_get_key_value(0, 1)
-
-func get_init_pos():
-	if editor_anim:
-		return editor_anim.get_animation("FromAtoB").track_get_key_value(0, 0)
-
 func _on_FromWall_tree_entered():
 	_prepare();
 
@@ -75,12 +60,39 @@ func _on_FromWall_tree_entered():
 func _on_ShowTrigger_body_entered(body):
 	if body.is_class("PlayerPhysics"):
 		print("player_enter")
-		if anim:
-			anim.play("FromAtoB", -1, 1)
+		if !players_inside.has(body):
+			players_inside.append(body)
+		inside = true
+		if players_inside.size() > 0:
+			set_process(true)
 
 
 func _on_ShowTrigger_body_exited(body):
 	if body.is_class("PlayerPhysics"):
 		print("player_exit")
-		if anim:
-			anim.play_backwards("FromAtoB", -1)
+		if players_inside.has(body):
+			players_inside.remove(players_inside.find(body))
+		if players_inside.size() < 1:
+			inside = false
+			set_process(true)
+
+func _process(delta: float) -> void:
+	var target_position
+	var direction
+	var motion
+	var distance_to_target
+	
+	if inside:
+		target_position = final_pos
+	else:
+		target_position = init_pos
+	
+	print(target_position)
+	direction = (target_position - fan.position).normalized()
+	motion = direction * delta * speed*100
+	distance_to_target = fan.position.distance_to(target_position)
+	if motion.length() >= distance_to_target:
+		fan.position = target_position
+		set_process(false)
+	else:
+		fan.position += motion

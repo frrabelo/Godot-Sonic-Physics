@@ -1,15 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://general-objects/mask-setter-blue.res" type="PackedScene" id=1]
+[ext_resource path="res://general-objects/mask-setter-blue.tscn" type="PackedScene" id=1]
 [ext_resource path="res://zones/test-zone-objects/loop-part.res" type="PackedScene" id=2]
-[ext_resource path="res://general-objects/mask-setter-red.res" type="PackedScene" id=6]
-[ext_resource path="res://general-objects/mask-setter-invert.res" type="PackedScene" id=7]
-
-
-
-
-
-
+[ext_resource path="res://general-objects/mask-setter-red.tscn" type="PackedScene" id=6]
+[ext_resource path="res://general-objects/mask-setter-invert.tscn" type="PackedScene" id=7]
 
 [node name="FullLoop" type="Node2D"]
 

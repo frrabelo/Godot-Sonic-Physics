@@ -1,81 +1,54 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/general-scripts/spring-script.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/general-sprites/YellowSprings.png" type="Texture" id=2]
-[ext_resource path="res://zones/test-zone-objects/spring-collisions-object.tscn" type="PackedScene" id=3]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
-region = Rect2( 224, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
 region = Rect2( 32, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
 region = Rect2( 128, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 192, 0, 32, 32 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 2 ) ],
-"loop": false,
-"name": "Normal",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
 "loop": false,
 "name": "Push",
 "speed": 35.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": false,
+"name": "Normal",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 resource_name = "Push"
 length = 0.9
 tracks/0/type = "value"
@@ -115,7 +88,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 resource_name = "Stop"
 length = 0.1
 tracks/0/type = "value"
@@ -155,6 +128,12 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 15, 3 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 16, 9 )
+
 [node name="YellowSpring" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -162,16 +141,26 @@ __meta__ = {
 }
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 10 )
+frames = SubResource( 9 )
 animation = "Push"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 playback_speed = 3.0
-anims/Push = SubResource( 11 )
-anims/Stop = SubResource( 12 )
+anims/Push = SubResource( 10 )
+anims/Stop = SubResource( 11 )
 
-[node name="Body" parent="." instance=ExtResource( 3 )]
+[node name="JumpArea" type="Area2D" parent="."]
+
+[node name="JumpCollide" type="CollisionShape2D" parent="JumpArea"]
+position = Vector2( 0, -3 )
+shape = SubResource( 12 )
+one_way_collision = true
+
+[node name="Body" type="StaticBody2D" parent="."]
+
+[node name="HitBox" type="CollisionShape2D" parent="Body"]
+position = Vector2( 0, 7 )
+shape = SubResource( 13 )
+
 [connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="body_entered" from="Body/JumpArea" to="." method="_on_JumpArea_body_entered"]
-
-[editable path="Body"]
+[connection signal="body_entered" from="JumpArea" to="." method="_on_JumpArea_body_entered"]

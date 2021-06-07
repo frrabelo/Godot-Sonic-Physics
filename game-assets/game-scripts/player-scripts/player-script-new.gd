@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal damaged
 
+export(int) var CHARACTER_SELECTED = 0 setget _set_character_sel
 export(float) var ACC = 4.6875
 export(float) var DEC = 30
 export(float) var ROLLDEC = 7.5
@@ -22,24 +23,21 @@ export(bool) var spinDash = true;
 
 onready var fsm = $StateMachine
 onready var player_camera = $'../../PlayerCamera'
-onready var player_vfx = $Characters/VFX
+onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
 onready var low_collider = $LowCollider
 onready var ray_collider = $Ray
 
-onready var left_ground:RayCast2D = $LeftGroundSensor
-onready var right_ground:RayCast2D = $RightGroundSensor
-onready var middle_ground:RayCast2D = $MiddleGroundSensor
 onready var high_sensor = $HighCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
 onready var left_wall_bottom:RayCast2D = $LeftWallSensorBottom
 onready var right_wall_bottom:RayCast2D = $RightWallSensorBottom
 
-onready var character = $Characters
-onready var sprite = character.get_node('Sonic');
-onready var animation = sprite.get_node("CharAnimation");
+onready var characters = $Characters
+onready var sprite
+onready var animation
 onready var audio_player = $AudioPlayer
 onready var main_scene = $"/root/main"
 var snap_margin = 32.0
@@ -48,7 +46,7 @@ var ring_scene = preload("res://general-objects/ring-object.tscn")
 
 var direction : Vector2 = Vector2.ZERO;
 var gsp : float
-var velocity : Vector2
+var speed : Vector2
 var ground_mode : int
 var control_locked : bool
 var control_unlock_time = .5
@@ -74,15 +72,16 @@ var constant_roll : bool
 var up_direction : Vector2 = Vector2.UP
 
 func _ready():
+	_set_character_sel(CHARACTER_SELECTED)
 	control_unlock_timer = control_unlock_time
 
 func _process(delta):
 	var roll_anim = animation.current_animation == 'Rolling'
 	high_sensor.set_deferred("disabled", roll_anim)
 	low_collider.set_deferred("disabled", !roll_anim)
-	left_ground.position.x = -9 if !roll_anim else -7
-	right_ground.position.x = 9 if !roll_anim else 7
-	ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && velocity.y < 0)
+	#left_ground.position.x = -9 if !roll_anim else -7
+	#right_ground.position.x = 9 if !roll_anim else 7
+	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
 	
 	direction.x = \
 	-Input.get_action_strength("ui_left") +\
@@ -105,8 +104,7 @@ func physics_step():
 		is_grounded = true
 	
 	var can_break = abs(gsp) > 270 && is_rolling
-	
-	var coll = [self, middle_ground, left_ground, right_ground, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
+	var coll = [self, right_wall, right_wall_bottom, left_wall, left_wall_bottom]
 	
 	if is_grounded:
 		ground_normal = get_floor_normal()
@@ -142,12 +140,12 @@ func physics_step():
 	
 	is_wall_left = is_wall_left || position.x - 9 <= 0
 	is_wall_right
-	
+	print(is_wall_left, is_wall_right)
 	if constant_roll:
 		control_locked = true
 		control_unlock_timer = 0.1
 		if abs(gsp) < 500:
-			gsp += 100 * character.scale.x
+			gsp += 100 * characters.scale.x
 		is_rolling = true
 		if !is_grounded:
 			constant_roll = false
@@ -165,24 +163,24 @@ func fall_from_ground():
 
 func snap_to_ground():
 	rotation_degrees = -rad2deg(ground_angle())
-	velocity += -ground_normal * 150
+	speed += -ground_normal * 150
 
 func ground_reacquisition():
 	var ground_angle = ground_angle();
 	var angle = abs(rad2deg(ground_angle))
 	
 	if angle >= 0 and angle < 22.5:
-		gsp = velocity.x
+		gsp = speed.x
 	elif angle >= 22.5 and angle < 45.0:
-		if abs(velocity.x) > velocity.y:
-			gsp = velocity.x
+		if abs(speed.x) > speed.y:
+			gsp = speed.x
 		else:
-			gsp = velocity.y * .5 * -sign(sin(ground_angle))
+			gsp = speed.y * .5 * -sign(sin(ground_angle))
 	elif angle >= 45.0 and angle < 90:
-		if abs(velocity.x) > velocity.y:
-			gsp = velocity.x
+		if abs(speed.x) > speed.y:
+			gsp = speed.x
 		else:
-			gsp = velocity.y * -sign(sin(ground_angle))
+			gsp = speed.y * -sign(sin(ground_angle))
 	
 	rotation_degrees = -rad2deg(ground_angle)
 
@@ -199,8 +197,8 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	timer_ivun_start(.1)
 	
 	if !invulnerable:
-		velocity.x = side.x * 220
-		velocity.y = side.y * 200
+		speed.x = side.x * 220
+		speed.y = side.y * 200
 		snap_margin = 0
 		fsm.change_state("OnAir")
 		control_locked = true
@@ -215,7 +213,7 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 		if have_rings:
 			audio_player.play("ring_loss")
 			var ground_angle = ground_angle()
-			position += velocity * get_physics_process_delta_time()
+			position += speed * get_physics_process_delta_time()
 		
 	else:
 		audio_player.play(sound_to_play)
@@ -265,14 +263,14 @@ func timer_ivun_start(time:float):
 
 func toogle_visible(timer:Timer):
 	timer.queue_free();
-	character.visible = !character.visible;
+	characters.visible = !characters.visible;
 	if invulnerable:
-		if character.visible:
+		if characters.visible:
 			timer_ivun_start(0.1);
 		else:
 			timer_ivun_start(0.025)
 	else:
-		character.visible = true
+		characters.visible = true
 
 func vunerable_again(timer:Timer):
 	timer.queue_free();
@@ -295,3 +293,15 @@ func set_is_rolling(val : bool):
 	if val && !is_rolling:
 		audio_player.play('spin')
 	is_rolling = val
+
+func _set_character_sel(val : int) -> void:
+	var children = characters.get_children()
+	if children is Array:
+		val = val % children.size()
+	else:
+		val = 0
+	CHARACTER_SELECTED = val
+	if children[CHARACTER_SELECTED] is Node2D:
+		var c : Node2D = children[CHARACTER_SELECTED]
+		sprite = c.get_node("Sprite")
+		animation = sprite.get_node("CharAnimation")

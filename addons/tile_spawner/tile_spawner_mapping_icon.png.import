@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/block64x64-white.bmp-3826670764d5c7fd08c07670c9a06b14.stex"
+path="res://.import/tile_spawner_mapping_icon.png-8a89bed749e409fc42d39cdd2ee6ca9e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/block64x64-white.bmp"
-dest_files=[ "res://.import/block64x64-white.bmp-3826670764d5c7fd08c07670c9a06b14.stex" ]
+source_file="res://addons/tile_spawner/tile_spawner_mapping_icon.png"
+dest_files=[ "res://.import/tile_spawner_mapping_icon.png-8a89bed749e409fc42d39cdd2ee6ca9e.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

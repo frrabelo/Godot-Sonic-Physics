@@ -1,18 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/player-scripts/player-camera.gd" type="Script" id=1]
-[ext_resource path="res://general-objects/hud.tscn" type="PackedScene" id=2]
-
-
-
-
-
-
-
-
-
-
-
 
 [node name="PlayerCamera" type="Node2D"]
 position = Vector2( 240, 135 )
@@ -25,8 +13,6 @@ followUp = true
 rotateWithPlayer = true
 
 [node name="CameraScroll" type="Node2D" parent="."]
-
-[node name="HUD" parent="CameraScroll" instance=ExtResource( 2 )]
 
 [node name="Camera2D" type="Camera2D" parent="CameraScroll"]
 rotating = true

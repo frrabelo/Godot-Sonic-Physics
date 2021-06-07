@@ -7,13 +7,13 @@ var minutes:float;
 var ring:int = 100 setget setRing, getRings;
 var time:String;
 func _ready():
-	pass
+	setRing(ring)
 	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func setRing(value:int):
 	ring = value;
 	if ($PlayerCamera != null):
-		$PlayerCamera/CameraScroll/HUD/RingCounter.text = String(ring);
+		$HUD/STRCounters/Count/RingCounter.text = String(ring);
 
 func getRings():
 	return ring;
@@ -27,8 +27,8 @@ func _process(delta):
 	minutes = floor(count / 60);
 	milliseconds = floor((fmod(count, 60) - seconds) * 100);
 	time = "%s%d'%s%d''%s%d" % ["0" if minutes < 10 else "", minutes, "0" if seconds < 10 else "", seconds, "0" if milliseconds < 10 else "", milliseconds]
-	if $PlayerCamera != null:
-		$PlayerCamera/CameraScroll/HUD/TimeCounter.text = time;
+	if $HUD != null:
+		$HUD/STRCounters/Count/TimeCounter.text = time;
 	if Input.is_action_just_pressed("ui_full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen
 

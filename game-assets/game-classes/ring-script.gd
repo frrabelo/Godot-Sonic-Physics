@@ -74,7 +74,7 @@ func _physics_process(delta):
 func _on_Area_body_entered(body:Node):
 	if body.is_class("PlayerPhysics"):
 		queue_free()
-		$"/root/main".ring += 1;
+		get_tree().current_scene.ring += points;
 		var player:= body
 		var sound:AudioPlayer = player.get_node("AudioPlayer");
 		instBlink.position = position;
