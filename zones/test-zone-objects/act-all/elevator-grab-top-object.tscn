@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/chain_grab/grabber.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/chain_grab/chain.png" type="Texture" id=2]
+[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/elevator-script.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12, 8 )
+
+[node name="Elevator" type="Node2D"]
+script = ExtResource( 3 )
+chain_length = 6
+grab_position = 0.0
+can_move_right_top = true
+can_move_left_top = false
+can_move_right_bottom = false
+can_move_left_bottom = false
+
+[node name="Chain" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+offset = Vector2( 0, -48 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 7, 96 )
+
+[node name="Collision" type="Area2D" parent="."]
+position = Vector2( 0, 20 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MainShape" type="CollisionShape2D" parent="Collision"]
+position = Vector2( 0, 20 )
+shape = SubResource( 1 )
+
+[node name="Grab" type="Sprite" parent="Collision"]
+texture = ExtResource( 1 )
+
+[connection signal="body_shape_entered" from="Collision" to="." method="_on_Collision_body_shape_entered"]
+[connection signal="body_shape_exited" from="Collision" to="." method="_on_Collision_body_shape_exited"]

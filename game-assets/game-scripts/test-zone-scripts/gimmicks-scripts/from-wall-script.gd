@@ -86,8 +86,6 @@ func _process(delta: float) -> void:
 		target_position = final_pos
 	else:
 		target_position = init_pos
-	
-	print(target_position)
 	direction = (target_position - fan.position).normalized()
 	motion = direction * delta * speed*100
 	distance_to_target = fan.position.distance_to(target_position)

@@ -124,11 +124,13 @@ func _get_point(point : Vector2) -> int:
 func drag_radius(val : Vector2) -> void:
 	var converted_cordinates = obj.get_viewport().get_global_canvas_transform().affine_inverse().xform(val)
 	converted_cordinates = (converted_cordinates / 5).round() * 5
-	obj.radius = obj.global_position.distance_to(converted_cordinates)
+	obj._set_radius(obj.global_position.distance_to(converted_cordinates))
+	obj._update_rings_pos(obj.default_angle)
 
 func drag_angle (val : Vector2) -> void:
 	var converted_cordinates = obj.get_viewport().get_global_canvas_transform().affine_inverse().xform(val)
 	var deg = rad2deg(obj.global_position.angle_to_point(converted_cordinates) - PI/2)
 	deg = fmod(round(deg/10)*10, 360)
-	obj.default_angle = deg2rad(deg)
-	obj.default_angle = round(obj.default_angle*100)/100
+	obj._set_dangle(deg2rad(deg));
+	obj._set_dangle(round(obj.default_angle*100)/100)
+	obj._update_rings_pos(obj.default_angle)

@@ -11,11 +11,9 @@ extents = Vector2( 10, 165 )
 script = ExtResource( 1 )
 trigger_position = Vector2( -9, -166 )
 trigger_size = Vector2( 10, 165 )
-initial_angle = -180.0
-rotate_speed = 7.0
 
 [node name="SpPlat" type="Node2D" parent="."]
-rotation = -3.14159
+rotation = 3.14159
 __meta__ = {
 "_edit_group_": true
 }
@@ -28,6 +26,7 @@ region_rect = Rect2( 1076, 2562, 32, 32 )
 
 [node name="RedSpring" parent="SpPlat" instance=ExtResource( 2 )]
 position = Vector2( -16, 0 )
+use_parent_rotation = true
 
 [node name="ShowTrigger" type="Area2D" parent="."]
 position = Vector2( -9, -166 )

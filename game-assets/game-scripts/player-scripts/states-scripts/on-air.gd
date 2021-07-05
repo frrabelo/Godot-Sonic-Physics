@@ -19,6 +19,7 @@ func enter(host, prev_state):
 	#print(was_damaged)
 	if was_damaged:
 		host.control_locked = true;
+	print(was_damaged)
 	is_floating = host.is_floating;
 	if !is_floating:
 		spring_loaded = host.spring_loaded
@@ -53,13 +54,25 @@ func step(host, delta):
 		spring_loaded = false
 		has_rolled = false
 		is_floating = true
+		can_attack = false
+		host.control_locked = false
 	
 	if host.spring_loaded:
 		spring_loaded = true
 		has_jumped = false
 		has_rolled = false
 		is_floating = false
+		can_attack = false
 	
+	if host.was_damaged:
+		was_damaged = true
+		has_jumped = false
+		spring_loaded = false
+		has_rolled = false
+		is_floating = false
+		can_attack = false
+	
+	#print(was_damaged)
 	#print(spring_loaded, is_floating)
 	
 	if host.is_on_ceiling() && !spring_loaded:
@@ -86,7 +99,7 @@ func step(host, delta):
 	if prev_frame_state.size() > 25:
 		prev_frame_state.remove(0)
 	if prev_frame_state[0] != "OnGround":
-		host.set_rays(true)
+		host.set_ground_rays(true)
 	#print(prev_frame_state)
 	
 	

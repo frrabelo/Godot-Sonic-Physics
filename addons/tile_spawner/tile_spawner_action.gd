@@ -28,22 +28,23 @@ static func spawn_from_tilemap(tree, tile_spawner):
 
 	# Validate & get the mapping
 	var mapping_path = tile_spawner.mapping
-	var mapping_file = File.new()
-	if mapping_path == null or not mapping_file.file_exists(mapping_path):
+	#var mapping_file = File.new()
+	if mapping_path == null:
 		# Make sure the mapping file exists
 		print("Error: Mapping file for TileSpawner does not exist!")
 		return
-	if mapping_file.open(tile_spawner.mapping, File.READ) != OK:
+	#if mapping_file.open(tile_spawner.mapping, File.READ) != OK:
 		# Make sure the mapping file opened
-		print("Error: Could not open the mapping file for TileSpawner!")
-		return
-	var mapping_json = JSON.parse(mapping_file.get_as_text())
-	mapping_file.close()
-	if typeof(mapping_json.result) != TYPE_DICTIONARY:
+	#	print("Error: Could not open the mapping file for TileSpawner!")
+	#	return
+	var mapping_res:TileSpawnerResource = ResourceLoader.load(tile_spawner.mapping)
+	#mapping_file.close()
+	if !mapping_res is TileSpawnerResource:
 		# Make sure the mapping file is formatted correctly
-		print("Error: Mapping file for TileSpawner must be a JSON object!")
+		print("Error: Mapping file for TileSpawner must be a res object!")
 		return
-	var mapping = mapping_json.result
+	var mapping = mapping_res.objects
+	#print(mapping)
 
 	# Using the tilemap's cell_tile_origin, find an offset for each node
 	var origin_offset = Vector2()

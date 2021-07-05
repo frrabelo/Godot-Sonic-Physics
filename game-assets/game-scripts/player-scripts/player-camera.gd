@@ -27,7 +27,7 @@ export(float) var SCROLL_DELAY = 2
 var scroll_timer : float
 export(bool) var rotateWithPlayer:bool
 var stuck_in_object:bool
-var object_to_stuck;
+var object_to_stuck : Node2D;
 var secondary_target:Node2D;
 
 onready var camera_scroll = $CameraScroll
@@ -54,11 +54,23 @@ func camera_step(player : PlayerPhysics, delta : float):
 		if rotateWithPlayer:
 			var dir = (player.position - secondary_target.position).normalized();
 			rotation_degrees = rad2deg(dir.angle()) + 90;
-			position += (secondary_target.position - position) / 4
+			position += (secondary_target.position - position) * delta * 10
 			position.y -= 20 * cos(rotation);
 			position.x -= 20 * -sin(rotation)
 		else:
 			rotation_degrees += player.smooth_rotate(rotation_degrees, 0, 180);
+	else:
+		if object_to_stuck:
+			var vel_default = 4
+			if object_to_stuck.position.x > position.x + RIGHT:
+				position.x += min(object_to_stuck.position.x - (position.x + RIGHT), vel_default)
+			elif player.position.x < position.x + LEFT:
+				position.x += max(object_to_stuck.position.x - (position.x + LEFT), -vel_default)
+			
+			if object_to_stuck.position.y > position.y + GROUND_TOP:
+				position.y += min(object_to_stuck.position.y - (position.y + GROUND_TOP), vel_default)
+			elif object_to_stuck.position.y < position.y + GROUND_BOTTOM:
+				position.y += max(object_to_stuck.position.y - (position.y + GROUND_BOTTOM), -vel_default)
 
 func horizontal_border(player : PlayerPhysics):
 	if follow_player:

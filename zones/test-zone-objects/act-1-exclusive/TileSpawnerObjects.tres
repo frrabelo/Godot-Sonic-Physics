@@ -1,0 +1,44 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/tile_spawner/tile-spawner-resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+objects = {
+"BreakableBlock": {
+"scene": "res://zones/test-zone-objects/breakable-block-object.tscn"
+},
+"Fan": {
+"scene": "res://zones/test-zone-objects/fan-object.tscn"
+},
+"MaskBlue": {
+"scene": "res://general-objects/mask-setter-blue.tscn"
+},
+"MaskInvert": {
+"scene": "res://general-objects/mask-setter-invert.tscn"
+},
+"MaskRed": {
+"scene": "res://general-objects/mask-setter-red.tscn"
+},
+"RedSpring": {
+"properties": {
+"spring_presset": 1
+},
+"scene": "res://general-objects/spring-object.tscn"
+},
+"Ring": {
+"scene": "res://general-objects/ring-object.tscn"
+},
+"SpeedBooster": {
+"scene": "res://zones/test-zone-objects/speed-booster-gimmick-object.tscn"
+},
+"Spike": {
+"scene": "res://general-objects/Spike.tscn"
+},
+"YellowSpring": {
+"properties": {
+"spring_presset": 0
+},
+"scene": "res://general-objects/spring-object.tscn"
+}
+}

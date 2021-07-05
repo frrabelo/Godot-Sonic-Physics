@@ -13,17 +13,14 @@ var change = false
 func uselessSetter(useless_value):
 	pass
 
-func direction():
-	return Utils.sign_bool(to_right);
-
 func _ready():
-	speed.x = max_speed.x * direction()
+	speed.x = max_speed.x * Utils.sign_bool(to_right)
 	main_anim_name = "Moving"
 	set_physics_process(true)
 
 func _physics_process(delta):
 	if main_anim_name != "Flipping":
-		sprite.scale.x = -direction();
+		sprite.scale.x = -Utils.sign_bool(to_right);
 	if !is_on_floor():
 		if grav < 128:
 			grav += grav_pattern;
@@ -51,7 +48,7 @@ func _animation_step(delta):
 		if main_anim_name != "Flipping":
 			main_anim_name = "Flipping"
 		if (to_right && speed.x < max_speed.x) || (!to_right && speed.x > -max_speed.x):
-			speed.x += acc * direction();
+			speed.x += acc * Utils.sign_bool(to_right);
 	
 	if main_anim_name == "Moving":
 		if time > 0:

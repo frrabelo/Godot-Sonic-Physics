@@ -5,7 +5,7 @@
 [ext_resource path="res://zones/test-zone-objects/breaked-block-object.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 13 )
+extents = Vector2( 12, 21 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 24 )
@@ -21,7 +21,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 32, 48 )
 
 [node name="BreakArea" type="Area2D" parent="."]
-visible = false
 position = Vector2( 0, 8 )
 gravity_vec = Vector2( 0, 0 )
 linear_damp = 0.0
@@ -29,11 +28,9 @@ angular_damp = 0.0
 
 [node name="Area" type="CollisionShape2D" parent="BreakArea"]
 modulate = Color( 0, 0, 0, 1 )
-rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Body" type="StaticBody2D" parent="."]
-visible = false
 position = Vector2( 0, 8 )
 collision_layer = 32
 collision_mask = 32

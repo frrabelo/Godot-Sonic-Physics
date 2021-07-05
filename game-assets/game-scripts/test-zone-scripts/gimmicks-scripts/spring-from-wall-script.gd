@@ -4,15 +4,19 @@ var showTrigger:Area2D;
 export(Vector2) var trigger_position = Vector2(80, 0) setget setTriggerPos, getTriggerPos;
 export(Vector2) var trigger_size = Vector2(80, 0) setget setTriggerSize, getTriggerSize
 var show_rect:RectangleShape2D = RectangleShape2D.new();
-export var initial_angle : float = 180
+export var initial_angle : float = 180 setget setInitAngle
 export var final_angle : float = 0
 var activate:bool = false;
 var sp_plat : Node2D
-var duration : float =0.5
+var duration : float =0.1
+export var activate_only_on_ground : bool = false
+export var activate_only_when_stopped : bool = false
+
 var players_inside : Array = []
 var inside : bool = false
 
 func _ready() -> void:
+	setInitAngle(initial_angle)
 	set_process(false)
 
 func _enter_tree():
@@ -26,8 +30,10 @@ func _prepare():
 
 func setInitAngle(value:float):
 	initial_angle = fmod(value, 360);
-	if sp_plat:
-		sp_plat.rotation_degrees = initial_angle;
+	var sp_p = get_node_or_null('SpPlat')
+	if sp_p:
+		sp_p.rotation_degrees = initial_angle;
+		print(sp_p)
 
 func getInitAngle():
 	return initial_angle;
@@ -63,11 +69,17 @@ func getTriggerSize():
 
 func _on_ShowTrigger_body_entered(body):
 	if body.is_class("PlayerPhysics"):
+		if activate_only_on_ground:
+			if !body.is_grounded:
+				return
+			else:
+				if activate_only_when_stopped && abs(body.gsp) > 0:
+					return
 		if !players_inside.has(body):
 			players_inside.append(body)
 		if players_inside.size() > 0:
 			inside = true
-			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation, final_angle, duration, Tween.TRANS_LINEAR)
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation_degrees, final_angle, duration, Tween.TRANS_LINEAR)
 			$Tween.start()
 func _on_ShowTrigger_body_exited(body):
 	if body.is_class("PlayerPhysics"):
@@ -75,7 +87,7 @@ func _on_ShowTrigger_body_exited(body):
 			players_inside.remove(players_inside.find(body))
 		if players_inside.size() < 1:
 			inside = false
-			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation, initial_angle, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation_degrees, initial_angle, duration, Tween.TRANS_LINEAR)
 			$Tween.start()
 func _on_RedSpringFromSolid_script_changed():
 	_prepare();

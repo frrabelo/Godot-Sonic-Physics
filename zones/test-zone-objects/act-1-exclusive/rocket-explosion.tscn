@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://zones/test-zone-objects/act-1-exclusive/rocket-explosion.gd" type="Script" id=1]
+[ext_resource path="res://game-assets/audio/sfx/Explosion.wav" type="AudioStream" id=4]
+
+[node name="RocketExplosion" type="Node2D"]
+position = Vector2( 244, 143 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Timer"]
+stream = ExtResource( 4 )
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

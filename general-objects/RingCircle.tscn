@@ -11,6 +11,6 @@ __meta__ = {
 scene = ExtResource( 1 )
 radius = 61.2046
 object_count = 8
-blank_position = "11111"
+blank_position = "1"
 rotate = true
 rotation_speed = 2.0

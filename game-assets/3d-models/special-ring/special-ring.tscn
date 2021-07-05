@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game-assets/3d-models/special-ring/ring-material.material" type="Material" id=1]
 [ext_resource path="res://game-assets/3d-models/special-ring/special-ring-animator.gd" type="Script" id=2]
-[ext_resource path="res://game-assets/3d-models/special-ring/special-ring-enviroment.tres" type="Environment" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Círculo"
@@ -20,7 +19,7 @@ surfaces/0 = {
 "vertex_count": 256
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 length = 3.0
 loop = true
 tracks/0/type = "value"
@@ -36,10 +35,10 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 360, 360, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 length = 2.0
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 
@@ -72,25 +71,19 @@ material/0 = null
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EmeraldRingObj"]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0, 0, 10.9294 )
+transform = Transform( 1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0, 0, 3.585 )
 fov = 22.2737
 near = 0.000999987
 
 [node name="Rotation" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 6 )
-anims/Spawn = SubResource( 7 )
+anims/Idle = SubResource( 2 )
+anims/Spawn = SubResource( 3 )
 
 [node name="Scale" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 8 )
+anims/Idle = SubResource( 4 )
 anims/Spawn = SubResource( 5 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 3 )
-
-[node name="SpotLight" type="SpotLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.30941 )
+[node name="Light" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 light_energy = 16.0
-light_indirect_energy = 7.76
-spot_range = 15.7106
-
-[node name="OmniLight" type="OmniLight" parent="."]
+directional_shadow_mode = 0

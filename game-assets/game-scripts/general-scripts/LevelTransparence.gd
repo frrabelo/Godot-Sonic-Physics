@@ -1,8 +1,16 @@
 extends Area2D
+tool
 
 var players : Array = []
 export var fade_time:float = 0.5
 export var tranparency_inside : float = 0.5
+
+func _ready() -> void:
+	set_process(false)
+	if Engine.editor_hint:
+		modulate.a = 0.5
+		return
+	modulate.a = 1.0
 
 func _on_LevelTransparence_body_entered(body: Node) -> void:
 	if body is PlayerPhysics:

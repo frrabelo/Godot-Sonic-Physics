@@ -26,7 +26,7 @@ func _thread_load(path):
 		# Update progress bar, use call deferred, which routes to main thread
 #		progress.call_deferred("set_value", ril.get_stage())
 		# Simulate a delay
-		print(ril.get_stage())
+		#print(ril.get_stage())
 		OS.delay_msec(SIMULATED_DELAY_SEC * 100.0)
 		# Poll (does a load step)
 		var err = ril.poll()
@@ -59,7 +59,7 @@ func _thread_done(resource):
 	get_tree().current_scene = null
 	# Add new one to root
 	get_tree().root.add_child(new_scene)
-	print('SCENE PRELOADED!') 
+	#print('SCENE PRELOADED!') 
 	# Set as current scene
 	get_tree().current_scene = new_scene
 	SIMULATED_DELAY_SEC = SIMULATED_DELAY_SEC_NORMAL

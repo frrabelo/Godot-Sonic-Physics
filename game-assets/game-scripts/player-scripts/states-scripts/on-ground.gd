@@ -11,6 +11,7 @@ func enter(host, prev_state):
 	#host.spring_loaded = false
 	idle_anim = 'Idle'
 	host.snap_margin = host.snaps
+	host.suspended_jump = false
 	
 	if host.selected_character.states.has(name):
 		var to_return = host.selected_character.states[name].enter(host, prev_state, self)
@@ -36,16 +37,24 @@ func step(host, delta):
 	if host.is_floating:
 		return 'OnAir'
 	
-	if host.direction.y != 0:
-		if host.direction.y > 0:
-			if abs_gsp > 61.875:
-				host.is_rolling = true
-			elif host.ground_mode == 0:
-				host.is_rolling = false
-				if host.spinDash || host.selected_character.get("spin_dash_override"):
-						if Input.is_action_just_pressed("ui_jump"):
-							return 'SpinDash'
-				host.is_looking_down = true
+	if host.constant_roll:
+		host.is_rolling = true
+		host.gsp += ((host.TOPROLL - host.gsp) * delta) * host.characters.scale.x * host.ACC
+		host.gsp = max(-host.TOPROLL, min(host.gsp, host.TOPROLL))
+	#	print(host.gsp)
+		host.control_locked = true
+		host.control_unlock_timer = 0.5
+	else:
+		if host.direction.y != 0:
+			if host.direction.y > 0:
+				if abs_gsp > 61.875:
+					host.is_rolling = true
+				elif host.ground_mode == 0:
+					host.is_rolling = false
+					if host.spinDash || host.selected_character.get("spin_dash_override"):
+							if Input.is_action_just_pressed("ui_jump"):
+								return 'SpinDash'
+					host.is_looking_down = true
 	
 	var ground_angle = host.ground_angle();
 	
@@ -77,9 +86,10 @@ func step(host, delta):
 			if !is_braking && abs_gsp < host.TOP && !host.is_rolling:
 					host.gsp += host.ACC * host.direction.x;
 		else:
+			is_braking = false
 			if !host.is_rolling:
 				host.gsp -= min(abs_gsp, host.FRC) * sign(host.gsp)
-				abs_gsp = host.gsp
+				abs_gsp = abs(host.gsp)
 	
 	if host.is_wall_right && host.gsp > 0 || host.is_wall_left && host.gsp < 0:
 		host.is_pushing = true

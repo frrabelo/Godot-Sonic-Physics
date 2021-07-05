@@ -44,6 +44,7 @@ grav = 5.0
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -8, -8 )
 frames = SubResource( 1 )
+frame = 9
 playing = true
 
 [node name="Area" type="Area2D" parent="."]
@@ -58,4 +59,5 @@ position = Vector2( -8, -8 )
 shape = SubResource( 3 )
 disabled = true
 
+[connection signal="area_entered" from="Area" to="." method="_on_Area_area_entered"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

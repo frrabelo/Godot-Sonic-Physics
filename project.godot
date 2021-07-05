@@ -39,10 +39,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/CircleObjectManipulator/ObjectsCircle.gd"
 }, {
+"base": "Node2D",
+"class": "CircleVisualEffect",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/rocket-explosion-script.gd"
+}, {
 "base": "SpriteFrames",
 "class": "ImprovedSpriteFrames",
 "language": "GDScript",
 "path": "res://game-assets/game-classes/improved-sprite-frames-scripts.gd"
+}, {
+"base": "Node2D",
+"class": "ItemBox",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/general-scripts/monitor-script.gd"
 }, {
 "base": "PanelContainer",
 "class": "JsonDock",
@@ -99,6 +109,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/general-scripts/4way-rotation.gd"
 }, {
+"base": "Resource",
+"class": "TileSpawnerResource",
+"language": "GDScript",
+"path": "res://addons/tile_spawner/tile-spawner-resource.gd"
+}, {
 "base": "Reference",
 "class": "Utils",
 "language": "GDScript",
@@ -111,7 +126,9 @@ _global_script_class_icons={
 "CharacterAnimator": "",
 "CharacterProperties": "",
 "CircleObjects": "",
+"CircleVisualEffect": "",
 "ImprovedSpriteFrames": "",
+"ItemBox": "",
 "JsonDock": "",
 "MovingPlatformObject": "",
 "NumCounter": "",
@@ -123,6 +140,7 @@ _global_script_class_icons={
 "State": "",
 "StateChar": "",
 "StaticNode2D": "",
+"TileSpawnerResource": "",
 "Utils": ""
 }
 
@@ -133,8 +151,9 @@ stdout/verbose_stdout=true
 [application]
 
 config/name="Godot the Hedgehog"
-run/main_scene="res://main.tscn"
-config/custom_user_dir_name="soneco-directory"
+run/main_scene="res://zones/test-zone-act-1-scene.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="GodotHedgehogData"
 boot_splash/fullsize=false
 config/icon="res://icon.png"
 
@@ -156,8 +175,8 @@ window/size/height=270
 window/size/test_width=960
 window/size/test_height=540
 window/handheld/orientation="sensor_landscape"
-window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
@@ -245,12 +264,14 @@ file_logging/max_log_files=1
 
 [physics]
 
+2d/cell_size=32
 2d/default_linear_damp=0.0
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
+threads/thread_model=2
 vram_compression/import_etc=true
 quality/directional_shadow/size.mobile=1024
+quality/shadow_atlas/size.mobile=1024
 quality/filters/anisotropic_filter_level=1
-environment/default_environment="res://default_env.tres"

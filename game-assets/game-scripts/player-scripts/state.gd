@@ -1,19 +1,15 @@
 extends Node
 
 class_name State
-
 func enter(host: PlayerPhysics, prev_state:String):
-	return
-
+	pass
 func step(host: PlayerPhysics, delta: float):
-	return
-
+	pass
 func exit(host: PlayerPhysics, next_state:String):
-	return
+	pass
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
-	return
-
+	pass
 
 func _on_animation_finished(anim_name: String):
 	pass

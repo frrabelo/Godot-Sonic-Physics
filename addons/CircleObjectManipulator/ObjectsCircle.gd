@@ -2,7 +2,7 @@ tool
 extends Node2D
 class_name CircleObjects
 
-export var scene : PackedScene
+export var scene : PackedScene = preload('res://general-objects/spring-object.tscn')
 export var scene_offset : Vector2 = Vector2(8, 8) setget _set_scene_offset
 export var radius : float = 50 setget _set_radius
 export var object_count : int = 16 setget _set_object_count
@@ -11,7 +11,7 @@ export var rotate : bool = false setget _set_rotate
 export var rotation_speed : float = 1.0
 export var editor_process : bool = false setget _set_editor_process
 export var default_angle : float = 0 setget _set_dangle
-var process_angle
+var process_angle = default_angle
 
 func _ready() -> void:
 	if Engine.editor_hint:
@@ -22,29 +22,29 @@ func _ready() -> void:
 func _set_object_count(val : int) -> void:
 	val = max(val, 0)
 	object_count = val
-	_spawn_rings(val, default_angle, blank_position)
+	_spawn_objects(val, default_angle, blank_position)
 	update()
 
 func _set_blank_positions(val : String) -> void:
 	blank_position = val
-	_spawn_rings(object_count, default_angle, blank_position)
+	_spawn_objects(object_count, default_angle, blank_position)
 	update()
 
 func _set_radius (val : float) -> void:
 	radius = val
-	if !is_processing():
+	if !editor_process:
 		_update_rings_pos(default_angle)
 	update()
 
 func _set_scene_offset (val : Vector2) -> void:
 	scene_offset = val
-	if !is_processing():
+	if !editor_process:
 		_update_rings_pos(default_angle)
 	update()
 
 func _set_dangle( val : float) -> void:
 	default_angle = val
-	if !is_processing():
+	if !editor_process:
 		_update_rings_pos(default_angle)
 	update()
 
@@ -67,7 +67,7 @@ func _set_editor_process (val : bool) -> void:
 	if rotate:
 		set_physics_process(val)
 
-func _spawn_rings(count : int, angle : float = 0, blanks : String = "") -> void:
+func _spawn_objects(count : int, angle : float = 0, blanks : String = "") -> void:
 	_clear()
 	var container = Node2D.new()
 	container.name = "objContainer"
@@ -78,12 +78,16 @@ func _spawn_rings(count : int, angle : float = 0, blanks : String = "") -> void:
 	for i in count:
 		if blank_position.length() > i && blank_position[i] == "0":
 			m_angle += angle_step / object_count
+			var obj : Node2D = Node2D.new()
+			obj.position = Vector2.RIGHT.rotated(angle)
+			container.add_child(obj)
 			continue
 		var scene_obj : Node2D = scene.instance(PackedScene.GEN_EDIT_STATE_INSTANCE)
 		var direction = Vector2(cos(m_angle), sin(m_angle))
 		var pos = (scene_offset + container.position) + (direction * radius)
-		scene_obj.set_position(pos)
-		container.add_child(scene_obj)
+		if scene_obj != null:
+			scene_obj.set_position(pos)
+			container.add_child(scene_obj)
 		m_angle += angle_step / object_count
 
 func _update_rings_pos(angle : float) -> void:
@@ -96,8 +100,9 @@ func _update_rings_pos(angle : float) -> void:
 	#print(container.get_children())
 	var b : int = 0
 	for i in container.get_children():
-		if blank_position.length() > b && blank_position[b] == "0":
-			b+=1
+		#print(b < blank_position.length() && blank_position[b] == "0")
+		if b < blank_position.length() && blank_position[b] == "0":
+			b += 1
 			angle += angle_step/object_count
 			continue
 		var direction = Vector2(cos(angle), sin(angle))
@@ -108,9 +113,13 @@ func _update_rings_pos(angle : float) -> void:
 	process_angle = default_angle
 
 func _physics_process(delta: float) -> void:
+	if process_angle == null:
+		process_angle = default_angle
+		print(process_angle)
+		return
 	process_angle += delta * rotation_speed
-	var p_angle = process_angle
-	var angle_step = 2 * PI
+	var p_angle : float = process_angle
+	var angle_step : float = 2 * PI
 	for i in get_child(0).get_children():
 		var direction = Vector2(cos(p_angle), sin(p_angle))
 		var pos = scene_offset + direction * radius

@@ -80,6 +80,7 @@ func get_size() -> Vector2:
 func _physics_process(delta: float) -> void:
 	var target_position = positions[current_target]
 	var direction:Vector2 = (target_position - platform.position).normalized()
+	#print(direction)
 	var motion: = direction * speed * delta
 	var distance_to_target: = platform.position.distance_to(target_position)
 	if motion.length() >= distance_to_target:

@@ -73,19 +73,28 @@ func _physics_process(delta):
 
 func _on_Area_body_entered(body:Node):
 	if body.is_class("PlayerPhysics"):
-		queue_free()
-		get_tree().current_scene.ring += points;
-		var player:= body
-		var sound:AudioPlayer = player.get_node("AudioPlayer");
-		instBlink.position = position;
-		instBlink.animation = floor(rand_range(0, 3));
-		var instBlinkAnim:AnimatedSprite = instBlink.get_node("Anim")
-		get_parent().add_child(instBlink);
-		sound.play("ring");
-		queue_free();
+		_catch(body)
 
 func get_class():
 	return "Ring"
 
 func is_class(name:String):
 	return name == get_class();
+
+
+func _on_Area_area_entered(area: Area2D) -> void:
+	if area.get_owner().is_class('Rocket'):
+		if area.get_owner().can_ascend == true && area.get_owner().player:
+			var player = area.get_owner().player
+			_catch(player)
+
+func _catch(body: Node) -> void:
+	get_tree().current_scene.rings += points;
+	var player:= body
+	var sound:AudioPlayer = player.get_node("AudioPlayer");
+	instBlink.position = position;
+	instBlink.animation = floor(rand_range(0, 3));
+	var instBlinkAnim:AnimatedSprite = instBlink.get_node("Anim")
+	get_parent().add_child(instBlink);
+	sound.play("ring");
+	queue_free()

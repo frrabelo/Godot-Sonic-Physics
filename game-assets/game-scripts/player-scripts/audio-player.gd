@@ -2,25 +2,14 @@ extends Node2D
 
 class_name AudioPlayer
 
-onready var audios = {
-	'jump' : $jump,
-	'spring' : $Spring,
-	'brake' : $brake,
-	'spin' : $spin,
-	'drop_dash_charge': $DropDashCharge,
-	'spin_dash_charge' : $SpinDashCharge,
-	'spin_dash_release' : $SpinDashRelease,
-	'peel_out_charge' : $PeelOutCharge,
-	'peel_out_release' : $PeelOutRelease,
-	'insta_shield' : $InstaShield,
-	'ring' : $Ring,
-	'ring_loss': $RingLose,
-	'hurt': $Hurt,
-	'spike_hurt': $SpikeHurt,
-	'hyper_ring': $HyperRing, 
-}
+var audios = {}
 
-func play(audio_name : String):
+func _ready() -> void:
+	for i in get_children():
+		audios[(i as Node).name] = i
+
+func play(audio_name : String, from : float = 0.0):
+	#print(audios[audio_name], audio_name)
 	audios[audio_name].play()
 
 func stop(audio_name : String):

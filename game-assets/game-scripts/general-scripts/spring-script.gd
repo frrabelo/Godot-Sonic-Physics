@@ -3,7 +3,7 @@ extends StaticNode2D
 signal pushed_by_spring
 
 enum Springs{YELLOW, RED}
-
+export var use_parent_rotation:bool = false
 export var push_force = 500;
 var sprite : AnimatedSprite;
 onready var jump_collide = $JumpArea/JumpCollide
@@ -16,6 +16,21 @@ const _pressets = {
 
 func _ready():
 	set_rotation_degrees(rotation_degrees)
+
+func set_rotation_degrees(val : float) -> void:
+	.set_rotation_degrees(val)
+	var scale_change = 1.0
+	if val == 90 || val == 180:
+		scale_change = -1.0
+	for i in get_types():
+		i.scale.x = -scale_change
+
+func get_types () -> Array:
+	var to_return = []
+	for i in $Types.get_children():
+		to_return.append(i)
+	
+	return to_return
 
 func _set_spring_presset(val:int) -> void:
 	spring_presset = val
@@ -40,15 +55,15 @@ func _on_JumpArea_body_entered(body):
 	if body is PlayerPhysics:
 		var player:PlayerPhysics = body;
 		var abs_p_angle = abs(player.rotation_degrees)
-		var abs_rot = abs(rotation_degrees)
+		var my_rotation =  rotation_degrees if !use_parent_rotation else get_parent().rotation_degrees
+		var abs_rot = abs(my_rotation)
 		animplayer.play("Push", -1, 2);
 		player.audio_player.play('spring');
 		#var ground_angle = player.ground_angle();
-		var sp : float = -push_force * cos(rotation);
-		#print(abs_rot)
+		var sp : float = -push_force * cos(deg2rad(my_rotation));
 		if abs_rot == 0 or abs_rot == 180:
 			if player.is_grounded:
-				player.set_rays(false)
+				player.set_ground_rays(false)
 				player.is_grounded = false
 				player.fsm.change_state("OnAir")
 			player.snap_margin = 0
@@ -61,16 +76,16 @@ func _on_JumpArea_body_entered(body):
 			if player.is_grounded:
 				match player.ground_mode:
 					0:
-						player.gsp = push_force*1.5 * sin(rotation);
+						player.gsp = push_force*1.5 * sin(deg2rad(my_rotation));
 					_:
 						if abs(player.ground_mode) == 1:
 							player.speed.x = push_force * -player.ground_mode;
-							player.position.x += player.speed.x * get_physics_process_delta_time()
+							player.speed = player.move_and_slide(player.speed)
 							player.speed.y = 0;
 						player.is_grounded = false;
 						player.fsm.change_state("OnAir")
 			else:
-				player.speed.x = push_force * 1.5 * sin(rotation);
+				player.speed.x = push_force * 1.5 * sin(deg2rad(my_rotation));
 		player.spring_loaded = true
 		player.speed = player.move_and_slide(player.speed)
 
