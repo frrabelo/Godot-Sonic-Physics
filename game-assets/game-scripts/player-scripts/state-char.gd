@@ -13,7 +13,7 @@ func step(host: PlayerPhysics, delta: float, main_state:State):
 func exit(host: PlayerPhysics, next_state:String, main_state:State):
 	return
 
-func animation_step(host: PlayerPhysics, animator: CharacterAnimator, main_state:State, args:Array = []):
+func animation_step(host: PlayerPhysics, animator: CharacterAnimator, main_state:State, delta, args:Array = []):
 	return
 
 

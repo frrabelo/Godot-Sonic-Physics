@@ -147,7 +147,7 @@ func exit(host, next_state):
 		if to_return:
 			return to_return
 
-func animation_step(host, animator):
+func animation_step(host, animator, delta):
 	var anim_name = animator.current_animation
 	var anim_speed = animator.get_playing_speed()
 	
@@ -171,7 +171,7 @@ func animation_step(host, animator):
 					anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
 	
 	if host.selected_character.states.has(name):
-		var dic = host.selected_character.states[name].animation_step(host, animator, self, [anim_name, anim_speed])
+		var dic = host.selected_character.states[name].animation_step(host, animator, self, delta, [anim_name, anim_speed])
 		if dic:
 			anim_name = dic.anim_name
 			anim_speed = dic.anim_speed

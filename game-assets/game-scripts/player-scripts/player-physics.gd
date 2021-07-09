@@ -90,12 +90,18 @@ var suspended_jump : bool = false
 var suspended_can_right : bool = true
 var suspended_can_left : bool = true
 
+func _enter_tree() -> void:
+	if Engine.editor_hint:
+		set_process(false)
+
 func _ready():
-	if player_camera:
-		player_camera.camera_ready(self)
-	_set_character_sel(CHARACTER_SELECTED)
-	set_collision_mask(get_collision_mask())
-	control_unlock_timer = control_unlock_time_normal
+	if !Engine.editor_hint:
+		if player_camera:
+			player_camera.camera_ready(self)
+		_set_character_sel(CHARACTER_SELECTED)
+		set_collision_mask(get_collision_mask())
+		control_unlock_timer = control_unlock_time_normal
+		set_process(true)
 
 func is_on_floor() -> bool:
 	return .is_on_floor()
@@ -163,6 +169,8 @@ func physics_step():
 		is_grounded = true
 	
 	if is_grounded && ground_ray:
+		if collider_is_one_way(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
+			ground_mode = 0
 		ground_normal = ground_ray.get_collision_normal()
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
 		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
@@ -191,7 +199,9 @@ func step_wall_collision(var wall_sensors : Array):
 		var collider = rs.get_collider()
 		if collider:
 			var one_way = collider_is_one_way(rs, collider)
-			if one_way:
+			var angle = abs(floor(rad2deg(rs.get_collision_normal().angle())))
+			print(angle)
+			if one_way || ((angle != 180 && angle != 0) && is_grounded) || (abs(rotation) > deg2rad(5) && fsm.current_state == 'OnAir'):
 				continue
 			to_return = to_return || rs.is_colliding()
 	return to_return
@@ -234,17 +244,17 @@ func ground_reacquisition():
 	if angle >= 0 and angle < 22.5:
 		gsp = speed.x
 	elif angle >= 22.5 and angle < 45.0:
-		if abs(speed.x) > speed.y:
-			gsp = speed.x
-		else:
-			gsp = speed.y * .5 * -sign(sin(ground_angle))
+		gsp = max(speed.x, speed.y)
+		if speed.y >= abs(speed.x):
+			gsp *= .5 * -sign(sin(ground_angle))
 	elif angle >= 45.0 and angle < 90:
-		if abs(speed.x) > speed.y:
-			gsp = speed.x
-		else:
-			gsp = speed.y * -sign(sin(ground_angle))
+		gsp = max(speed.x, speed.y)
+		if speed.y >= abs(speed.x):
+			gsp *= -sign(sin(ground_angle))
 	
-	rotation_degrees = -rad2deg(ground_angle)
+	print(gsp, " ", angle)
+	
+	rotation = -(ground_angle)
 
 func ground_angle() -> float:
 	return ground_normal.angle_to(Vector2(0, -1))

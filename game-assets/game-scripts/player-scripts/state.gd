@@ -8,7 +8,7 @@ func step(host: PlayerPhysics, delta: float):
 func exit(host: PlayerPhysics, next_state:String):
 	pass
 
-func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
+func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta:float):
 	pass
 
 func _on_animation_finished(anim_name: String):

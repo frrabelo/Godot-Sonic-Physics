@@ -143,7 +143,7 @@ func exit(host, next_stage):
 		if to_return:
 			return to_return
 
-func animation_step(host, animator):
+func animation_step(host, animator, delta):
 	var gsp_dir = sign(host.gsp)
 	var anim_name = idle_anim
 	var anim_speed = 1.0
@@ -181,10 +181,10 @@ func animation_step(host, animator):
 			if abs_crot < 20:
 				if abs_crot < 10:
 					host_char.global_rotation = 0;
-				host_char.rotation_degrees += host.smooth_rotate(char_rotation, -host_rotation, 180.0)
+				host_char.rotation += (0 - char_rotation) * (delta)
 			else:
 				pass
-				host_char.rotation_degrees += host.smooth_rotate(char_rotation, 0, 360.0)
+				host_char.rotation += (0 - char_rotation) * (delta*2)
 			anim_speed = max(-(8.0 / 60.0 - (abs_gsp / 120.0)), 1.6)
 			if gsp_dir != 0:
 				host.characters.scale.x = gsp_dir
@@ -217,7 +217,7 @@ func animation_step(host, animator):
 			anim_speed = 1.5;
 	
 	if host.selected_character.states.has(name):
-		host.selected_character.states[name].animation_step(host, animator, self)
+		host.selected_character.states[name].animation_step(host, animator, self, delta)
 	
 	animator.animate(anim_name, anim_speed, play_once);
 

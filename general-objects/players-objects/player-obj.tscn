@@ -1327,7 +1327,7 @@ func exit(host, next_state, state) -> void:
 			dropTimer.stop();
 			dropTimer = null;
 
-func animation_step(host, animator, state, args=[]) -> Dictionary:
+func animation_step(host, animator, state, delta, args=[]) -> Dictionary:
 	var anim_name = args[0]
 	var anim_speed = args[1]
 	if state.has_jumped or state.has_rolled:
@@ -1404,9 +1404,7 @@ script = SubResource( 3 )
 
 [node name="Sprite" type="AnimatedSprite" parent="Characters/Sonic"]
 frames = SubResource( 4 )
-animation = "SuspendedMove"
-frame = 3
-offset = Vector2( -2, 38 )
+animation = "Idle"
 
 [node name="CharAnimation" type="AnimationPlayer" parent="Characters/Sonic/Sprite"]
 anims/BrakeLoop = SubResource( 5 )
@@ -1462,6 +1460,7 @@ script = ExtResource( 11 )
 
 [node name="AudioPlayer" type="Node2D" parent="."]
 script = ExtResource( 17 )
+streams = [ ExtResource( 8 ) ]
 
 [node name="jump" type="AudioStreamPlayer" parent="AudioPlayer"]
 stream = ExtResource( 8 )

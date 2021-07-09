@@ -51,3 +51,9 @@ func get_rectshape_2d() -> Dictionary:
 		shape = rect,
 		position = position
 	}
+
+func get_class() -> String:
+	return "RectManipulate2D"
+
+func is_class(val : String) -> bool:
+	return val == get_class() || .is_class(val)

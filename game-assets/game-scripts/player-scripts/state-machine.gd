@@ -54,9 +54,9 @@ func _physics_process(delta):
 		true
 	)
 	if cur_state is State:
-		cur_state.animation_step(host, host.animation)
+		cur_state.animation_step(host, host.animation, delta)
 	elif cur_state is StateChar:
-		cur_state.animation_step(host, host.animation, null)
+		cur_state.animation_step(host, host.animation, delta, null)
 	
 	if host.player_camera != null:
 		host.player_camera.camera_step(host, delta)

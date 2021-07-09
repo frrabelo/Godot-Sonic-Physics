@@ -1,8 +1,6 @@
 extends Node2D
 tool
 
-onready var sprite = $Collision/Grab
-
 const height : int = 40
 const width : int = 24
 

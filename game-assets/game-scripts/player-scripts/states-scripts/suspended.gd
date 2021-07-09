@@ -57,7 +57,7 @@ func exit(host: PlayerPhysics, next_state:String):
 	target_pos = null
 	side = 0
 
-func animation_step(host: PlayerPhysics, animator: CharacterAnimator):
+func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta):
 	#print(main_anim_name)
 	var playback_speed = 1.0
 	if side == 0:

@@ -27,7 +27,7 @@ func exit(host: PlayerPhysics, next_stage:String, main_state):
 	else:
 		host.audio_player.stop('peel_out_charge')
 
-func animation_step(host: PlayerPhysics, animator: CharacterAnimator, main_state, args=[]):
+func animation_step(host: PlayerPhysics, animator: CharacterAnimator, main_state, delta, args=[]):
 	var anim_speed = max(-(8.0 / 60.0 - (animation_speed / 120.0)), 1.0)
 	var anim_name = 'Walking'
 	

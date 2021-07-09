@@ -24,6 +24,8 @@ export(float) var SCROLL_DOWN = 88
 export(float) var SCROLL_SPEED = 120
 export(float) var SCROLL_DELAY = 2
 
+onready var camera : Camera2D = $CameraScroll/Camera2D
+
 var scroll_timer : float
 export(bool) var rotateWithPlayer:bool
 var stuck_in_object:bool

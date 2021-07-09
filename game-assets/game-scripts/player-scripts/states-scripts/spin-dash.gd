@@ -28,6 +28,6 @@ func exit(host, next_state):
 	host.audio_player.stop('spin_dash_charge')
 	host.audio_player.play('spin_dash_release')
 
-func animation_step(host, animator):
+func animation_step(host, animator, delta):
 	animator.animate('SpinDashCharge', 3.0, false)
 	pass
