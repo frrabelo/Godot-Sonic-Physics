@@ -27,8 +27,8 @@ var GRV
 export(bool) var spinDash = true;
 
 onready var selected_character
-onready var fsm = $StateMachine
-onready var player_camera = $'../../PlayerCamera'
+onready var fsm : = $StateMachine
+onready var player_camera = get_node('CameraContainer/PlayerCamera')
 onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
@@ -38,7 +38,7 @@ onready var ray_collider = $Ray
 onready var left_ground:RayCast2D = $LeftGroundSensor
 onready var right_ground:RayCast2D = $RightGroundSensor
 onready var middle_ground:RayCast2D = $MiddleGroundSensor
-onready var main_sensor:CollisionShape2D = $MainCollider
+onready var main_collider:CollisionShape2D = $MainCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
 onready var left_wall_bottom:RayCast2D = $LeftWallSensorBottom
@@ -90,6 +90,8 @@ var suspended_jump : bool = false
 var suspended_can_right : bool = true
 var suspended_can_left : bool = true
 
+var input_dict : Dictionary
+
 func _enter_tree() -> void:
 	if Engine.editor_hint:
 		set_process(false)
@@ -101,10 +103,6 @@ func _ready():
 		_set_character_sel(CHARACTER_SELECTED)
 		set_collision_mask(get_collision_mask())
 		control_unlock_timer = control_unlock_time_normal
-		set_process(true)
-
-func is_on_floor() -> bool:
-	return .is_on_floor()
 
 func get_rays() -> Array:
 	return [left_ground, middle_ground, right_ground, left_wall, left_wall_bottom, right_wall, right_wall_bottom]
@@ -134,15 +132,15 @@ func _set_can_brake_wall( val : bool ) -> void:
 	set_collision_mask_bit(5, can_break_wall)
 	set_collision_layer_bit(5, can_break_wall)
 
-func _process(delta):
+func _step_setup(delta : float) -> void:
 	#print(speed)
 	var roll_anim = animation.current_animation == 'Rolling'
 	if "animation_roll" in selected_character:
 		roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
 	assert (char_stand_collision && char_low_collision, "Error: the variables not contains value")
 	var shape = char_stand_collision.get_rectshape_2d() if !roll_anim else char_low_collision.get_rectshape_2d()
-	main_sensor.shape.extents = shape.shape.extents
-	main_sensor.position = shape.position
+	main_collider.shape.extents = shape.shape.extents
+	main_collider.position = shape.position
 	left_ground.position.x = -9 if !roll_anim else -7
 	right_ground.position.x = 9 if !roll_anim else 7
 	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
@@ -150,18 +148,12 @@ func _process(delta):
 	_set_can_brake_wall(!(abs(gsp) > 270 && is_rolling && is_grounded))
 	set_collision_mask_bit(6, !roll_anim)
 	set_collision_layer_bit(6, !roll_anim)
-	
 	#print(get_collision_mask_bit(5))
-	direction.x = \
-	-Input.get_action_strength("ui_left") +\
-	Input.get_action_strength("ui_right")
-	
-	direction.y = \
-	-Input.get_action_strength("ui_up") +\
-	Input.get_action_strength("ui_down")
 
-func physics_step():
-	position.x = max(position.x, 9.0)
+func physics_step(delta):
+	_step_setup(delta)
+	position.x = max(player_camera.camera.limit_left+9, position.x)
+	position.x = min(player_camera.camera.limit_right-9, position.x)
 	ground_ray = get_ground_ray()
 	is_ray_colliding = ground_ray != null
 	
@@ -179,8 +171,8 @@ func physics_step():
 		ground_normal = Vector2(0, -1)
 		is_grounded = false
 	
-	is_wall_left = step_wall_collision([left_wall, left_wall_bottom]) || position.x - 9 <= 0
-	is_wall_right = step_wall_collision([right_wall, right_wall_bottom])
+	is_wall_left = step_wall_collision([left_wall, left_wall_bottom]) || global_position.x-main_collider.shape.extents.x - player_camera.camera.limit_left <= 0
+	is_wall_right = step_wall_collision([right_wall, right_wall_bottom]) || global_position.x+9 - player_camera.camera.limit_right >= 0
 	
 	#print("left: ", is_wall_left, ", right:", is_wall_right)
 
@@ -192,7 +184,7 @@ func _set_control_locked(val : bool) -> void:
 		_control_unlock_timer_node.wait_time = control_unlock_time_normal
 		_control_unlock_timer_node.stop()
 
-func step_wall_collision(var wall_sensors : Array):
+func step_wall_collision(wall_sensors : Array) -> bool:
 	var to_return = false
 	for w in wall_sensors:
 		var rs : RayCast2D = w
@@ -200,7 +192,7 @@ func step_wall_collision(var wall_sensors : Array):
 		if collider:
 			var one_way = collider_is_one_way(rs, collider)
 			var angle = abs(floor(rad2deg(rs.get_collision_normal().angle())))
-			print(angle)
+			#print(angle)
 			if one_way || ((angle != 180 && angle != 0) && is_grounded) || (abs(rotation) > deg2rad(5) && fsm.current_state == 'OnAir'):
 				continue
 			to_return = to_return || rs.is_colliding()
@@ -214,7 +206,7 @@ func collider_is_one_way(ray_cast : RayCast2D, collider) -> bool:
 			var cell = tmap.get_cellv(tmap.world_to_map(ray_cast.get_collision_point()))
 			var shape = ray_cast.get_collider_shape()
 			to_return = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
-		'StaticBody2D', 'RigidBody2D':
+		'StaticBody2D', 'RigidBody2D', "KinematicBody2D":
 			var coll : CollisionObject2D = collider
 			var collider_shape_id : int = ray_cast.get_collider_shape()
 			var collider_shape_owner_id : int = coll.shape_find_owner(collider_shape_id)
@@ -252,7 +244,7 @@ func ground_reacquisition():
 		if speed.y >= abs(speed.x):
 			gsp *= -sign(sin(ground_angle))
 	
-	print(gsp, " ", angle)
+	#print(gsp, " ", angle)
 	
 	rotation = -(ground_angle)
 

@@ -9,5 +9,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
+[node name="Tween" type="Tween" parent="."]
+
 [connection signal="body_shape_entered" from="." to="." method="_on_BossArea_body_shape_entered"]
 [connection signal="body_shape_exited" from="." to="." method="_on_BossArea_body_shape_exited"]

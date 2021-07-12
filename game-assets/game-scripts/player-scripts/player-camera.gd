@@ -24,15 +24,14 @@ export(float) var SCROLL_DOWN = 88
 export(float) var SCROLL_SPEED = 120
 export(float) var SCROLL_DELAY = 2
 
-onready var camera : Camera2D = $CameraScroll/Camera2D
+onready var camera_scroll = $CameraScroll
+onready var camera : Camera2D = camera_scroll.get_node('Camera2D')
 
 var scroll_timer : float
 export(bool) var rotateWithPlayer:bool
 var stuck_in_object:bool
 var object_to_stuck : Node2D;
 var secondary_target:Node2D;
-
-onready var camera_scroll = $CameraScroll
 
 func camera_ready(player : PlayerPhysics) -> void:
 	position = player.position
@@ -50,10 +49,12 @@ func camera_step(player : PlayerPhysics, delta : float):
 		vertical_border(player)
 		vertical_scrolling(player, delta);
 		if rotation == 0 && rotateWithPlayer == false:
-			$CameraScroll/Camera2D.rotating = false;
+			camera.rotating = false;
 		else:
-			$CameraScroll/Camera2D.rotating = true;
+			camera.rotating = true;
 		if rotateWithPlayer:
+			if !secondary_target:
+				return
 			var dir = (player.position - secondary_target.position).normalized();
 			rotation_degrees = rad2deg(dir.angle()) + 90;
 			position += (secondary_target.position - position) * delta * 10

@@ -115,7 +115,6 @@ func _update_rings_pos(angle : float) -> void:
 func _physics_process(delta: float) -> void:
 	if process_angle == null:
 		process_angle = default_angle
-		print(process_angle)
 		return
 	process_angle += delta * rotation_speed
 	var p_angle : float = process_angle

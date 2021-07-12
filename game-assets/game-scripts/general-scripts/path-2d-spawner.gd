@@ -1,24 +1,28 @@
 extends Path2D
 tool
-class_name Path2DSpawner
+class_name ObjectSpawnerArc
 
-var parent_is_obj_spawner : bool = false
+export var scene : PackedScene = preload("res://general-objects/ring-object.tscn")
+export var update:bool setget _update_button
+export var offset:Vector2 = Vector2(8, 8)
 
-func _enter_tree() -> void:
-	update_configuration_warning()
+func _ready() -> void:
+	refresh()
 
-func set_curve(val : Curve2D) -> void:
-	if parent_is_obj_spawner:
-		get_parent().update_objects()
+func refresh () -> void:
+	if get_child_count() > 0:
+		for i in get_children():
+			i.queue_free()
+	var curves = curve.get_baked_points()
+	for i in curves:
+		var obj = scene.instance()
+		obj.position = i + offset
+		var container = Node2D.new()
+		add_child(container)
+		container.add_child(obj)
 
 func _draw() -> void:
-	if parent_is_obj_spawner:
-		get_parent().update_objects()
+	refresh()
 
-func _get_configuration_warning() -> String:
-	var to_return := ""
-	if !get_parent() is ObjectSpawner:
-		to_return = "Path2DSpawner must contain ObjectSpawner as a parent"
-	else:
-		parent_is_obj_spawner = true
-	return to_return
+func _update_button(val : bool) -> void:
+	refresh()

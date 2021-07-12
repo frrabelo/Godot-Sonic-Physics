@@ -1,5 +1,5 @@
 extends AudioStreamSample
-class_name NamedAudioStream
+class_name NamedAudioStreamSample
 tool
 
 export(String) var main_name:String setget set_main_name, get_main_name

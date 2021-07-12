@@ -12,7 +12,7 @@ func _ready():
 
 func set_ring(value:int):
 	rings = value;
-	if ($PlayerCamera != null):
+	if ($HUD != null):
 		$HUD/Separate/STRCounters/Count/RingCounter.text = String(rings);
 
 

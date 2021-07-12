@@ -1,4 +1,4 @@
-[gd_scene load_steps=216 format=2]
+[gd_scene load_steps=217 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/spin-dash.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/on-air.gd" type="Script" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://game-assets/game-scripts/player-scripts/state-machine.gd" type="Script" id=5]
 [ext_resource path="res://game-assets/audio/sfx/spin.wav" type="AudioStream" id=6]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/character-vfx.gd" type="Script" id=7]
-[ext_resource path="res://game-assets/audio/sfx/jump.wav" type="AudioStream" id=8]
+[ext_resource path="res://jump.tres" type="AudioStream" id=8]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-charge.wav" type="AudioStream" id=9]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-release.wav" type="AudioStream" id=10]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/super-peel-out.gd" type="Script" id=11]
@@ -186,6 +186,7 @@
 [ext_resource path="res://game-assets/game-sprites/player-sprites/characters-sprites/sonic-sprites/pindurado/movendo-se/pindurado#19.png" type="Texture" id=184]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/suspended.gd" type="Script" id=185]
 [ext_resource path="res://game-assets/audio/sfx/grab.wav" type="AudioStream" id=186]
+[ext_resource path="res://general-objects/players-objects/player-camera.tscn" type="PackedScene" id=187]
 
 [sub_resource type="Animation" id=1]
 length = 0.28
@@ -250,14 +251,14 @@ func _ready() -> void:
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
-"loop": true,
-"name": "Down",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 27 ) ],
 "loop": true,
 "name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
+"loop": true,
+"name": "Down",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 152 ), ExtResource( 153 ), ExtResource( 155 ), ExtResource( 154 ), ExtResource( 150 ), ExtResource( 138 ), ExtResource( 139 ), ExtResource( 142 ), ExtResource( 141 ), ExtResource( 135 ), ExtResource( 136 ), ExtResource( 149 ), ExtResource( 134 ), ExtResource( 151 ), ExtResource( 133 ), ExtResource( 148 ), ExtResource( 144 ), ExtResource( 147 ), ExtResource( 132 ), ExtResource( 140 ), ExtResource( 146 ), ExtResource( 145 ), ExtResource( 137 ), ExtResource( 143 ) ],
@@ -1458,9 +1459,8 @@ script = SubResource( 28 )
 [node name="SuperPeelOut" type="Node" parent="Characters/Sonic/CharStates"]
 script = ExtResource( 11 )
 
-[node name="AudioPlayer" type="Node2D" parent="."]
+[node name="AudioPlayer" type="Node" parent="."]
 script = ExtResource( 17 )
-streams = [ ExtResource( 8 ) ]
 
 [node name="jump" type="AudioStreamPlayer" parent="AudioPlayer"]
 stream = ExtResource( 8 )
@@ -1575,6 +1575,11 @@ cast_to = Vector2( -12, 0 )
 collision_mask = 33
 
 [node name="ControlLockTimer" type="Timer" parent="."]
+
+[node name="CameraContainer" type="Node" parent="."]
+
+[node name="PlayerCamera" parent="CameraContainer" instance=ExtResource( 187 )]
+position = Vector2( 0, 0 )
 
 [connection signal="animation_finished" from="Characters/Sonic/Sprite/CharAnimation" to="StateMachine/OnGround" method="_on_CharAnimation_animation_finished"]
 [connection signal="timeout" from="ControlLockTimer" to="." method="_on_ControlLockTimer_timeout"]

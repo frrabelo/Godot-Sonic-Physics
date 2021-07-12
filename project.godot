@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Node",
 "class": "AudioPlayer",
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/player-scripts/audio-player.gd"
@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/rocket-explosion-script.gd"
 }, {
+"base": "Node",
+"class": "FSM",
+"language": "GDScript",
+"path": "res://game-assets/game-scripts/player-scripts/state-machine.gd"
+}, {
 "base": "SpriteFrames",
 "class": "ImprovedSpriteFrames",
 "language": "GDScript",
@@ -75,7 +80,7 @@ _global_script_classes=[ {
 "path": "res://addons/MovingPlatformTool/moving-platform-object-script.gd"
 }, {
 "base": "AudioStreamSample",
-"class": "NamedAudioStream",
+"class": "NamedAudioStreamSample",
 "language": "GDScript",
 "path": "res://general-objects/resources/named-audio-res.gd"
 }, {
@@ -84,13 +89,8 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game-assets/game-classes/num-digit.gd"
 }, {
-"base": "Node2D",
-"class": "ObjectSpawner",
-"language": "GDScript",
-"path": "res://game-assets/game-scripts/general-scripts/object-spawer.gd"
-}, {
 "base": "Path2D",
-"class": "Path2DSpawner",
+"class": "ObjectSpawnerArc",
 "language": "GDScript",
 "path": "res://game-assets/game-scripts/general-scripts/path-2d-spawner.gd"
 }, {
@@ -284,14 +284,14 @@ _global_script_class_icons={
 "CharacterProperties": "",
 "CircleObjects": "",
 "CircleVisualEffect": "",
+"FSM": "",
 "ImprovedSpriteFrames": "",
 "ItemBox": "",
 "JsonDock": "",
 "MovingPlatformObject": "",
-"NamedAudioStream": "",
+"NamedAudioStreamSample": "",
 "NumCounter": "",
-"ObjectSpawner": "",
-"Path2DSpawner": "",
+"ObjectSpawnerArc": "",
 "PlayerCamera": "",
 "PlayerPhysics": "",
 "RMS2D_Material": "",

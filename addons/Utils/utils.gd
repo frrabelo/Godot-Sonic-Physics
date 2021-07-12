@@ -1,5 +1,12 @@
 class_name Utils
 
+enum Vec2AngleDirection {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}
+
 static func sign_2_bool(minus:bool, plus:bool) -> int:
 	return - int(minus) + int(plus)
 
@@ -11,6 +18,16 @@ static func get_node_by_type(from:Node, i:String):
 		if c.is_class(i):
 			return c
 	return null
+
+static func get_nodes_by_type(from:Node, i:String):
+	var to_return = []
+	for c in from.get_children():
+		if c.is_class(i):
+			to_return.append(c)
+			print(c)
+	if to_return.size() <= 0:
+		to_return = null
+	return to_return
 
 static func int2bin(n : int, bits: int) -> String:
 	var to_return := ""
@@ -41,12 +58,19 @@ static func count_how_much_has(digit:bool, b:String) -> int:
 	
 	return to_return
 
-static func angle2Vec2(angle : float) -> Vector2:
+static func angle2Vec2(angle : float, to : int = 0) -> Vector2:
 	var to_return : Vector2
-	
 	to_return = Vector2(cos(angle), -sin(angle))
 	
 	return to_return
 
 static func between(val: float, minor:float, major:float) -> bool:
 	return val > minor && val < major
+
+static func action_continuous_pressed(val : String, event:InputEvent = null) -> bool:
+	var to_return : bool = false
+	if event == null:
+		to_return = Input.is_action_pressed(val) && !Input.is_action_just_released(val)
+	else:
+		to_return = event.is_action_pressed(val) && !event.is_action_released(val)
+	return to_return
