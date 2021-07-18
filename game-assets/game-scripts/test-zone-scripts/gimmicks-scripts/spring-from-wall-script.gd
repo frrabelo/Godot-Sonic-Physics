@@ -79,7 +79,9 @@ func _on_ShowTrigger_body_entered(body):
 			players_inside.append(body)
 		if players_inside.size() > 0:
 			inside = true
-			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation_degrees, final_angle, duration, Tween.TRANS_LINEAR)
+			if sp_plat.rotation_degrees == -initial_angle:
+				sp_plat.rotation_degrees = initial_angle
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", -sp_plat.rotation_degrees, final_angle, duration, Tween.TRANS_LINEAR)
 			$Tween.start()
 func _on_ShowTrigger_body_exited(body):
 	if body.is_class("PlayerPhysics"):
@@ -87,7 +89,7 @@ func _on_ShowTrigger_body_exited(body):
 			players_inside.remove(players_inside.find(body))
 		if players_inside.size() < 1:
 			inside = false
-			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation_degrees, initial_angle, duration, Tween.TRANS_LINEAR)
+			$Tween.interpolate_property(sp_plat, "rotation_degrees", sp_plat.rotation_degrees, -initial_angle, duration, Tween.TRANS_LINEAR)
 			$Tween.start()
 func _on_RedSpringFromSolid_script_changed():
 	_prepare();

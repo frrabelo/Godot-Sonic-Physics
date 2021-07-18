@@ -1,5 +1,5 @@
 extends Node
-
+onready var state_machine = get_parent()
 class_name State
 func enter(host: PlayerPhysics, prev_state:String):
 	pass
@@ -11,8 +11,10 @@ func exit(host: PlayerPhysics, next_state:String):
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta:float):
 	pass
 
-func _on_animation_finished(anim_name: String):
+func _on_animation_finished(host:PlayerPhysics, anim_name: String):
 	pass
+
+func state_input (host : PlayerPhysics, event : InputEvent):pass
 
 func get_class():
 	return "State"

@@ -141,8 +141,8 @@ func _step_setup(delta : float) -> void:
 	var shape = char_stand_collision.get_rectshape_2d() if !roll_anim else char_low_collision.get_rectshape_2d()
 	main_collider.shape.extents = shape.shape.extents
 	main_collider.position = shape.position
-	left_ground.position.x = -9 if !roll_anim else -7
-	right_ground.position.x = 9 if !roll_anim else 7
+	#left_ground.position.x = -9 if !roll_anim else -7
+	#right_ground.position.x = 9 if !roll_anim else 7
 	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
 	#print(roll_anim, " ", animation.current_animation)
 	_set_can_brake_wall(!(abs(gsp) > 270 && is_rolling && is_grounded))
@@ -160,9 +160,11 @@ func physics_step(delta):
 	if is_on_floor():
 		is_grounded = true
 	
-	if is_grounded && ground_ray:
+	if ground_ray:
 		if collider_is_one_way(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
+			ground_normal = ground_ray.get_collision_normal()
 			ground_mode = 0
+			return
 		ground_normal = ground_ray.get_collision_normal()
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
 		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
@@ -232,21 +234,12 @@ func snap_to_ground() -> void:
 func ground_reacquisition():
 	var ground_angle = ground_angle();
 	var angle = abs(rad2deg(ground_angle))
-	
-	if angle >= 0 and angle < 22.5:
-		gsp = speed.x
-	elif angle >= 22.5 and angle < 45.0:
-		gsp = max(speed.x, speed.y)
-		if speed.y >= abs(speed.x):
-			gsp *= .5 * -sign(sin(ground_angle))
-	elif angle >= 45.0 and angle < 90:
-		gsp = max(speed.x, speed.y)
-		if speed.y >= abs(speed.x):
-			gsp *= -sign(sin(ground_angle))
-	
-	#print(gsp, " ", angle)
-	
-	rotation = -(ground_angle)
+	var angle_speed : Vector2
+	angle_speed.x = cos(ground_angle) * speed.x
+	angle_speed.y = -sin(ground_angle) * speed.y
+	var converted_speed = angle_speed.x + angle_speed.y
+	gsp = converted_speed
+	#print(cos(ground_angle) * angle_speed.x)
 
 func ground_angle() -> float:
 	return ground_normal.angle_to(Vector2(0, -1))
@@ -418,3 +411,44 @@ func _set_character_sel(val : int) -> void:
 func _on_ControlLockTimer_timeout() -> void:
 	_set_control_locked(false)
 	_control_unlock_timer_node.set_wait_time(control_unlock_time_normal)
+
+func move_and_slide_preset() -> Vector2:
+	var top_collide:Vector2 = Vector2(sin(rotation), -cos(rotation))
+	var bottom_snap:Vector2 = -top_collide * snap_margin
+	return move_and_slide_with_snap(\
+		speed,
+		bottom_snap,
+		top_collide,
+		true,
+		4,
+		deg2rad(60),
+		true
+	)
+
+func jump() -> String:
+	snap_margin = 0
+	var ground_angle = ground_angle()
+	speed.x += -JMP * sin(ground_angle)
+	speed.y += -JMP * cos(ground_angle)
+	speed = move_and_slide_preset()
+	rotation = 0
+	is_grounded = false
+	spring_loaded = false
+	is_floating = false
+	has_jumped = true
+	snap_margin = 0
+	audio_player.play('jump')
+	return 'OnAir'
+
+func get_slope_ratio() -> float:
+	var to_return : float
+	var ground_angle = ground_angle()
+	if !is_rolling:
+		to_return = -SLP
+	else:
+		if sign(gsp) == sign(sin(ground_angle)):
+			to_return = -SLPROLLUP
+		else:
+			to_return = -SLPROLLDOWN
+	
+	return to_return

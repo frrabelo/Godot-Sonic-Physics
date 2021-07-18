@@ -336,12 +336,14 @@ stdout/verbose_stdout=true
 
 [application]
 
-config/name="Godot the Hedgehog"
+config/name="HedgeGodot"
 run/main_scene="res://zones/test-zone-act-1-scene.tscn"
 config/use_custom_user_dir=true
-config/custom_user_dir_name="GodotHedgehogData"
+config/custom_user_dir_name="HedgeGodotData"
+boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
-config/icon="res://icon.png"
+boot_splash/bg_color=Color( 0.0578, 0.11016, 0.17, 1 )
+config/icon="res://icon-new.png"
 
 [autoload]
 
@@ -367,7 +369,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/CircleObjectManipulator/plugin.cfg", "res://addons/MovingPlatformTool/plugin.cfg", "res://addons/json_editor/plugin.cfg", "res://addons/rect-extent/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg", "res://addons/tile_spawner/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/CircleObjectManipulator/plugin.cfg", "res://addons/json_editor/plugin.cfg", "res://addons/rect-extent/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg", "res://addons/tile_spawner/plugin.cfg" )
 
 [importer_defaults]
 

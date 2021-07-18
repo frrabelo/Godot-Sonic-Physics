@@ -59,16 +59,15 @@ func exit(host: PlayerPhysics, next_state:String):
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta):
 	#print(main_anim_name)
-	var playback_speed = 1.0
+	var playback_speed = 1.59
 	if side == 0:
 		main_anim_name = "Suspended"
 	else:
 		main_anim_name = 'SuspendedMove'
-		playback_speed = 1.6
 	animator.animate(main_anim_name, playback_speed, true)
 
 
-func _on_animation_finished(anim_name: String):
+func _on_animation_finished(host, anim_name: String):
 	pass
 
 func get_class():

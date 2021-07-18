@@ -12,14 +12,16 @@ var post_damage:bool
 var prev_frame_state:PoolStringArray = []
 
 func enter(host, prev_state):
+	host.snap_margin = 0
 	prev_frame_state.push_back(prev_state)
 	#print(prev_state)
-	host.characters.rotation = 0;
+	if host.has_jumped || host.spring_loaded || host.is_rolling:
+		host.characters.rotation = 0;
 	was_damaged = host.was_damaged;
 	#print(was_damaged)
 	if was_damaged:
 		host.control_locked = true;
-	print(was_damaged)
+	#print(was_damaged)
 	is_floating = host.is_floating;
 	if !is_floating:
 		spring_loaded = host.spring_loaded
@@ -49,6 +51,12 @@ func enter(host, prev_state):
 			return to_return
 
 func step(host, delta):
+	if host.ground_normal:
+		host.rotation = -host.ground_angle()
+	else:
+		host.rotation += (-0 - host.rotation) / (0.5/delta)
+	#print(host.rotation, 'air')
+	host.characters.rotation += (-host.rotation - host.characters.rotation) / (0.5/delta)
 	if host.is_floating:
 		has_jumped = false
 		spring_loaded = false
@@ -92,7 +100,7 @@ func step(host, delta):
 		if prev_frame_state[0] != "OnGround":
 	#	if host.speed.y >= -50:
 			host.spring_loaded = false
-			host.ground_reacquisition()
+			host.snap_margin = host.snaps
 			return 'OnGround'
 	
 	prev_frame_state.push_back("OnAir")
@@ -142,6 +150,8 @@ func exit(host, next_state):
 			host.speed.x = 0
 			host.gsp = 0
 			host.was_damaged = false
+		else:
+			host.ground_reacquisition()
 	if host.selected_character.states.has(name):
 		var to_return = host.selected_character.states[name].exit(host, next_state, self)
 		if to_return:
@@ -168,10 +178,11 @@ func animation_step(host, animator, delta):
 			else:
 				if has_jumped or has_rolled:
 					anim_name = 'Rolling';
+					host.characters.rotation = 0
 					anim_speed = max(-((5.0 / 60.0) - (abs(host.gsp) / 120.0)), 1.0);
 	
 	if host.selected_character.states.has(name):
-		var dic = host.selected_character.states[name].animation_step(host, animator, self, delta, [anim_name, anim_speed])
+		var dic = host.selected_character.states[name].animation_step(host, animator, delta, self, [anim_name, anim_speed])
 		if dic:
 			anim_name = dic.anim_name
 			anim_speed = dic.anim_speed

@@ -19,7 +19,7 @@ func get_radius():
 
 func _on_RotateCamTrigger_body_entered(body):
 	if body.is_class("PlayerPhysics"):
-		var player_cam:PlayerCamera = $"/root/main/PlayerCamera"
+		var player_cam:PlayerCamera = body.player_camera
 		if player_cam:
 			player_cam.rotateWithPlayer = !inverse
 			player_cam.follow_player = false
@@ -27,6 +27,6 @@ func _on_RotateCamTrigger_body_entered(body):
 
 func _on_RotateCamTrigger_body_exited(body):
 	if body.is_class("PlayerPhysics"):
-		var player_cam:PlayerCamera = $"/root/main/PlayerCamera"
+		var player_cam:PlayerCamera = body.player_camera
 		player_cam.rotateWithPlayer = inverse
 		player_cam.follow_player = true

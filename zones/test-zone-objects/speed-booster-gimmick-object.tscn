@@ -10,9 +10,6 @@ extents = Vector2( 32, 4 )
 [node name="SonicBooster" type="Node2D"]
 z_index = 2
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 bullet_scene = ExtResource( 3 )
 
 [node name="Area" type="Area2D" parent="."]
@@ -22,7 +19,16 @@ position = Vector2( 0, 2 )
 shape = SubResource( 1 )
 
 [node name="Base" type="Sprite" parent="."]
+position = Vector2( 0, -7.5 )
 texture = ExtResource( 1 )
-region_rect = Rect2( 606, 1974, 64, 24 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 15 )
+
+[node name="Bottom" type="Sprite" parent="."]
+position = Vector2( 0, 4.5 )
+z_index = -2
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 15, 64, 9 )
 
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

@@ -24,6 +24,10 @@ func step(host, delta):
 	host.is_looking_up = false
 	var gsp_dir = sign(host.gsp)
 	var abs_gsp = abs(host.gsp)
+	
+	if abs_gsp == 0 && host.direction.x == 0:
+		return 'Idle'
+	
 	if host.was_damaged:
 		host.snap_margin = 0
 		return 'OnAir'
@@ -54,6 +58,7 @@ func step(host, delta):
 					if host.spinDash || host.selected_character.get("spin_dash_override"):
 							if Input.is_action_just_pressed("ui_jump"):
 								return 'SpinDash'
+					return "Crouch"
 					host.is_looking_down = true
 	
 	var ground_angle = host.ground_angle();
@@ -61,13 +66,7 @@ func step(host, delta):
 	if host.is_rolling and abs_gsp < 30.0:
 		host.is_rolling = false
 	
-	if !host.is_rolling:
-		slope = -host.SLP
-	else:
-		if sign(host.gsp) == sign(sin(ground_angle)):
-			slope = -host.SLPROLLUP
-		else:
-			slope = -host.SLPROLLDOWN
+	slope = host.get_slope_ratio()
 	
 	host.gsp += slope * sin(ground_angle)
 	abs_gsp = abs(host.gsp)
@@ -118,25 +117,13 @@ func step(host, delta):
 			return to_return
 	
 	if Input.is_action_just_pressed("ui_jump"):
-		host.speed.x += -host.JMP * sin(ground_angle)
-		host.speed.y += -host.JMP * cos(ground_angle)
-		host.speed = host.move_and_slide(host.speed, host.up_direction, true, 4, deg2rad(75))
-		host.rotation_degrees = 0
-		host.is_grounded = false
-		host.spring_loaded = false
-		host.is_floating = false
-		host.has_jumped = true
-		host.snap_margin = 0
-		host.audio_player.play('jump')
-		return 'OnAir'
+		return host.jump()
 	if !host.can_fall:
 		host.snap_to_ground()
 
 func exit(host, next_stage):
 	is_braking = false
 	host.is_braking = false
-	if next_stage == "OnAir":
-		host.snap_margin = 0
 	
 	if host.selected_character.states.has(name):
 		var to_return = host.selected_character.states[name].exit(host, next_stage, self)
@@ -178,16 +165,21 @@ func animation_step(host, animator, delta):
 			var char_rotation = host_char.rotation_degrees;
 			var host_rotation = host.rotation_degrees
 			var abs_crot = abs(host_rotation)
-			if abs_crot < 20:
-				if abs_crot < 10:
+			#print(-host.rotation_degrees)
+			if abs_crot <= 30:
+				if abs_crot < 20:
 					host_char.global_rotation = 0;
-				host_char.rotation += (0 - char_rotation) * (delta)
+				host_char.rotation += (-host_char.rotation - host.rotation) / (0.1/delta)
+				#print(host_char.rotation - host.rotation)
 			else:
 				pass
-				host_char.rotation += (0 - char_rotation) * (delta*2)
+				host_char.rotation += (0 - host_char.rotation) / (0.1/delta)
 			anim_speed = max(-(8.0 / 60.0 - (abs_gsp / 120.0)), 1.6)
 			if gsp_dir != 0:
-				host.characters.scale.x = gsp_dir
+				if abs_gsp > 500:
+					host_char.scale.x = gsp_dir
+				else:
+					host_char.scale.x = host.direction.x if host.direction.x != 0 else host_char.scale.x
 	elif is_braking:
 		if anim_name != 'BrakeLoop' && anim_name != 'PostBrakReturn':
 			anim_name = 'Braking'
@@ -217,11 +209,11 @@ func animation_step(host, animator, delta):
 			anim_speed = 1.5;
 	
 	if host.selected_character.states.has(name):
-		host.selected_character.states[name].animation_step(host, animator, self, delta)
+		host.selected_character.states[name].animation_step(host, animator, delta, self)
 	
 	animator.animate(anim_name, anim_speed, play_once);
 
-func _on_animation_finished(anim_name):
+func _on_animation_finished(host, anim_name):
 	if anim_name == 'Walking':
 		is_braking = false
 	elif anim_name == 'Idle':
