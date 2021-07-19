@@ -8,7 +8,7 @@ enum PermissibleRotations{
 func set_rotation_degrees (val : float) -> void:
 	#print(PermissibleRotations.values())
 	var final_value : float = abs(fmod(round(val / 90.0), 4))
-	print(final_value)
+	#print(final_value)
 	.set_rotation_degrees(final_value * 90)
 
 func set_rotation( val : float) -> void:

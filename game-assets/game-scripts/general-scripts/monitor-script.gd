@@ -50,7 +50,7 @@ func _ready() -> void:
 		for i in get_children():
 			if i is Area2D:
 				i.connect('body_entered', self, '_on_ExplodeArea_body_entered')
-		if !get_tree().current_scene.has_node('Players'):
+		if !get_tree().get_current_scene().has_node('Players'):
 			return
 		var player = get_tree().current_scene.get_node('Players').get_node('Player').CHARACTER_SELECTED
 		if object_to_pick == ITEM_TO_PICK.LIFE_UP:
@@ -92,7 +92,7 @@ func _on_ExplodeArea_body_entered(body: Node) -> void:
 			for i in base_sprite.get_children():
 				i.queue_free()
 			base_sprite.frame = int(rand_range(1, 3))
-			get_tree().current_scene.get_node('GlobalSFX/Destroy').play()
+			get_tree().get_current_scene().get_node('GlobalSFX/Destroy').play()
 			_push_player(body)
 			var timer = Timer.new()
 			timer.connect('timeout', self, '_timeout_action', [timer, body])
@@ -107,7 +107,7 @@ func _on_ExplodeArea_body_entered(body: Node) -> void:
 func _process(delta: float) -> void:
 	yspeed += 600 * delta
 	position.y += yspeed * delta
-	print(yspeed)
+	#print(yspeed)
 	if global_position.y > spawn_pos.y:
 		yspeed = 0
 		global_position.y = spawn_pos.y

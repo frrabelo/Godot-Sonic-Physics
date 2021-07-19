@@ -17,7 +17,7 @@ func set_ring(value:int):
 
 
 func get_global_mouse_position() -> Vector2:
-	return Node2D.new().get_global_mouse_position()
+	return get_viewport().get_mouse_position()
 
 func _process(delta):
 	count += delta;

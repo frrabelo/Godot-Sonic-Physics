@@ -18,7 +18,7 @@ func _on_SuspendedLock_body_shape_entered(body_id: int, body: Node, body_shape: 
 		else:
 			p.suspended_can_left = false
 			p.suspended_can_right = false
-		print(p.suspended_can_left, p.suspended_can_right)
+		#print(p.suspended_can_left, p.suspended_can_right)
 
 
 func _on_SuspendedLock_body_shape_exited(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
@@ -32,7 +32,7 @@ func _on_SuspendedLock_body_shape_exited(body_id: int, body: Node, body_shape: i
 			p.suspended_can_left = true
 			p.suspended_can_right = true
 		
-		print(p.suspended_can_left, p.suspended_can_right)
+		#print(p.suspended_can_left, p.suspended_can_right)
 
 func _set_lock(val : int) -> void:
 	lock = val

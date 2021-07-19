@@ -37,7 +37,7 @@ func _on_GrabTopArea_body_shape_entered(body_id: int, body: Node, body_shape: in
 			snap.x = diff + global_position.x
 			if snap.x > global_position.x + 24 * (length-2):
 				snap.x -= 24
-			print('d: %f, sz: %f, sn: %f, gb: %f' % [diff, size, snap.x, global_position.x])
+			#print('d: %f, sz: %f, sn: %f, gb: %f' % [diff, size, snap.x, global_position.x])
 			p.global_position.y = snap.y
 			p.global_position.x = snap.x
 

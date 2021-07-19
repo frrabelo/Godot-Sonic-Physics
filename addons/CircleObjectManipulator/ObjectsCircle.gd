@@ -43,7 +43,7 @@ func _set_scene_offset (val : Vector2) -> void:
 	update()
 
 func _set_dangle( val : float) -> void:
-	default_angle = val
+	default_angle = fmod(val, PI*2)
 	if !editor_process:
 		_update_rings_pos(default_angle)
 	update()
@@ -117,6 +117,7 @@ func _physics_process(delta: float) -> void:
 		process_angle = default_angle
 		return
 	process_angle += delta * rotation_speed
+	process_angle = fmod(process_angle, PI*2)
 	var p_angle : float = process_angle
 	var angle_step : float = 2 * PI
 	for i in get_child(0).get_children():
@@ -124,6 +125,7 @@ func _physics_process(delta: float) -> void:
 		var pos = scene_offset + direction * radius
 		i.position = pos
 		p_angle += angle_step / object_count
+		p_angle = fmod(p_angle, PI*2)
 
 
 func _draw() -> void:

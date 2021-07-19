@@ -13,7 +13,7 @@ export var right = true
 
 func _on_AutoSpin_body_entered(body):
 	if body.is_class("PlayerPhysics"):
-		print("auto_roll")
+		#print("auto_roll")
 		var player:PlayerPhysics = body
 		if impulse:
 			if !player.constant_roll:
@@ -27,5 +27,5 @@ func _on_AutoSpin_body_entered(body):
 				ActivateType.ACTIVATE: true,
 				ActivateType.DEACTIVATE: false,
 			}
-			print(type[activate_type])
+			#print(type[activate_type])
 			player.constant_roll = type[activate_type]

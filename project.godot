@@ -337,7 +337,7 @@ stdout/verbose_stdout=true
 [application]
 
 config/name="HedgeGodot"
-run/main_scene="res://zones/test-zone-act-1-scene.tscn"
+run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="HedgeGodotData"
 boot_splash/image="res://splash.png"
@@ -440,6 +440,10 @@ ui_jump={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [layer_names]
 

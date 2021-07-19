@@ -32,7 +32,7 @@ func _ready():
 
 		# Spawn nodes from tilemap at runtime desired
 		if spawn_at_runtime:
-			print(mapping)
+			#print(mapping)
 			ACTIONS.spawn_from_tilemap(get_tree(), self)
 
 # source_tilemap helpers

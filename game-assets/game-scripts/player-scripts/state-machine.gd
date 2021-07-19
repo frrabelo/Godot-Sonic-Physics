@@ -54,15 +54,14 @@ func change_state(state_name):
 	emit_signal('state_changed', previous_state, current_state, host)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		var kevt : InputEventKey = event
-		var action_chk = funcref(kevt, "is_action")
-		if action_chk.call_func('ui_right') || action_chk.call_func('ui_left'):
-			host.direction.x = -Input.get_action_strength('ui_left') + Input.get_action_strength('ui_right')
-		if action_chk.call_func('ui_up') || action_chk.call_func('ui_down'):
-			host.direction.y = -Input.get_action_strength('ui_up') + Input.get_action_strength('ui_down')
-		var state = get_available_state()
-		get_available_state().state_input(host, event)
+	var kevt = event
+	var action_chk = funcref(Utils, "is_action")
+	if action_chk.call_func('ui_right') || action_chk.call_func('ui_left'):
+		host.direction.x = -Input.get_action_strength('ui_left') + Input.get_action_strength('ui_right')
+	if action_chk.call_func('ui_up') || action_chk.call_func('ui_down'):
+		host.direction.y = -Input.get_action_strength('ui_up') + Input.get_action_strength('ui_down')
+	var state = get_available_state()
+	get_available_state().state_input(host, event)
 
 
 func _on_CharAnimation_animation_finished(anim_name: String) -> void:

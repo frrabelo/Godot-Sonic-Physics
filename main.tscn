@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game-assets/game-sprites/logo-sprites/retro-sega-logo.png" type="Texture" id=1]
-[ext_resource path="res://game-assets/audio/sfx/sega-spelling.wav" type="AudioStream" id=2]
 [ext_resource path="res://game-assets/game-scripts/general-scripts/presentation-screen.gd" type="Script" id=3]
 [ext_resource path="res://game-assets/game-fonts/sonic-hud-font.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://game-assets/game-sprites/logo-sprites/sonic-worlds-logo.png" type="Texture" id=5]
@@ -137,7 +136,6 @@ size_flags_vertical = 2
 size_flags_stretch_ratio = 2.41
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1

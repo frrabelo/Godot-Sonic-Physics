@@ -124,7 +124,7 @@ func physics_step():
 				var cell = tmap.get_cellv(tmap.world_to_map(rs.get_collision_point()))
 				var shape = rs.get_collider_shape()
 				var tile = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
-				print(tile)
+				#print(tile)
 				if tile:
 					continue
 			if j < 2:
@@ -140,7 +140,7 @@ func physics_step():
 	
 	is_wall_left = is_wall_left || position.x - 9 <= 0
 	is_wall_right
-	print(is_wall_left, is_wall_right)
+	#print(is_wall_left, is_wall_right)
 	if constant_roll:
 		control_locked = true
 		control_unlock_timer = 0.1

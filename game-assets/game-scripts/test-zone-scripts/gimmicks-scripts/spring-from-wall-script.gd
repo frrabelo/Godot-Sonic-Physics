@@ -33,7 +33,7 @@ func setInitAngle(value:float):
 	var sp_p = get_node_or_null('SpPlat')
 	if sp_p:
 		sp_p.rotation_degrees = initial_angle;
-		print(sp_p)
+		#print(sp_p)
 
 func getInitAngle():
 	return initial_angle;

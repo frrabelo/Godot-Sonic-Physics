@@ -46,8 +46,8 @@ func _on_BossArea_body_shape_entered(body_id: int, body: Node, body_shape: int, 
 					"limit_right", "limit_top":
 						sum = -sum
 				
-				print(i, " ", pos[i])
-				print(i, " ", pc.camera.get(i) - pos[i], " ", pc.camera.get(i))
+				#print(i, " ", pos[i])
+				#print(i, " ", pc.camera.get(i) - pos[i], " ", pc.camera.get(i))
 				tween.interpolate_property(pc.camera, i, pos[i] - sum, pos[i], 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.0)
 			#tween.interpolate_property(pc, "global_position:x", pc.global_position.x, global_position.x, 1.0, 0, Tween.EASE_OUT)
 			#tween.interpolate_property(pc, "global_position:y", pc.global_position.y, global_position.y, 1.0, 0, Tween.EASE_OUT)

@@ -89,7 +89,7 @@ func _on_Area_area_entered(area: Area2D) -> void:
 			_catch(player)
 
 func _catch(body: Node) -> void:
-	get_tree().current_scene.rings += points;
+	get_tree().get_current_scene().rings += points;
 	var player:= body
 	var sound:AudioPlayer = player.get_node("AudioPlayer");
 	instBlink.position = position;

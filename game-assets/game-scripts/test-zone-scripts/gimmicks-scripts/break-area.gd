@@ -15,11 +15,11 @@ func spawnBlock(pos:Vector2, speed:Vector2, body):
 func _on_BreakArea_body_entered(body):
 
 	if body.is_class("PlayerPhysics"):
-		print("e")
+		#print("e")
 		var player:PlayerPhysics = body
 		if player.is_grounded:
 			if player.is_rolling:
-				print("e")
+				#print("e")
 				if abs(player.gsp) > min_speed:
 					breakingSound.play()
 					breakingSound2.play()

@@ -24,7 +24,7 @@ static func get_nodes_by_type(from:Node, i:String):
 	for c in from.get_children():
 		if c.is_class(i):
 			to_return.append(c)
-			print(c)
+			#print(c)
 	if to_return.size() <= 0:
 		to_return = null
 	return to_return
@@ -67,10 +67,9 @@ static func angle2Vec2(angle : float, to : int = 0) -> Vector2:
 static func between(val: float, minor:float, major:float) -> bool:
 	return val > minor && val < major
 
-static func action_continuous_pressed(val : String, event:InputEvent = null) -> bool:
-	var to_return : bool = false
-	if event == null:
-		to_return = Input.is_action_pressed(val) && !Input.is_action_just_released(val)
-	else:
-		to_return = event.is_action_pressed(val) && !event.is_action_released(val)
+static func is_action(action:String) -> bool:
+	var to_return = false
+	
+	to_return = Input.is_action_pressed(action) or Input.is_action_just_released(action)
+	
 	return to_return

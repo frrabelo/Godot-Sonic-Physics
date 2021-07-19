@@ -30,7 +30,6 @@ func _thread_load(path):
 		OS.delay_msec(SIMULATED_DELAY_SEC * 100.0)
 		# Poll (does a load step)
 		var err = ril.poll()
-		print(err)
 		# if OK, then load another one. If EOF, it' s done. Otherwise there was an error.
 		if err == ERR_FILE_EOF:
 			# Loading done, fetch resource
@@ -55,13 +54,12 @@ func _thread_done(resource):
 	# Instantiate new scene
 	new_scene = resource.instance()
 	# Free current scene
-	get_tree().current_scene.free()
-	get_tree().current_scene = null
-	# Add new one to root
-	get_tree().root.add_child(new_scene)
+	new_scene.connect("tree_entered", get_tree(), "set_current_scene", [new_scene], CONNECT_ONESHOT)
+	get_tree().get_current_scene().free()
+	get_tree().get_root().add_child(new_scene)
 	#print('SCENE PRELOADED!') 
 	# Set as current scene
-	get_tree().current_scene = new_scene
+	#print(get_tree().get_current_scene().name)
 	SIMULATED_DELAY_SEC = SIMULATED_DELAY_SEC_NORMAL
 #	progress.visible = false
 	clear_stuff()
