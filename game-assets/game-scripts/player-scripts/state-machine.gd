@@ -9,7 +9,14 @@ onready var host = get_parent();
 var current_state = 'OnGround' setget change_state
 var previous_state = null
 
+func _enter_tree() -> void:
+	set_physics_process(false)
+	set_process_input(false)
+
 func _ready() -> void:
+	set_physics_process(false)
+	set_process_input(false)
+	yield(get_parent(), 'loaded')
 	for i in get_children():
 		if i.is_class("State"):
 			states[i.name] = i
@@ -25,6 +32,9 @@ func get_available_state() -> Node:
 	return to_return
 
 func _physics_process(delta):
+	#if !host.char_default_collision_air:
+	if !is_physics_processing():
+		return
 	host.physics_step(delta)
 	var cur_state = get_available_state()
 	var state_name

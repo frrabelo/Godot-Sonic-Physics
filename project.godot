@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/rmsmartshape/RMSmartShapeAnchor2D.gd"
 }, {
+"base": "Node",
+"class": "ReadOnlyRect",
+"language": "GDScript",
+"path": "res://addons/rect-extent/read-only-rect-extent.gd"
+}, {
 "base": "Node2D",
 "class": "RectManipulate2D",
 "language": "GDScript",
@@ -299,6 +304,7 @@ _global_script_class_icons={
 "RMS2D_VertexPropertiesArray": "",
 "RMSmartShape2D": "res://addons/rmsmartshape/assets/LEGACY_shape.png",
 "RMSmartShapeAnchor2D": "res://addons/rmsmartshape/assets/LEGACY_shape_anchor.png",
+"ReadOnlyRect": "",
 "RectManipulate2D": "",
 "Ring": "",
 "SFXPlayer": "",
@@ -441,30 +447,22 @@ ui_jump={
  ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-
 [layer_names]
 
 2d_render/layer_1="Player1 Layer"
 2d_physics/layer_1="Player1 Layer"
+
+[locale]
+
+locale_filter=[ 0, [ "en_US", "pt_BR" ] ]
 
 [logging]
 
 file_logging/enable_file_logging=true
 file_logging/max_log_files=1
 
-[physics]
-
-2d/cell_size=32
-2d/default_linear_damp=0.0
-
 [rendering]
 
 quality/driver/driver_name="GLES2"
-threads/thread_model=2
 vram_compression/import_etc=true
-quality/directional_shadow/size.mobile=1024
-quality/shadow_atlas/size.mobile=1024
 quality/filters/anisotropic_filter_level=1

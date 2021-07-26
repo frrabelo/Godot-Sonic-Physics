@@ -25,7 +25,11 @@ func _ready() -> void:
 	if !Engine.editor_hint:
 		animator.play('Idle')
 
-func play_sounds (stream_player : AudioStreamPlayer2D, audio : AudioStream, loop : bool = false):
+func play_sounds (stream_player, audio : AudioStream, loop : bool = false):
+	#var stream_player : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+	if !stream_player.is_inside_tree():
+		rocket.add_child(stream_player)
+		stream_player.connect('finished', self, 'temp_stream_finish', [stream_player])
 	stream_player.set_stream(audio)
 	stream_player.set_autoplay(loop)
 	stream_player.play(0)
@@ -90,7 +94,7 @@ func _explode() -> void:
 	
 	# Explosion Effects
 	get_tree().get_current_scene().get_node('HUD').flash_screen(0.1, 0.85)
-	play_sounds($Rocket/Audios, preload('res://game-assets/audio/sfx/Explosion3.wav'), false)
+	play_sounds(AudioStreamPlayer2D.new(), preload('res://game-assets/audio/sfx/Explosion3.wav'), false)
 	var explosion = preload('res://zones/test-zone-objects/act-1-exclusive/rocket-explosion.tscn')
 	var speeds = [
 		Vector3(-200, -450, 0),
@@ -183,6 +187,9 @@ func _on_Snap_body_shape_entered(body_id: int, body: Node, body_shape: int, loca
 				return
 	if is_processing() && can_ascend:
 		_explode()
+
+func temp_stream_finish(st) -> void:
+	st.queue_free()
 
 func get_class():
 	return "Rocket"

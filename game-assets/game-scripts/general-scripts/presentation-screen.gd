@@ -20,7 +20,6 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 
 func _on_Loader_can_change() -> void:
 	$LoadingIndicator.get_child(0).disappear()
-	$AudioStreamPlayer.set_stream(load('res://game-assets/audio/sfx/sega-spelling.wav'))
 	loaded = true
 	if !finished:
 		set_process_input(true)

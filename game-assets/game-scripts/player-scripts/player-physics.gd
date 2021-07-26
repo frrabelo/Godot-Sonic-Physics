@@ -1,6 +1,7 @@
 extends KinematicBody2D
 class_name PlayerPhysics
 signal damaged
+signal loaded
 enum Rays{
 	LEFT_GROUND = 0,
 	MIDDLE_GROUND = 1,
@@ -33,7 +34,7 @@ onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
 onready var low_collider = $LowCollider
-onready var ray_collider = $Ray
+onready var ray_collider = $RayCollider
 
 onready var left_ground:RayCast2D = $LeftGroundSensor
 onready var right_ground:RayCast2D = $RightGroundSensor
@@ -46,8 +47,10 @@ onready var right_wall_bottom:RayCast2D = $RightWallSensorBottom
 
 onready var characters = $Characters
 onready var sprite
-onready var char_stand_collision : RectManipulate2D
-onready var char_low_collision : RectManipulate2D
+var char_default_collision_floor
+var char_default_collision_air
+var char_low_collision_floor
+var char_low_collision_air
 onready var animation
 onready var audio_player = $AudioPlayer
 onready var main_scene = get_tree().current_scene
@@ -98,11 +101,14 @@ func _enter_tree() -> void:
 
 func _ready():
 	if !Engine.editor_hint:
+		#yield(get_tree().create_timer(0.1), 'timeout')
 		if player_camera:
 			player_camera.camera_ready(self)
+		
 		_set_character_sel(CHARACTER_SELECTED)
 		set_collision_mask(get_collision_mask())
 		control_unlock_timer = control_unlock_time_normal
+		emit_signal('loaded')
 
 func get_rays() -> Array:
 	return [left_ground, middle_ground, right_ground, left_wall, left_wall_bottom, right_wall, right_wall_bottom]
@@ -137,9 +143,20 @@ func _step_setup(delta : float) -> void:
 	var roll_anim = animation.current_animation == 'Rolling'
 	if "animation_roll" in selected_character:
 		roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
-	assert (char_stand_collision && char_low_collision, "Error: the variables not contains value")
-	var shape = char_stand_collision.get_rectshape_2d() if !roll_anim else char_low_collision.get_rectshape_2d()
+	#print(char_default_collision_air, char_default_collision_floor, char_low_collision_air, char_low_collision_floor)
+	assert (char_default_collision_floor && char_low_collision_floor, "Error: the variables not contains value")
+	var shape
+	#var shape_rect
+	#if roll_anim:
+	#	shape_rect = char_low_collision_floor if is_grounded else char_low_collision_air
+	#else:
+	#	shape_rect = char_default_collision_floor if is_grounded else char_default_collision_air	
+	
+	#if shape_rect:
+	#	shape = shape_rect.get_rectshape_2d()
+	shape = char_default_collision_floor.get_rectshape_2d() if !roll_anim else char_low_collision_floor.get_rectshape_2d()
 	main_collider.shape.extents = shape.shape.extents
+	#print(shape.position)
 	main_collider.position = shape.position
 	#left_ground.position.x = -9 if !roll_anim else -7
 	#right_ground.position.x = 9 if !roll_anim else 7
@@ -172,7 +189,7 @@ func physics_step(delta):
 		ground_mode = 0
 		ground_normal = Vector2(0, -1)
 		is_grounded = false
-	
+	#ray_collider.set_deferred('disabled', !is_grounded)
 	is_wall_left = step_wall_collision([left_wall, left_wall_bottom]) || global_position.x-main_collider.shape.extents.x - player_camera.camera.limit_left <= 0
 	is_wall_right = step_wall_collision([right_wall, right_wall_bottom]) || global_position.x+9 - player_camera.camera.limit_right >= 0
 	
@@ -295,7 +312,7 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	speed.y = side.y * 200
 	_set_control_locked(true)
 	was_damaged = true;
-	speed = move_and_slide(speed)
+	speed = move_and_slide_preset()
 	if main_scene:
 		var rings = main_scene.rings
 		main_scene.rings = 0;
@@ -396,8 +413,11 @@ func _set_character_sel(val : int) -> void:
 		var c : Node2D = children[CHARACTER_SELECTED]
 		selected_character = c
 		sprite = selected_character.get_node("Sprite")
-		char_stand_collision = selected_character.get_node("StandBox")
-		char_low_collision = selected_character.get_node("LowBox")
+		print(selected_character.get_children())
+		char_default_collision_floor = selected_character.get_node("DefaultBox")
+		#char_default_collision_air = selected_character.get_node("DefaultBoxAir")
+		#char_low_collision_air = selected_character.get_node("RollBoxAir")
+		char_low_collision_floor = selected_character.get_node("RollBox")
 		animation = sprite.get_node("CharAnimation")
 		var props = [
 			"ACC", "DEC", "ROLLDEC", "FRC", "SLP", "SLPROLLUP",\
