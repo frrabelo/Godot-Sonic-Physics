@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=109 format=2]
+[gd_resource type="TileSet" load_steps=115 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/general-scripts/auto-tile-set-script.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/white-loop-part-not-flat.png" type="Texture" id=2]
@@ -177,6 +177,24 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 [sub_resource type="ConvexPolygonShape2D" id=56]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
+[sub_resource type="ConvexPolygonShape2D" id=101]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=102]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=103]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=104]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=105]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=106]
+points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
+
 [sub_resource type="ConvexPolygonShape2D" id=57]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 
@@ -318,7 +336,7 @@ resource_name = "tile_set_testzone"
 9/region = Rect2( 0, 0, 48, 240 )
 9/tile_mode = 1
 9/autotile/bitmask_mode = 1
-9/autotile/bitmask_flags = [ Vector2( 0, 0 ), 16, Vector2( 0, 1 ), 146, Vector2( 0, 2 ), 506, Vector2( 0, 3 ), 250, Vector2( 0, 4 ), 504, Vector2( 0, 5 ), 154, Vector2( 0, 6 ), 152, Vector2( 0, 7 ), 48, Vector2( 0, 8 ), 216, Vector2( 0, 9 ), 447, Vector2( 0, 10 ), 446, Vector2( 0, 11 ), 442, Vector2( 0, 12 ), 184, Vector2( 0, 13 ), 58, Vector2( 0, 14 ), 176, Vector2( 1, 0 ), 56, Vector2( 1, 1 ), 510, Vector2( 1, 2 ), 251, Vector2( 1, 3 ), 190, Vector2( 1, 4 ), 440, Vector2( 1, 5 ), 155, Vector2( 1, 6 ), 26, Vector2( 1, 7 ), 219, Vector2( 1, 8 ), 154, Vector2( 1, 9 ), 18, Vector2( 1, 10 ), 54, Vector2( 1, 11 ), 511, Vector2( 1, 12 ), 182, Vector2( 1, 13 ), 62, Vector2( 1, 14 ), 178, Vector2( 2, 0 ), 507, Vector2( 2, 1 ), 255, Vector2( 2, 2 ), 191, Vector2( 2, 3 ), 187, Vector2( 2, 4 ), 248, Vector2( 2, 5 ), 218, Vector2( 2, 6 ), 50, Vector2( 2, 7 ), 432, Vector2( 2, 8 ), 24, Vector2( 2, 9 ), 438, Vector2( 2, 10 ), 63, Vector2( 2, 11 ), 27, Vector2( 2, 12 ), 434, Vector2( 2, 13 ), 59, Vector2( 2, 14 ), 144 ]
+9/autotile/bitmask_flags = [ Vector2( 0, 0 ), 16, Vector2( 0, 1 ), 146, Vector2( 0, 2 ), 506, Vector2( 0, 3 ), 250, Vector2( 0, 4 ), 504, Vector2( 0, 5 ), 154, Vector2( 0, 6 ), 152, Vector2( 0, 7 ), 48, Vector2( 0, 8 ), 216, Vector2( 0, 9 ), 447, Vector2( 0, 10 ), 446, Vector2( 0, 11 ), 442, Vector2( 0, 12 ), 184, Vector2( 0, 13 ), 58, Vector2( 0, 14 ), 176, Vector2( 1, 0 ), 56, Vector2( 1, 1 ), 510, Vector2( 1, 2 ), 251, Vector2( 1, 3 ), 190, Vector2( 1, 4 ), 440, Vector2( 1, 5 ), 155, Vector2( 1, 6 ), 26, Vector2( 1, 7 ), 219, Vector2( 1, 8 ), 186, Vector2( 1, 9 ), 18, Vector2( 1, 10 ), 54, Vector2( 1, 11 ), 511, Vector2( 1, 12 ), 182, Vector2( 1, 13 ), 62, Vector2( 1, 14 ), 178, Vector2( 2, 0 ), 507, Vector2( 2, 1 ), 255, Vector2( 2, 2 ), 191, Vector2( 2, 3 ), 187, Vector2( 2, 4 ), 248, Vector2( 2, 5 ), 218, Vector2( 2, 6 ), 50, Vector2( 2, 7 ), 432, Vector2( 2, 8 ), 24, Vector2( 2, 9 ), 438, Vector2( 2, 10 ), 63, Vector2( 2, 11 ), 27, Vector2( 2, 12 ), 434, Vector2( 2, 13 ), 59, Vector2( 2, 14 ), 144 ]
 9/autotile/icon_coordinate = Vector2( 1, 11 )
 9/autotile/tile_size = Vector2( 16, 16 )
 9/autotile/spacing = 0
@@ -1141,8 +1159,45 @@ resource_name = "tile_set_testzone"
 26/navigation_offset = Vector2( 0, 0 )
 26/shape_offset = Vector2( 0, 0 )
 26/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+26/shape = SubResource( 101 )
 26/shape_one_way = false
-26/shape_one_way_margin = 0.0
-26/shapes = [  ]
+26/shape_one_way_margin = 1.0
+26/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 101 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 102 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 103 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 1 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 104 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 105 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 2 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 106 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
 26/z_index = 0
 script = ExtResource( 1 )

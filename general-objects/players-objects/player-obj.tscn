@@ -255,14 +255,14 @@ func _ready() -> void:
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 27 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
 "loop": true,
 "name": "Down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 27 ) ],
+"loop": true,
+"name": "Idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 63 ), ExtResource( 57 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 34 ), ExtResource( 50 ), ExtResource( 36 ), ExtResource( 64 ), ExtResource( 53 ), ExtResource( 68 ) ],
@@ -1462,20 +1462,20 @@ script = ExtResource( 4 )
 [node name="DefaultBox" type="Node" parent="Characters/Sonic"]
 script = ExtResource( 191 )
 
-[node name="DefaultBoxAirEdit" type="Node2D" parent="Characters/Sonic/DefaultBox"]
-position = Vector2( 0, 2 )
+[node name="RectManipulate2D" type="Node2D" parent="Characters/Sonic/DefaultBox"]
 script = ExtResource( 20 )
-size = Vector2( 20, 36 )
-color = Color( 1, 0.772549, 0, 0.5 )
+fill = true
+size = Vector2( 20, 34 )
+color = Color( 0, 1, 0.976471, 0.5 )
+offset = Vector2( 0, 3 )
 
 [node name="RollBox" type="Node" parent="Characters/Sonic"]
 script = ExtResource( 191 )
 
-[node name="RollBoxAirEditor" type="Node2D" parent="Characters/Sonic/RollBox"]
-position = Vector2( 0, 8 )
+[node name="RectManipulate2D" type="Node2D" parent="Characters/Sonic/RollBox"]
 script = ExtResource( 20 )
-size = Vector2( 20, 24 )
-color = Color( 0.921569, 0, 1, 0.5 )
+size = Vector2( 20, 20 )
+offset = Vector2( 0, 10 )
 
 [node name="CharStates" type="Node" parent="Characters/Sonic"]
 

@@ -118,7 +118,7 @@ func step(host, delta):
 	
 	if Input.is_action_just_pressed("ui_jump"):
 		return host.jump()
-	if !host.can_fall:
+	if !host.can_fall || (abs(rad2deg(ground_angle)) <= 30 && host.rotation != 0):
 		host.snap_to_ground()
 
 func exit(host, next_stage):

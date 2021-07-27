@@ -245,7 +245,14 @@ func fall_from_ground() -> bool:
 	return false
 
 func snap_to_ground() -> void:
-	rotation_degrees = -rad2deg(ground_angle())
+	var ground_ang = ground_angle()
+	var dir_count = 12
+	var angle_8dir = ground_ang / PI*dir_count
+	angle_8dir = round(angle_8dir)
+	#print(angle_8dir)
+	characters.global_rotation = global_rotation
+	rotation = -(angle_8dir / dir_count * PI)
+	#print(rotation_degrees)
 	speed += -ground_normal * 150
 
 func ground_reacquisition():

@@ -73,3 +73,7 @@ static func is_action(action:String) -> bool:
 	to_return = Input.is_action_pressed(action) or Input.is_action_just_released(action)
 	
 	return to_return
+
+static func round_between(n:float, minor : float , major: float):
+	return minor if (n - minor) < (major - n) else major
+	pass
