@@ -1,4 +1,4 @@
-[gd_scene load_steps=223 format=2]
+[gd_scene load_steps=221 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/spin-dash.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/on-air.gd" type="Script" id=2]
@@ -7,17 +7,14 @@
 [ext_resource path="res://game-assets/game-scripts/player-scripts/state-machine.gd" type="Script" id=5]
 [ext_resource path="res://game-assets/audio/sfx/spin.wav" type="AudioStream" id=6]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/character-vfx.gd" type="Script" id=7]
-[ext_resource path="res://jump.tres" type="AudioStream" id=8]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-charge.wav" type="AudioStream" id=9]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-release.wav" type="AudioStream" id=10]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/super-peel-out.gd" type="Script" id=11]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/player-physics.gd" type="Script" id=12]
 [ext_resource path="res://game-assets/audio/sfx/insta-shield.wav" type="AudioStream" id=13]
-[ext_resource path="res://game-assets/audio/sfx/peel-out-release.wav" type="AudioStream" id=14]
 [ext_resource path="res://game-assets/audio/sfx/brake.wav" type="AudioStream" id=15]
 [ext_resource path="res://game-assets/game-sprites/insta-shield.png" type="Texture" id=16]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/audio-player.gd" type="Script" id=17]
-[ext_resource path="res://game-assets/audio/sfx/peel-out-charge.wav" type="AudioStream" id=18]
 [ext_resource path="res://game-assets/game-sprites/spin-dash-dust.png" type="Texture" id=19]
 [ext_resource path="res://addons/rect-extent/rect-manipulate-2d.gd" type="Script" id=20]
 [ext_resource path="res://game-assets/game-classes/improved-sprite-frames-scripts.gd" type="Script" id=21]
@@ -191,6 +188,7 @@
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/crounch.gd" type="Script" id=189]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/look-up.gd" type="Script" id=190]
 [ext_resource path="res://addons/rect-extent/read-only-rect-extent.gd" type="Script" id=191]
+[ext_resource path="res://game-assets/audio/sfx/jump.wav" type="AudioStream" id=192]
 
 [sub_resource type="Animation" id=1]
 length = 0.28
@@ -1493,65 +1491,22 @@ script = SubResource( 29 )
 
 [node name="AudioPlayer" type="Node" parent="."]
 script = ExtResource( 17 )
-
-[node name="jump" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 8 )
-volume_db = -15.0
-
-[node name="grab" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 186 )
-volume_db = 1.0
-
-[node name="spring" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 120 )
-volume_db = -15.0
-
-[node name="drop_dash_charge" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 109 )
-volume_db = -10.0
-
-[node name="brake" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 15 )
-volume_db = -20.0
-
-[node name="spin" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 6 )
-volume_db = -10.0
-
-[node name="spin_dash_charge" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 9 )
-volume_db = -10.0
-
-[node name="spin_dash_release" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 10 )
-volume_db = -10.0
-
-[node name="peel_out_charge" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 18 )
-volume_db = -10.0
-
-[node name="peel_out_release" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 14 )
-volume_db = -10.0
-
-[node name="insta_shield" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 13 )
-volume_db = -25.0
-
-[node name="ring" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 131 )
-
-[node name="hurt" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 162 )
-
-[node name="spike_hurt" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 161 )
-
-[node name="ring_loss" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 163 )
-
-[node name="hyper_ring" type="AudioStreamPlayer" parent="AudioPlayer"]
-stream = ExtResource( 164 )
+audios = {
+"brake": ExtResource( 15 ),
+"drop_dash_charge": ExtResource( 109 ),
+"grab": ExtResource( 186 ),
+"hurt": ExtResource( 162 ),
+"hyper_ring": ExtResource( 164 ),
+"insta_shield": ExtResource( 13 ),
+"jump": ExtResource( 192 ),
+"ring": ExtResource( 131 ),
+"ring_loss": ExtResource( 163 ),
+"spike_hurt": ExtResource( 161 ),
+"spin": ExtResource( 6 ),
+"spin_dash_charge": ExtResource( 9 ),
+"spin_dash_release": ExtResource( 10 ),
+"spring": ExtResource( 120 )
+}
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
 modulate = Color( 0.741176, 0, 1, 1 )

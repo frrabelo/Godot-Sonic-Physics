@@ -15,7 +15,9 @@ func breakDown():
 	timer.stop();
 	$StaticBody2D.queue_free();
 	timer = null;
-	$BreakSound.play();
+	var level_sfx : AudioPlayer = get_tree().get_current_scene().get_node_or_null('LevelSFX')
+	if level_sfx:
+		level_sfx.play('CliffBreaking')
 	spawn(Vector2(8, 0), 0.10);
 	spawn(Vector2(-8, 0), 0.15);
 	spawn(Vector2(24, 0), 0.20);

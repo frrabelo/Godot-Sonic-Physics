@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/BreakableBlock.png" type="Texture" id=1]
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/clif-script.gd" type="Script" id=2]
-[ext_resource path="res://game-assets/audio/sfx/cliff-breaking.wav" type="AudioStream" id=3]
 [ext_resource path="res://zones/test-zone-objects/cliff-part-object.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -35,8 +34,4 @@ visible = false
 position = Vector2( 0, -3 )
 shape = SubResource( 2 )
 
-[node name="BreakSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
-[connection signal="finished" from="BreakSound" to="." method="_on_BreakSound_finished"]

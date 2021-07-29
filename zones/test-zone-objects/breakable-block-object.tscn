@@ -11,6 +11,7 @@ extents = Vector2( 12, 21 )
 extents = Vector2( 16, 24 )
 
 [node name="BreakableBlock" type="Node2D"]
+z_index = 10
 script = ExtResource( 2 )
 block_scene = ExtResource( 3 )
 

@@ -408,6 +408,7 @@ __meta__ = {
 shape = SubResource( 11 )
 
 [node name="Audios" type="AudioStreamPlayer2D" parent="Rocket"]
+bus = "SFX"
 
 [node name="SpawnPuff" type="Position2D" parent="Rocket"]
 position = Vector2( 0, 24 )

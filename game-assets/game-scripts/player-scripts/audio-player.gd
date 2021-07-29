@@ -1,20 +1,35 @@
 extends Node
 class_name AudioPlayer
 
-var audios = {}
-
-func _enter_tree() -> void:
-	for i in get_children():
-		audios[(i).name] = i
+export var audios = {}
+var instantied_players = {}
 
 func play(audio_name : String, from : float = 0.0) -> void:
 	if audios.has(audio_name):
 		#print(audios[audio_name], audio_name)
-		audios[audio_name].play(from)
+		var stream : AudioStreamPlayer
+		if !instantied_players.has(audio_name):
+			stream = AudioStreamPlayer.new()
+			stream.set_stream(audios[audio_name])
+			stream.connect('finished', self, 'delete_stream', [audio_name])
+			stream.set_bus('SFX')
+			add_child(stream)
+			instantied_players[audio_name] = stream
+		else:
+			stream = instantied_players[audio_name]
+		stream.play(from)
 
 func stop(audio_name : String):
-	audios[audio_name].stop()
+	instantied_players[audio_name].stop()
+	delete_stream(audio_name)
 
-func get_player(audio_name : String) -> AudioStreamPlayer:
+func get_player(audio_name : String) -> AudioStream:
 	assert (audios.has(audio_name), "Audio name not exist")
 	return audios[audio_name]
+
+func delete_stream(audio_name:String):
+	if instantied_players.has(audio_name):
+		var stream = instantied_players[audio_name]
+		instantied_players.erase(audio_name)
+		if stream.is_inside_tree():
+			stream.queue_free()

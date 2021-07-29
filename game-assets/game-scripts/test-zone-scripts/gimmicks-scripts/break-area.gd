@@ -1,8 +1,6 @@
 extends Node2D
 export var block_scene:PackedScene;
-onready var breakingSound:AudioStreamPlayer = $"/root/main/LevelSFX/WallBreak";
-onready var breakingSound2:AudioStreamPlayer = $"/root/main/LevelSFX/CliffBreaking";
-onready var level = $"/root/main/Level"
+onready var level = get_tree().get_current_scene().get_node_or_null('Level')
 onready var hitBox = $"Body/HitBox"
 var min_speed = 250;
 func spawnBlock(pos:Vector2, speed:Vector2, body):
@@ -21,8 +19,9 @@ func _on_BreakArea_body_entered(body):
 			if player.is_rolling:
 				#print("e")
 				if abs(player.gsp) > min_speed:
-					breakingSound.play()
-					breakingSound2.play()
+					var audio_player:AudioPlayer = get_tree().get_current_scene().get_node_or_null("LevelSFX");
+					audio_player.play('WallBreak')
+					audio_player.play('CliffBreaking')
 					var speed:Vector2
 					speed = player.speed
 					for i in range(0, 3):
