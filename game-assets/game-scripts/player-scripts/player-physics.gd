@@ -11,6 +11,7 @@ enum Rays{
 	RIGHT_WALL_TOP = 5,
 	RIGHT_WALL_BOTTOM = 6
 }
+var im_main_player : bool = false
 export(int) var CHARACTER_SELECTED = 0 setget _set_character_sel
 var ACC
 var DEC
@@ -29,16 +30,17 @@ export(bool) var spinDash = true;
 
 onready var selected_character
 onready var fsm : = $StateMachine
-onready var player_camera = get_node('CameraContainer/PlayerCamera')
+onready var player_camera = get_tree().get_current_scene().get_node('PlayerCamera')
 onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
 onready var low_collider = $LowCollider
 onready var ray_collider = $RayCollider
 
-onready var left_ground:RayCast2D = $LeftGroundSensor
-onready var right_ground:RayCast2D = $RightGroundSensor
-onready var middle_ground:RayCast2D = $MiddleGroundSensor
+onready var left_ground:RayCast2D = $GroundSensors/LeftGroundSensor
+onready var right_ground:RayCast2D = $GroundSensors/RightGroundSensor
+onready var middle_ground:RayCast2D = $GroundSensors/MiddleGroundSensor
+onready var ground_container:Node2D = $GroundSensors
 onready var main_collider:CollisionShape2D = $MainCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
@@ -92,7 +94,7 @@ var can_break_wall : bool = false setget _set_can_brake_wall
 var suspended_jump : bool = false
 var suspended_can_right : bool = true
 var suspended_can_left : bool = true
-
+var throwed : bool = false
 var input_dict : Dictionary
 
 func _enter_tree() -> void:
@@ -104,11 +106,21 @@ func _ready():
 		#yield(get_tree().create_timer(0.1), 'timeout')
 		if player_camera:
 			player_camera.camera_ready(self)
-		
 		_set_character_sel(CHARACTER_SELECTED)
 		set_collision_mask(get_collision_mask())
 		control_unlock_timer = control_unlock_time_normal
 		emit_signal('loaded')
+
+func is_on_ground() -> bool:
+	var ground_ray = get_ground_ray()
+	
+	if ground_ray != null:
+		var point = ground_ray.get_collision_point()
+		var normal = ground_ray.get_collision_normal()
+		if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
+			return position.y + 21 > point.y and speed.y >= 0
+	
+	return false
 
 func get_rays() -> Array:
 	return [left_ground, middle_ground, right_ground, left_wall, left_wall_bottom, right_wall, right_wall_bottom]
@@ -169,13 +181,16 @@ func _step_setup(delta : float) -> void:
 
 func physics_step(delta):
 	_step_setup(delta)
-	position.x = max(player_camera.camera.limit_left+9, position.x)
-	position.x = min(player_camera.camera.limit_right-9, position.x)
-	ground_ray = get_ground_ray()
-	is_ray_colliding = ground_ray != null
-	
+	if player_camera:
+		position.x = max(player_camera.camera.limit_left+9, position.x)
+		position.x = min(player_camera.camera.limit_right-9, position.x)
+	else:
+		position.x = max(9, position.x)
 	if is_on_floor():
 		is_grounded = true
+	
+	ground_ray = get_ground_ray()
+	is_ray_colliding = ground_ray != null
 	
 	if ground_ray:
 		if collider_is_one_way(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
@@ -190,9 +205,11 @@ func physics_step(delta):
 		ground_normal = Vector2(0, -1)
 		is_grounded = false
 	#ray_collider.set_deferred('disabled', !is_grounded)
-	is_wall_left = step_wall_collision([left_wall, left_wall_bottom]) || global_position.x-main_collider.shape.extents.x - player_camera.camera.limit_left <= 0
-	is_wall_right = step_wall_collision([right_wall, right_wall_bottom]) || global_position.x+9 - player_camera.camera.limit_right >= 0
-	
+	is_wall_left = step_wall_collision([left_wall, left_wall_bottom])
+	is_wall_right = step_wall_collision([right_wall, right_wall_bottom])
+	if player_camera:
+		is_wall_left = is_wall_left or global_position.x-main_collider.shape.extents.x - player_camera.camera.limit_left <= 0
+		is_wall_right = is_wall_right or global_position.x+9 - player_camera.camera.limit_right >= 0
 	#print("left: ", is_wall_left, ", right:", is_wall_right)
 
 func _set_control_locked(val : bool) -> void:
@@ -219,6 +236,9 @@ func step_wall_collision(wall_sensors : Array) -> bool:
 
 func collider_is_one_way(ray_cast : RayCast2D, collider) -> bool:
 	var to_return : bool = false
+	if !collider:
+		return to_return
+	#print(ray_cast.name)
 	match collider.get_class():
 		'TileMap':
 			var tmap : TileMap = collider
@@ -242,17 +262,33 @@ func fall_from_ground() -> bool:
 			ground_mode = 0
 			return true
 		
+		#print('fall')
+		
 	return false
 
 func snap_to_ground() -> void:
-	var ground_ang = ground_angle()
+	var ground_ang = (ground_angle())
+	#print(ground_ang)
 	var dir_count = 12
 	var angle_8dir = ground_ang / PI*dir_count
 	angle_8dir = round(angle_8dir)
+	var to_radian = angle_8dir / dir_count * PI
 	#print(angle_8dir)
-	characters.global_rotation = global_rotation
-	rotation = -(angle_8dir / dir_count * PI)
-	#print(rotation_degrees)
+	#print(to_radian - (-rotation))
+	if characters.rotation == 0:
+		characters.rotation += -rotation
+		#print(-to_radian - rotation)
+	#	characters.rotation += to_radian - (-rotation)
+	#if get_floor_normal().angle() == ground_ang:
+	rotation = -to_radian
+	
+	
+	var ray_dir_count = 2
+	var angle_dir = rotation / PI * ray_dir_count
+	angle_dir = round(angle_dir)
+	var ray_to_radian = angle_dir / ray_dir_count * PI
+	#print(position - get_ground_ray().get_collision_point())
+	ground_container.global_rotation = ray_to_radian
 	speed += -ground_normal * 150
 
 func ground_reacquisition():
@@ -267,6 +303,13 @@ func ground_reacquisition():
 
 func ground_angle() -> float:
 	return ground_normal.angle_to(Vector2(0, -1))
+
+func get_collider_normal_precise(ray:RayCast2D):
+	while ray.is_colliding():
+		var coll = ray.get_collider()
+		match coll.get_class():
+			'StaticBody2D':
+				(coll as StaticBody2D)
 
 func get_ground_ray() -> RayCast2D:
 	can_fall = true
@@ -283,24 +326,17 @@ func get_ground_ray() -> RayCast2D:
 	var left_point : float
 	var right_point : float
 	
-	match ground_mode:
-		0:
-			left_point = -left_ground.get_collision_point().y
-			right_point = -right_ground.get_collision_point().y
-		1:
-			left_point = -left_ground.get_collision_point().x
-			right_point = -right_ground.get_collision_point().x
-		2:
-			left_point = left_ground.get_collision_point().y
-			right_point = right_ground.get_collision_point().y
-		-1:
-			left_point = left_ground.get_collision_point().x
-			right_point = right_ground.get_collision_point().x
+	var l_relative_point : Vector2 = left_ground.get_collision_point() - position
+	var r_relative_point : Vector2 = right_ground.get_collision_point() - position
 	
-	if left_point >= right_point:
-		return left_ground
+	left_point = sin(rotation) * l_relative_point.x + cos(rotation) + l_relative_point.y
+	right_point = sin(rotation) * r_relative_point.x + cos(rotation) + r_relative_point.y
+	#print(left_point, ' ', right_point)
+	
+	if left_point <= right_point:
+		return left_ground #if characters.scale.x < 0 else right_ground
 	else:
-		return right_ground
+		return right_ground #if characters.scale.x >= 0 else left_ground
 
 func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	if invulnerable:
@@ -364,10 +400,8 @@ func drop_rings(rings:int = 0):
 	for c in last_rings:
 		for e in last_rings:
 			c.add_collision_exception_with(e);
-		
-	# Add all rings on level
-	for r in last_rings:
-		parent.add_child(r);
+		# Add all rings on level
+		parent.add_child(c);
 
 func timer_ivun_start(time:float):
 	var timer_ivun = Timer.new();
@@ -448,7 +482,7 @@ func move_and_slide_preset() -> Vector2:
 		top_collide,
 		true,
 		4,
-		deg2rad(60),
+		deg2rad(75),
 		true
 	)
 

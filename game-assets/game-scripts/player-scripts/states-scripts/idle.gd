@@ -6,6 +6,7 @@ func enter(host : PlayerPhysics, prev_state):
 	host.speed = Vector2.ZERO
 	host.direction = Vector2.ZERO
 	host.gsp = 0
+	host.characters.rotation = 0
 
 func step(host : PlayerPhysics, delta):
 	var ground_angle = host.ground_angle()

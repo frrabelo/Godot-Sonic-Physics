@@ -198,7 +198,6 @@ __meta__ = {
 }
 
 [node name="d-pad" parent="Separate/AspectRatioContainer/TouchScreenController/DPAD" instance=ExtResource( 13 )]
-visible = false
 modulate = Color( 1, 1, 1, 0.784314 )
 position = Vector2( 81, 71 )
 scale = Vector2( 2, 2 )

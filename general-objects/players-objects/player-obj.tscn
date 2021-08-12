@@ -1,4 +1,4 @@
-[gd_scene load_steps=221 format=2]
+[gd_scene load_steps=222 format=2]
 
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/spin-dash.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/on-air.gd" type="Script" id=2]
@@ -7,11 +7,13 @@
 [ext_resource path="res://game-assets/game-scripts/player-scripts/state-machine.gd" type="Script" id=5]
 [ext_resource path="res://game-assets/audio/sfx/spin.wav" type="AudioStream" id=6]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/character-vfx.gd" type="Script" id=7]
+[ext_resource path="res://game-assets/audio/sfx/peel-out-charge.wav" type="AudioStream" id=8]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-charge.wav" type="AudioStream" id=9]
 [ext_resource path="res://game-assets/audio/sfx/spin-dash-release.wav" type="AudioStream" id=10]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/super-peel-out.gd" type="Script" id=11]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/player-physics.gd" type="Script" id=12]
 [ext_resource path="res://game-assets/audio/sfx/insta-shield.wav" type="AudioStream" id=13]
+[ext_resource path="res://game-assets/audio/sfx/peel-out-release.wav" type="AudioStream" id=14]
 [ext_resource path="res://game-assets/audio/sfx/brake.wav" type="AudioStream" id=15]
 [ext_resource path="res://game-assets/game-sprites/insta-shield.png" type="Texture" id=16]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/audio-player.gd" type="Script" id=17]
@@ -183,7 +185,6 @@
 [ext_resource path="res://game-assets/game-sprites/player-sprites/characters-sprites/sonic-sprites/pindurado/movendo-se/pindurado#19.png" type="Texture" id=184]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/suspended.gd" type="Script" id=185]
 [ext_resource path="res://game-assets/audio/sfx/grab.wav" type="AudioStream" id=186]
-[ext_resource path="res://general-objects/players-objects/player-camera.tscn" type="PackedScene" id=187]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/idle.gd" type="Script" id=188]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/crounch.gd" type="Script" id=189]
 [ext_resource path="res://game-assets/game-scripts/player-scripts/states-scripts/look-up.gd" type="Script" id=190]
@@ -253,34 +254,14 @@ func _ready() -> void:
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
-"loop": true,
-"name": "Down",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 27 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 63 ), ExtResource( 57 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 34 ), ExtResource( 50 ), ExtResource( 36 ), ExtResource( 64 ), ExtResource( 53 ), ExtResource( 68 ) ],
+"frames": [ ExtResource( 55 ), ExtResource( 58 ), ExtResource( 48 ), ExtResource( 65 ) ],
 "loop": true,
-"name": "Jogging",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 160 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 157 ), ExtResource( 156 ) ],
-"loop": true,
-"name": "Hurt",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 87 ), ExtResource( 84 ), ExtResource( 90 ), ExtResource( 92 ), ExtResource( 89 ), ExtResource( 85 ), ExtResource( 91 ) ],
-"loop": true,
-"name": "Braking",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 86 ), ExtResource( 93 ) ],
-"loop": true,
-"name": "BrakeLoop",
+"name": "Down",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 47 ), ExtResource( 59 ), ExtResource( 62 ), ExtResource( 61 ), ExtResource( 54 ), ExtResource( 66 ), ExtResource( 33 ), ExtResource( 71 ) ],
@@ -351,6 +332,26 @@ animations = [ {
 "frames": [ ExtResource( 24 ), ExtResource( 22 ), ExtResource( 32 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ), ExtResource( 29 ), ExtResource( 40 ), ExtResource( 44 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ) ],
 "loop": true,
 "name": "Walking",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 63 ), ExtResource( 57 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 34 ), ExtResource( 50 ), ExtResource( 36 ), ExtResource( 64 ), ExtResource( 53 ), ExtResource( 68 ) ],
+"loop": true,
+"name": "Jogging",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 160 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 157 ), ExtResource( 156 ) ],
+"loop": true,
+"name": "Hurt",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 87 ), ExtResource( 84 ), ExtResource( 90 ), ExtResource( 92 ), ExtResource( 89 ), ExtResource( 85 ), ExtResource( 91 ) ],
+"loop": true,
+"name": "Braking",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 86 ), ExtResource( 93 ) ],
+"loop": true,
+"name": "BrakeLoop",
 "speed": 5.0
 } ]
 script = ExtResource( 21 )
@@ -815,6 +816,20 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, 1 ), Vector2( 1, 0 ), Vector2( -1, 0 ), Vector2( 1, -2 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 0 ), Vector2( 1, -1 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("CharAnimation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 2.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "animation_finished", "Rotating" ],
+"method": "emit_signal"
+} ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -1305,8 +1320,9 @@ func exit(host, next_state, state = null) -> void:
 			add_child(dust);
 			dust.position = host.position;
 			dust.get_child(0).scale.x = host.characters.scale.x
-			if abs(host.gsp) < 480:
-				host.player_camera.delay(0.25);
+			if host.player_camera:
+				if abs(host.gsp) < 480:
+					host.player_camera.delay(0.25);
 			if abs(host.gsp) < 560:
 				host.gsp = \\
 					560 * host.characters.scale.x;
@@ -1364,7 +1380,9 @@ func state_input(host : PlayerPhysics, event: InputEvent, main_state:State = nul
 [sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 3, 3 )
 
-[sub_resource type="RayShape2D" id=31]
+[sub_resource type="CapsuleShape2D" id=31]
+radius = 4.0
+height = 24.0
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
@@ -1427,6 +1445,7 @@ __meta__ = {
 
 [node name="Sonic" type="Node2D" parent="Characters"]
 script = SubResource( 3 )
+FALL = 2.5
 
 [node name="Sprite" type="AnimatedSprite" parent="Characters/Sonic"]
 frames = SubResource( 4 )
@@ -1461,9 +1480,10 @@ script = ExtResource( 4 )
 script = ExtResource( 191 )
 
 [node name="RectManipulate2D" type="Node2D" parent="Characters/Sonic/DefaultBox"]
+position = Vector2( 0, -1 )
 script = ExtResource( 20 )
 fill = true
-size = Vector2( 20, 34 )
+size = Vector2( 20, 36 )
 color = Color( 0, 1, 0.976471, 0.5 )
 offset = Vector2( 0, 3 )
 
@@ -1499,6 +1519,8 @@ audios = {
 "hyper_ring": ExtResource( 164 ),
 "insta_shield": ExtResource( 13 ),
 "jump": ExtResource( 192 ),
+"peel_out_charge": ExtResource( 8 ),
+"peel_out_release": ExtResource( 14 ),
 "ring": ExtResource( 131 ),
 "ring_loss": ExtResource( 163 ),
 "spike_hurt": ExtResource( 161 ),
@@ -1513,28 +1535,11 @@ modulate = Color( 0.741176, 0, 1, 1 )
 shape = SubResource( 30 )
 
 [node name="RayCollider" type="CollisionShape2D" parent="."]
+visible = false
 modulate = Color( 0.741176, 0, 1, 1 )
+position = Vector2( 0, 4 )
 shape = SubResource( 31 )
 disabled = true
-
-[node name="LeftGroundSensor" type="RayCast2D" parent="."]
-modulate = Color( 0.0901961, 1, 0.0117647, 1 )
-position = Vector2( -9, 0 )
-enabled = true
-cast_to = Vector2( 0, 35 )
-collision_mask = 33
-
-[node name="MiddleGroundSensor" type="RayCast2D" parent="."]
-modulate = Color( 0.0901961, 1, 0.0117647, 1 )
-cast_to = Vector2( 0, 35 )
-collision_mask = 33
-
-[node name="RightGroundSensor" type="RayCast2D" parent="."]
-modulate = Color( 0.0901961, 1, 0.0117647, 1 )
-position = Vector2( 9, 0 )
-enabled = true
-cast_to = Vector2( 0, 35 )
-collision_mask = 33
 
 [node name="RightWallSensor" type="RayCast2D" parent="."]
 visible = false
@@ -1564,10 +1569,26 @@ collision_mask = 33
 
 [node name="ControlLockTimer" type="Timer" parent="."]
 
-[node name="CameraContainer" type="Node" parent="."]
+[node name="GroundSensors" type="Node2D" parent="."]
 
-[node name="PlayerCamera" parent="CameraContainer" instance=ExtResource( 187 )]
-position = Vector2( 0, 0 )
+[node name="LeftGroundSensor" type="RayCast2D" parent="GroundSensors"]
+modulate = Color( 0.0901961, 1, 0.0117647, 1 )
+position = Vector2( -10, 0 )
+enabled = true
+cast_to = Vector2( 0, 40 )
+collision_mask = 33
+
+[node name="MiddleGroundSensor" type="RayCast2D" parent="GroundSensors"]
+modulate = Color( 0.0901961, 1, 0.0117647, 1 )
+cast_to = Vector2( 0, 35 )
+collision_mask = 33
+
+[node name="RightGroundSensor" type="RayCast2D" parent="GroundSensors"]
+modulate = Color( 0.0901961, 1, 0.0117647, 1 )
+position = Vector2( 10, 0 )
+enabled = true
+cast_to = Vector2( 0, 40 )
+collision_mask = 33
 
 [connection signal="animation_finished" from="Characters/Sonic/Sprite/CharAnimation" to="StateMachine" method="_on_CharAnimation_animation_finished"]
 [connection signal="timeout" from="ControlLockTimer" to="." method="_on_ControlLockTimer_timeout"]

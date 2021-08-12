@@ -343,7 +343,7 @@ stdout/verbose_stdout=true
 [application]
 
 config/name="HedgeGodot"
-run/main_scene="res://main.tscn"
+run/main_scene="res://zones/test-zone-act-1-scene.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="HedgeGodotData"
 boot_splash/image="res://splash.png"

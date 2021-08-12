@@ -62,6 +62,7 @@ func step(host, delta):
 					host.is_looking_down = true
 	
 	var ground_angle = host.ground_angle();
+	#print(rad2deg(ground_angle))
 	
 	if host.is_rolling and abs_gsp < 30.0:
 		host.is_rolling = false
@@ -109,7 +110,7 @@ func step(host, delta):
 	host.gsp = .0 if host.is_wall_left and host.gsp < 0 else host.gsp
 	host.gsp = .0 if host.is_wall_right and host.gsp > 0 else host.gsp
 	host.speed.x = host.gsp * cos(ground_angle)
-	host.speed.y = host.gsp * -sin(ground_angle);
+	host.speed.y = host.gsp * -sin(ground_angle)
 	
 	if host.selected_character.states.has(name):
 		var to_return = host.selected_character.states[name].step(host, delta, self)
@@ -139,41 +140,38 @@ func animation_step(host, animator, delta):
 	host.rotation_degrees = round(host.rotation_degrees)
 	if abs_gsp > .1 and !is_braking:
 		idle_anim = 'Idle'
-		anim_name = 'Walking'
-		if abs_gsp > 0:
-			if abs_gsp >= 250:
-				anim_name = 'Jogging'
-			
-			if abs_gsp >= 380:
-				anim_name = 'Running'
-			
-			if abs_gsp >= 960:
-				anim_name = 'SuperPeelOut'
+		var joggin = 250
+		var runnin = 380
+		var fasterrun = 960
+		if abs_gsp < joggin:
+			anim_name = 'Walking'
+		elif abs_gsp >= joggin and abs_gsp < runnin:
+			anim_name = "Jogging"
+		elif abs_gsp >= runnin and abs_gsp < fasterrun:
+			anim_name = "Running"
+		else:
+			anim_name = "SuperPeelOut"
 		if host.is_rolling:
 			host.characters.global_rotation = 0;
 			var side = sign(host.characters.scale.x);
 			if side == 0: side = 1
 			host.sprite.offset.x = (-6) * (sin(host.characters.rotation) * -side);
-			var up = host.sprite.offset.y < 0;
-			var cdown = host.sprite.offset.y >= 0;
-			var numBase = {up : 6, cdown : 6}
-			host.sprite.offset.y = numBase[true] * cos(host.characters.rotation);
+			#var up = host.sprite.offset.y < 0;
+			#var cdown = host.sprite.offset.y >= 0;
+			#var numBase = {up : 6, cdown : 6}
+			host.sprite.offset.y = 6 * cos(host.characters.rotation);
 			anim_name = 'Rolling'
-			anim_speed = -((5.0 / 60.0) - (abs(host.gsp) / 120.0))
+			anim_speed = -((5.0 / 60.0) - (abs_gsp / 120.0))
 		else:
 			var host_char = host.characters
 			var char_rotation = host_char.rotation_degrees;
 			var host_rotation = host.rotation_degrees
 			var abs_crot = abs(host_rotation)
 			#print(-host.rotation_degrees)
-			if abs_crot <= 30:
-				if abs_crot < 20:
-					host_char.global_rotation = 0;
-				host_char.rotation += (-host_char.rotation - host.rotation) / (0.1/delta)
-				#print(host_char.rotation - host.rotation)
-			else:
-				pass
-				host_char.rotation += (0 - host_char.rotation) / (0.1/delta)
+			#host_char.rotation += (0-host_char.rotation) / (0.5 / delta)
+			host_char.rotation += (-host_char.rotation) * (2 * delta)
+			if abs_crot < .05:
+				host_char.rotation = 0
 			anim_speed = max(-(8.0 / 60.0 - (abs_gsp / 120.0)), 1.6)
 			if gsp_dir != 0:
 				if abs_gsp > 500:

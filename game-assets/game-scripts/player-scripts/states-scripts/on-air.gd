@@ -9,16 +9,21 @@ var can_attack : bool
 var is_floating
 var override_anim : String
 var post_damage:bool
-var prev_frame_state:PoolStringArray = []
+var can_snap:float
+var was_throwed : bool = false
 
 func enter(host, prev_state):
 	host.snap_margin = 0
-	prev_frame_state.push_back(prev_state)
+	can_snap = 0
 	#print(prev_state)
+	host.ground_container.rotation = 0
 	if host.has_jumped || host.spring_loaded || host.is_rolling:
 		host.characters.rotation = 0;
 	was_damaged = host.was_damaged;
 	#print(was_damaged)
+	if host.throwed:
+		was_throwed = true
+		host.throwed = false
 	if was_damaged:
 		host.control_locked = true;
 	#print(was_damaged)
@@ -54,7 +59,7 @@ func step(host, delta):
 	if host.ground_normal:
 		host.rotation = -host.ground_angle()
 	else:
-		host.rotation += (-0 - host.rotation) / (0.5/delta)
+		host.rotation += (-0 - host.rotation) / (0.25/delta)
 	#print(host.rotation, 'air')
 	host.characters.rotation += (-host.rotation - host.characters.rotation) / (0.5/delta)
 	if host.is_floating:
@@ -97,17 +102,14 @@ func step(host, delta):
 	
 	#print(prev_frame_state)
 	if host.is_grounded:
-		if prev_frame_state[0] != "OnGround":
+		if can_snap >= 0.25:
 	#	if host.speed.y >= -50:
 			host.spring_loaded = false
 			host.snap_margin = host.snaps
 			return 'OnGround'
 	
-	prev_frame_state.push_back("OnAir")
-	if prev_frame_state.size() > 25:
-		prev_frame_state.remove(0)
-	if prev_frame_state[0] != "OnGround":
-		host.set_ground_rays(true)
+	can_snap += delta
+	#print(can_snap)
 	#print(prev_frame_state)
 	
 	
@@ -141,9 +143,10 @@ func step(host, delta):
 	#print(host.speed)
 
 func exit(host, next_state):
-	prev_frame_state = []
+	can_snap = 0
 	is_floating = false;
 	host.is_floating = false;
+	was_throwed = false
 	if next_state == 'OnGround' || host.is_grounded:
 		if host.was_damaged:
 			host.control_locked = false
@@ -161,14 +164,16 @@ func animation_step(host, animator, delta):
 	var anim_name = animator.current_animation
 	var anim_speed = animator.get_playing_speed()
 	
+	if anim_name == 'Walking':
+		anim_speed = 3
+	
 	if anim_name == 'Braking':
 		anim_name = 'Walking';
-	
 	if was_damaged:
 		anim_name = "Hurt"
 		anim_speed = 2
 	else:
-		if is_floating:
+		if is_floating || was_throwed:
 			anim_name = "Rotating"
 			anim_speed = 3;
 		else:
@@ -189,6 +194,13 @@ func animation_step(host, animator, delta):
 	
 	host.characters.scale.x = host.direction.x if host.direction.x != 0 else host.characters.scale.x
 	animator.animate(anim_name, anim_speed, true)
+
+func _on_animation_finished(host, anim_name) -> void:
+	match anim_name:
+		'Rotating':
+			if was_throwed && !is_floating:
+				was_throwed = false
+				host.animation.current_animation = 'Walking'
 
 func when_pushed_by_spring():
 	spring_loaded = true;

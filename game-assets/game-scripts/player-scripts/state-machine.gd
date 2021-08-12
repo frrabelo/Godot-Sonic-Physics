@@ -47,8 +47,9 @@ func _physics_process(delta):
 	host.speed = host.move_and_slide_preset()
 	cur_state.animation_step(host, host.animation, delta)
 	
-	if host.player_camera != null:
-		host.player_camera.camera_step(host, delta)
+	if host.player_camera:
+		if host.im_main_player:
+			host.player_camera.camera_step(host, delta)
 
 func change_state(state_name):
 	if state_name == current_state:

@@ -1,0 +1,4 @@
+[gd_resource type="ConvexPolygonShape2D" format=2]
+
+[resource]
+points = PoolVector2Array( 96, 96, 0, 96, 1, 80, 4, 64, 11, 48, 16, 40, 23, 32, 32, 23, 40, 16, 48, 11, 65, 4, 80, 1, 96, 0 )

@@ -90,7 +90,7 @@ func _on_HitArea_body_entered(body):
 		if !player.invulnerable && !player_is_rolling:
 			push_player(player)
 		elif player_is_rolling:
-			explode_audio_player.play(0);
+			explode_audio_player.play('Destroy');
 			if player.fsm.current_state == "OnAir":
 				var angle = rotation
 				player.speed.y -= (player.speed.y * 1.85) * cos(angle)

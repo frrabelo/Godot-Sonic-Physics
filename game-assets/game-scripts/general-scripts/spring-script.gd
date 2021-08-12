@@ -20,10 +20,9 @@ func _ready():
 func set_rotation_degrees(val : float) -> void:
 	.set_rotation_degrees(val)
 	var scale_change = 1.0
-	if val == 90 || val == 180:
+	if val == 90 || val == 180 || val == -90 || val == 270:
 		scale_change = -1.0
-	for i in get_types():
-		i.scale.x = -scale_change
+	$Types.scale.x = -scale_change
 
 func get_types () -> Array:
 	var to_return = []
@@ -45,7 +44,7 @@ func _set_spring_presset(val:int) -> void:
 						sprite = j
 						sprite.set_visible(true)
 		if i is AnimationPlayer:
-			if sprite:
+			if sprite && sprite.is_inside_tree():
 				i.root_node = sprite.get_path()
 	if sprite:
 		sprite.set_visible(true)
@@ -63,7 +62,7 @@ func _on_JumpArea_body_entered(body):
 		var sp : float = -push_force * cos(deg2rad(my_rotation));
 		if abs_rot == 0 or abs_rot == 180:
 			if player.is_grounded:
-				player.set_ground_rays(false)
+				#player.set_ground_rays(false)
 				player.is_grounded = false
 				player.fsm.change_state("OnAir")
 			player.snap_margin = 0
