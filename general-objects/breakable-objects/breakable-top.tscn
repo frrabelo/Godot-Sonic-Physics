@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/general-scripts/breakables/breakable-top.gd" type="Script" id=1]
+[ext_resource path="res://general-objects/breakable-objects/breaked-block-object.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/breakable-block-oneway.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 16, 4 )
+
+[node name="BreakableTop" type="Node2D"]
+script = ExtResource( 1 )
+block_scene = ExtResource( 2 )
+
+[node name="BreakableBlock-oneway" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 16 )
+
+[node name="TopStatic" type="StaticBody2D" parent="."]
+collision_layer = 256
+collision_mask = 256
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopStatic"]
+modulate = Color( 0.521569, 0.956863, 0.611765, 1 )
+shape = SubResource( 1 )
+
+[node name="Trigger" type="Area2D" parent="."]
+position = Vector2( 0, -4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger"]
+self_modulate = Color( 0.788235, 0.792157, 0.0705882, 1 )
+shape = SubResource( 2 )
+
+[node name="Positions" type="Node2D" parent="."]
+position = Vector2( 0, 16 )
+
+[node name="Spawn2" type="Position2D" parent="Positions"]
+position = Vector2( -8, -16 )
+__meta__ = {
+"_gizmo_extents_": 2.0
+}
+
+[node name="Spawn3" type="Position2D" parent="Positions"]
+position = Vector2( 8, -16 )
+__meta__ = {
+"_gizmo_extents_": 2.0
+}
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_Trigger_body_entered"]

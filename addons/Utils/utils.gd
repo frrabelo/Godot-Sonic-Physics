@@ -1,5 +1,11 @@
 class_name Utils
 
+static func posinf() -> float:
+	return 3.402823e+38
+
+static func neginf () -> float:
+	return -2.802597e-45
+
 enum Vec2AngleDirection {
 	UP,
 	DOWN,
@@ -53,16 +59,14 @@ static func bin2int(b : String) -> int:
 static func count_how_much_has(digit:bool, b:String) -> int:
 	var to_return = 0
 	var bin = b
+	var intd = int(digit)
 	for i in b:
-		to_return += int(digit)
+		to_return += intd
 	
 	return to_return
 
-static func angle2Vec2(angle : float, to : int = 0) -> Vector2:
-	var to_return : Vector2
-	to_return = Vector2(cos(angle), -sin(angle))
-	
-	return to_return
+static func angle2Vec2(angle : float) -> Vector2:
+	return Vector2(cos(angle), -sin(angle))
 
 static func between(val: float, minor:float, major:float) -> bool:
 	return val > minor && val < major
@@ -74,6 +78,38 @@ static func is_action(action:String) -> bool:
 	
 	return to_return
 
-static func round_between(n:float, minor : float , major: float):
-	return minor if (n - minor) < (major - n) else major
-	pass
+# Convert radians to directions:
+# directions are the possible angles can be returned in radians
+static func rad2dir(val:float, directions:int, dir:float = 0):
+	var findin = directions/2
+	var angle_2_dir = val / PI*(findin)
+	var final
+	if dir == 0:
+		final = round(angle_2_dir)
+	elif dir < 0:
+		final = floor(angle_2_dir)
+	else:
+		final = ceil(angle_2_dir)
+	var to_radian = final / findin * PI
+	return to_radian
+
+static func invertXY(vec:Vector2)->Vector2:
+	return Vector2(vec.y, vec.x)
+
+static func get_min_vector2pool(val : PoolVector2Array, prop:String="y") -> float:
+	var to_return : float = 0
+	
+	for i in val:
+		if i < to_return:
+			to_return = i[prop]
+	
+	return to_return
+
+static func get_max_vector2pool(val : PoolVector2Array, prop:String="x") -> float:
+	var to_return : float = 0
+	
+	for i in val:
+		if i > to_return:
+			to_return = i[prop]
+	
+	return to_return

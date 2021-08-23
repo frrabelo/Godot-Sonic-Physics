@@ -7,13 +7,12 @@ onready var path : Path2D = Utils.get_node_by_type(self, 'Path2D')
 export var loop : bool = false setget set_loop
 export var speed : float = 1.0
 export var pause_timer : float = 1.0
-export(bool) var editor_processing = false setget set_editor_process
 onready var platform : KinematicBody2D = Utils.get_node_by_type(self, 'KinematicBody2D')
 onready var positions = (path as Path2D).curve.get_baked_points()
 var path_follow : PathFollow2D = PathFollow2D.new()
 var remote_t : RemoteTransform2D = RemoteTransform2D.new()
 var right : bool = false
-var unit_pos = 0.0
+var unit_pos:float = 0.0
 
 func _enter_tree() -> void:
 	if Engine.editor_hint:
@@ -21,7 +20,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if Engine.editor_hint:
-		set_physics_process(editor_processing)
+		return
 	else:
 		if path:
 			path_follow.rotate = false
@@ -29,7 +28,7 @@ func _ready() -> void:
 			path.add_child(path_follow)
 			path_follow.add_child(remote_t)
 			path_follow.unit_offset= 0
-		set_physics_process(true)
+			set_physics_process(true)
 	#print(is_physics_processing())
 
 func set_loop (val:bool) -> void:
@@ -50,6 +49,7 @@ func _physics_process(delta: float) -> void:
 	#print(int(right) * delta)
 	unit_pos += Utils.sign_bool(right) * delta * speed
 	unit_pos = max(0, min(1, unit_pos))
+	#print(Utils.sign_bool(right) * delta * speed)
 	path_follow.unit_offset = unit_pos
 	if loop:
 		if (path_follow.unit_offset >= 1 || path_follow.unit_offset <= 0):
@@ -87,18 +87,6 @@ func _get_configuration_warning() -> String:
 	return text
 
 func _timer_timeout(timer : Timer):
-	if Engine.editor_hint:
-		set_physics_process(editor_processing)
-	else:
+	if !Engine.editor_hint:
 		set_physics_process(true)
 	timer.queue_free()
-
-func set_editor_process(val:bool) -> void:
-	if Engine.editor_hint:
-		editor_processing = val
-		set_physics_process(editor_processing)
-		for i in get_children():
-			if i is Timer:
-				i.queue_free()
-			elif i is KinematicBody2D:
-				i.position = Vector2.ZERO

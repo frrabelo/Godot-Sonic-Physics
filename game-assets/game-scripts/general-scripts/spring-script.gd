@@ -69,6 +69,7 @@ func _on_JumpArea_body_entered(body):
 			player.speed.y = sp
 			if abs_p_angle > 22.5 && abs_p_angle < 155: 
 				pass
+			player.spring_loaded_v = true
 				#player.position.y += player.speed.y * get_physics_process_delta_time()
 			player.rotation = 0
 		elif abs_rot == 90 or abs_rot == 270:

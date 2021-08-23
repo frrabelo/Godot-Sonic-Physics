@@ -40,7 +40,7 @@ onready var ray_collider = $RayCollider
 onready var left_ground:RayCast2D = $GroundSensors/LeftGroundSensor
 onready var right_ground:RayCast2D = $GroundSensors/RightGroundSensor
 onready var middle_ground:RayCast2D = $GroundSensors/MiddleGroundSensor
-onready var ground_container:Node2D = $GroundSensors
+onready var ground_sensors_container:Node2D = $GroundSensors
 onready var main_collider:CollisionShape2D = $MainCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
@@ -56,7 +56,7 @@ var char_low_collision_air
 onready var animation
 onready var audio_player = $AudioPlayer
 onready var main_scene = get_tree().current_scene
-var snaps : float = 21
+var snaps : float = 5
 var snap_margin = snaps
 
 var ring_scene = preload("res://general-objects/ring-object.tscn")
@@ -85,6 +85,7 @@ var is_pushing : bool
 var is_looking_down : bool
 var is_looking_up : bool
 var spring_loaded : bool
+var spring_loaded_v : bool
 var invulnerable : bool;
 var constant_roll : bool
 var up_direction : Vector2 = Vector2.UP
@@ -96,6 +97,9 @@ var suspended_can_right : bool = true
 var suspended_can_left : bool = true
 var throwed : bool = false
 var input_dict : Dictionary
+var speed_shoes : bool = false setget set_speed_shoes
+var underwater : bool = false setget set_underwater
+var roll_anim: bool = false
 
 func _enter_tree() -> void:
 	if Engine.editor_hint:
@@ -110,17 +114,6 @@ func _ready():
 		set_collision_mask(get_collision_mask())
 		control_unlock_timer = control_unlock_time_normal
 		emit_signal('loaded')
-
-func is_on_ground() -> bool:
-	var ground_ray = get_ground_ray()
-	
-	if ground_ray != null:
-		var point = ground_ray.get_collision_point()
-		var normal = ground_ray.get_collision_normal()
-		if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
-			return position.y + 21 > point.y and speed.y >= 0
-	
-	return false
 
 func get_rays() -> Array:
 	return [left_ground, middle_ground, right_ground, left_wall, left_wall_bottom, right_wall, right_wall_bottom]
@@ -144,6 +137,7 @@ func set_collision_mask_bit(val : int, switch : bool) -> void:
 	.set_collision_mask_bit(val, switch)
 	for i in get_rays():
 		i.set_collision_mask_bit(val, switch)
+		
 
 func _set_can_brake_wall( val : bool ) -> void:
 	can_break_wall = val
@@ -152,9 +146,13 @@ func _set_can_brake_wall( val : bool ) -> void:
 
 func _step_setup(delta : float) -> void:
 	#print(speed)
-	var roll_anim = animation.current_animation == 'Rolling'
+	roll_anim = animation.current_animation == 'Rolling'
 	if "animation_roll" in selected_character:
-		roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
+		if selected_character.animation_roll is Array:
+			for i in selected_character.animation_roll:
+				roll_anim = roll_anim || animation.current_animation == i
+		else:
+			roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
 	#print(char_default_collision_air, char_default_collision_floor, char_low_collision_air, char_low_collision_floor)
 	assert (char_default_collision_floor && char_low_collision_floor, "Error: the variables not contains value")
 	var shape
@@ -166,6 +164,7 @@ func _step_setup(delta : float) -> void:
 	
 	#if shape_rect:
 	#	shape = shape_rect.get_rectshape_2d()
+	#print(snap_margin)
 	shape = char_default_collision_floor.get_rectshape_2d() if !roll_anim else char_low_collision_floor.get_rectshape_2d()
 	main_collider.shape.extents = shape.shape.extents
 	#print(shape.position)
@@ -175,9 +174,43 @@ func _step_setup(delta : float) -> void:
 	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
 	#print(roll_anim, " ", animation.current_animation)
 	_set_can_brake_wall(!(abs(gsp) > 270 && is_rolling && is_grounded))
-	set_collision_mask_bit(6, !roll_anim)
-	set_collision_layer_bit(6, !roll_anim)
+	#var can_break_from_bottom = speed.y < 0 && fsm.is_current_state('OnAir')
+	roll_anim = !roll_anim
+	set_collision_mask_bit(6, roll_anim)
+	set_collision_layer_bit(6, roll_anim)
+	roll_anim = !roll_anim
 	#print(get_collision_mask_bit(5))
+
+func set_speed_shoes(val:bool) -> void:
+	speed_shoes = val
+	var default_vals = characters.get_child(CHARACTER_SELECTED)
+	for i in ['TOP', 'ACC', 'DEC', 'FRC']:
+		set(i, default_vals.get(i) * (1 if !speed_shoes else 1.7))
+	if underwater:
+		for i in ['TOP', 'ACC', 'DEC', 'FRC', 'AIR']:
+			set(i, get(i) / (1 if !underwater else 2))
+		if underwater:
+			JMP = default_vals.JMP/1.5
+			GRV = default_vals.GRV/4
+		else:
+			JMP = default_vals.JMP
+			GRV = default_vals.GRV
+	player_vfx.get_node('Trail').enabled = speed_shoes
+
+func set_underwater(val:bool) -> void:
+	underwater = val
+	var default_vals = characters.get_child(CHARACTER_SELECTED)
+	for i in ['TOP', 'ACC', 'DEC', 'FRC', 'AIR']:
+		set(i, default_vals.get(i) / (1 if !underwater else 2))
+	if underwater:
+		JMP = default_vals.JMP/1.5
+		GRV = default_vals.GRV/4
+	else:
+		JMP = default_vals.JMP
+		GRV = default_vals.GRV
+	if speed_shoes:
+		for i in ['TOP', 'ACC', 'DEC', 'FRC']:
+			set(i, get(i) * (1 if !speed_shoes else 1.7))
 
 func physics_step(delta):
 	_step_setup(delta)
@@ -268,27 +301,22 @@ func fall_from_ground() -> bool:
 
 func snap_to_ground() -> void:
 	var ground_ang = (ground_angle())
-	#print(ground_ang)
-	var dir_count = 12
-	var angle_8dir = ground_ang / PI*dir_count
-	angle_8dir = round(angle_8dir)
-	var to_radian = angle_8dir / dir_count * PI
+	var to_radian = Utils.rad2dir(ground_ang, 24)
 	#print(angle_8dir)
 	#print(to_radian - (-rotation))
-	if characters.rotation == 0:
-		characters.rotation += -rotation
+	if abs(rad2deg(ground_ang)) <= 27:
+		rotation = 0
+		return
+	characters.rotation_degrees = rotation + characters.rotation
 		#print(-to_radian - rotation)
 	#	characters.rotation += to_radian - (-rotation)
 	#if get_floor_normal().angle() == ground_ang:
-	rotation = -to_radian
+	rotation += (-to_radian - rotation) / (0.05 / fsm.get_physics_process_delta_time())
 	
-	
-	var ray_dir_count = 2
-	var angle_dir = rotation / PI * ray_dir_count
-	angle_dir = round(angle_dir)
-	var ray_to_radian = angle_dir / ray_dir_count * PI
+	to_radian = ground_ang
 	#print(position - get_ground_ray().get_collision_point())
-	ground_container.global_rotation = ray_to_radian
+	#print(ground_mode)
+	ground_sensors_container.global_rotation = -to_radian
 	speed += -ground_normal * 150
 
 func ground_reacquisition():
@@ -332,11 +360,11 @@ func get_ground_ray() -> RayCast2D:
 	left_point = sin(rotation) * l_relative_point.x + cos(rotation) + l_relative_point.y
 	right_point = sin(rotation) * r_relative_point.x + cos(rotation) + r_relative_point.y
 	#print(left_point, ' ', right_point)
-	
+	#print('l: %f, r: %f' % [left_point, right_point])
 	if left_point <= right_point:
-		return left_ground #if characters.scale.x < 0 else right_ground
+		return left_ground
 	else:
-		return right_ground #if characters.scale.x >= 0 else left_ground
+		return right_ground
 
 func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	if invulnerable:
@@ -475,7 +503,9 @@ func _on_ControlLockTimer_timeout() -> void:
 
 func move_and_slide_preset() -> Vector2:
 	var top_collide:Vector2 = Vector2(sin(rotation), -cos(rotation))
+	#var fways:Vector2 = Utils.angle2Vec2(Utils.rad2dir(top_collide.angle_to(Vector2.LEFT), 4))
 	var bottom_snap:Vector2 = -top_collide * snap_margin
+	#print(bottom_snap)
 	return move_and_slide_with_snap(\
 		speed,
 		bottom_snap,

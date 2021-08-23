@@ -24,6 +24,9 @@ func step(host : PlayerPhysics, delta):
 			else:
 				return 'LookUp'
 	
+	if host.ground_mode != 0:
+		return 'OnAir'
+	
 	if !host.is_grounded:
 		return 'OnAir'
 	

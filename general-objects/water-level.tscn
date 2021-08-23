@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/general-scripts/water-level.gd" type="Script" id=1]
+
+[node name="WaterLevel" type="Area2D"]
+z_index = 4096
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[connection signal="area_shape_entered" from="." to="." method="_on_WaterLevel_area_shape_entered"]
+[connection signal="area_shape_exited" from="." to="." method="_on_WaterLevel_area_shape_exited"]

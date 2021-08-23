@@ -34,8 +34,8 @@ func _physics_process(delta):
 		queue_free()
 	if (canFall):
 		sprite.rotation += (0 - sprite.rotation) / 10
-		if (speed.x > 50):
-			speed.x -= 1100 * delta;
+		if (abs(speed.x) > 50):
+			speed.x += -sign(speed.x) * 250 * delta;
 		if (speed.y < 5000):
 			speed.y += 1000 * delta;
 		move_local_x(speed.x * delta);

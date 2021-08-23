@@ -12,6 +12,11 @@ func enter(host, prev_state):
 	idle_anim = 'Idle'
 	host.snap_margin = host.snaps
 	host.suspended_jump = false
+	host.set_collision_mask_bit(7, true)
+	host.set_collision_layer_bit(7, true)
+	host.set_collision_mask_bit(8, true)
+	host.set_collision_layer_bit(8, true)
+	#print(host.get_collision_mask_bit(8))
 	
 	if host.selected_character.states.has(name):
 		var to_return = host.selected_character.states[name].enter(host, prev_state, self)
@@ -34,11 +39,12 @@ func step(host, delta):
 	
 	if !host.is_ray_colliding || host.fall_from_ground():
 		host.is_grounded = false
-		host.move_and_slide(host.speed)
+		host.move_and_slide_preset()
 		host.snap_margin = 0
 		return 'OnAir'
 	
 	if host.is_floating:
+		host.snap_margin = 0
 		return 'OnAir'
 	
 	if host.constant_roll:

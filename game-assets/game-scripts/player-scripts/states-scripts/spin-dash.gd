@@ -16,7 +16,7 @@ func step(host, delta):
 		host.animation.stop(true)
 		host.audio_player.play('spin_dash_charge')
 	
-	host.rotation_degrees = 0;
+	host.characters.rotation = 0
 	
 	p = min(p, 480)
 	p -= int(p / 7.5) / 15360.0

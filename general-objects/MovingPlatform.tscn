@@ -11,10 +11,8 @@ extents = Vector2( 40, 16 )
 scale = Vector2( 0.902001, 0.951601 )
 script = ExtResource( 2 )
 loop = true
-speed = 400.0
 
 [node name="MovingPlatform" type="KinematicBody2D" parent="."]
-scale = Vector2( 1, 1 )
 collision_layer = 25
 collision_mask = 25
 motion/sync_to_physics = true

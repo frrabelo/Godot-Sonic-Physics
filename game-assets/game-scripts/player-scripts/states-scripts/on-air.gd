@@ -4,6 +4,7 @@ var was_damaged : bool
 var has_jumped : bool
 var has_rolled : bool
 var spring_loaded : bool
+var spring_loaded_v : bool
 var roll_jump : bool
 var can_attack : bool
 var is_floating
@@ -11,12 +12,20 @@ var override_anim : String
 var post_damage:bool
 var can_snap:float
 var was_throwed : bool = false
+var cannot_break_bottom :bool
+var cannot_break_top :bool
 
 func enter(host, prev_state):
 	host.snap_margin = 0
 	can_snap = 0
+	cannot_break_bottom = host.speed.y >= 0
+	host.set_collision_mask_bit(7, host.speed.y >= 0)
+	host.set_collision_layer_bit(7, host.speed.y >= 0)
+	cannot_break_top = host.speed.y <= 0 or !host.roll_anim
+	host.set_collision_mask_bit(8, cannot_break_top)
+	host.set_collision_layer_bit(8, cannot_break_top)
 	#print(prev_state)
-	host.ground_container.rotation = 0
+	host.ground_sensors_container.rotation = 0
 	if host.has_jumped || host.spring_loaded || host.is_rolling:
 		host.characters.rotation = 0;
 	was_damaged = host.was_damaged;
@@ -30,10 +39,11 @@ func enter(host, prev_state):
 	is_floating = host.is_floating;
 	if !is_floating:
 		spring_loaded = host.spring_loaded
-	#	print(spring_loaded)
+		spring_loaded_v = host.spring_loaded_v
 		if !spring_loaded:
 			has_jumped = host.has_jumped
 			has_rolled = host.is_rolling
+			spring_loaded_v = false
 		else:
 			has_jumped = false
 			has_rolled = false
@@ -48,6 +58,7 @@ func enter(host, prev_state):
 	host.is_rolling = false
 	host.spring_loaded = false;
 	host.is_floating = false;
+	host.spring_loaded_v = false
 	roll_jump = has_jumped && has_rolled
 	#print(host.has_jumped)
 	if host.selected_character.states.has(name):
@@ -55,11 +66,19 @@ func enter(host, prev_state):
 		if to_return:
 			return to_return
 
-func step(host, delta):
+func step(host: PlayerPhysics, delta):
+	cannot_break_bottom = host.speed.y >= 0
+	host.set_collision_mask_bit(7, cannot_break_bottom)
+	host.set_collision_layer_bit(7, cannot_break_bottom)
+	cannot_break_top = host.speed.y <= 0 or !host.roll_anim
+	host.set_collision_mask_bit(8, cannot_break_top)
+	host.set_collision_layer_bit(8, cannot_break_top)
 	if host.ground_normal:
-		host.rotation = -host.ground_angle()
+		host.ground_sensors_container.global_rotation = 0
 	else:
-		host.rotation += (-0 - host.rotation) / (0.25/delta)
+		host.characters.rotation = -host.rotation
+		host.rotation = 0
+		host.ground_sensors_container.rotation = 0
 	#print(host.rotation, 'air')
 	host.characters.rotation += (-host.rotation - host.characters.rotation) / (0.5/delta)
 	if host.is_floating:
@@ -70,8 +89,10 @@ func step(host, delta):
 		can_attack = false
 		host.control_locked = false
 	
-	if host.spring_loaded:
+	if host.spring_loaded || host.spring_loaded_v:
 		spring_loaded = true
+		if host.spring_loaded_v:
+			spring_loaded_v = true
 		has_jumped = false
 		has_rolled = false
 		is_floating = false
@@ -129,8 +150,11 @@ func step(host, delta):
 				roll_jump = false
 		if has_jumped:
 			if Input.is_action_just_released("ui_jump"): # has jumped
-				if host.speed.y < -240.0: # set min jump height
-					host.speed.y = -240.0
+				var jmp_release = -240.0
+				if host.underwater:
+					jmp_release /= 2
+				if host.speed.y < jmp_release: # set min jump height
+					host.speed.y = jmp_release
 	if host.speed.y < 0 and host.speed.y > -240:
 		host.speed.x -= int(host.speed.x / 7.5) /15360
 	
@@ -147,6 +171,8 @@ func exit(host, next_state):
 	is_floating = false;
 	host.is_floating = false;
 	was_throwed = false
+	cannot_break_bottom = true
+	cannot_break_top = true
 	if next_state == 'OnGround' || host.is_grounded:
 		if host.was_damaged:
 			host.control_locked = false
@@ -163,7 +189,6 @@ func exit(host, next_state):
 func animation_step(host, animator, delta):
 	var anim_name = animator.current_animation
 	var anim_speed = animator.get_playing_speed()
-	
 	if anim_name == 'Walking':
 		anim_speed = 3
 	
@@ -177,7 +202,7 @@ func animation_step(host, animator, delta):
 			anim_name = "Rotating"
 			anim_speed = 3;
 		else:
-			if spring_loaded:
+			if spring_loaded && spring_loaded_v:
 				anim_name = "SpringJump"
 				anim_speed = 3;
 			else:

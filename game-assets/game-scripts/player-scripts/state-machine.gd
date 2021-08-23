@@ -31,6 +31,9 @@ func get_available_state() -> Node:
 		to_return = host.selected_character.states[current_state]
 	return to_return
 
+func is_current_state(name:String) -> bool:
+	return current_state == name
+
 func _physics_process(delta):
 	#if !host.char_default_collision_air:
 	if !is_physics_processing():
