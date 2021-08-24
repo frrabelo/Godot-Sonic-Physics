@@ -311,7 +311,7 @@ func snap_to_ground() -> void:
 		#print(-to_radian - rotation)
 	#	characters.rotation += to_radian - (-rotation)
 	#if get_floor_normal().angle() == ground_ang:
-	rotation += (-to_radian - rotation) / (0.05 / fsm.get_physics_process_delta_time())
+	rotation += (-to_radian - rotation)
 	
 	to_radian = ground_ang
 	#print(position - get_ground_ray().get_collision_point())

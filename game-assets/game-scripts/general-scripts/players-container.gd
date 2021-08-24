@@ -22,14 +22,12 @@ func _ready():
 func set_main_player(child : PlayerPhysics):
 	if main_player:
 		selected = child.get_index()
-		print(selected)
 		child.im_main_player = true
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action_released('ui_end'):
 		get_node(main_player).im_main_player = false
 		selected += 1
-		print(selected)
 		selected = (selected % get_child_count())
 		var child = get_child(selected)
 		main_player = child.get_path()

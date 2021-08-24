@@ -2,8 +2,8 @@ extends Node2D
 
 class_name PlayerCamera
 
-export(float) var vertical_offset
-export(float) var horizontal_offset
+export(float) var vertical_offset setget _set_ver_offset
+export(float) var horizontal_offset setget _set_hor_offset
 
 export(bool) var follow_player = true;
 export(bool) var followUp = false;
@@ -25,7 +25,7 @@ export(float) var SCROLL_SPEED = 120
 export(float) var SCROLL_DELAY = 2
 
 onready var camera_scroll = $CameraScroll
-onready var camera : Camera2D = camera_scroll.get_node('Camera2D')
+onready var camera : Camera2D = $CameraScroll/Camera2D
 
 var scroll_timer : float
 export(bool) var rotateWithPlayer:bool
@@ -42,6 +42,16 @@ func can_scroll(delta : float):
 		return false
 	
 	return true
+
+func _set_hor_offset(val : float) -> void:
+	if camera:
+		horizontal_offset = val
+		camera.position.x = horizontal_offset
+
+func _set_ver_offset(val : float) -> void:
+	if camera:
+		vertical_offset = val
+		camera.position.y = vertical_offset
 
 func camera_step(player : PlayerPhysics, delta : float):
 	if !stuck_in_object:
@@ -87,7 +97,7 @@ func vertical_border(player : PlayerPhysics):
 		var vel;
 		var scroll_back = true
 		var scroll_world = camera_scroll.global_position
-		var realPos = position.y + vertical_offset;
+		var realPos = position.y;
 		if player.is_grounded:
 			if (realPos + 16 - position.y) != 0:
 				var playerPosCam = (player.position.y + 16) - realPos;
