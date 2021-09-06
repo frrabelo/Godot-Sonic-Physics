@@ -2,7 +2,8 @@ extends Area2D
 class_name CameraTrigger
 
 export(Vector2) var cam_offset
-export(Vector2) var cam_position
+export(Vector2) var position_when_not_following
+export(Vector2) var move_cam
 export(bool) var animate_enter = false
 export(bool) var animate_exit = false
 export(float) var animations_duration = 0.5
@@ -37,13 +38,18 @@ func _player_entered(body_id: int, body: Node, body_shape: int, local_shape: int
 			camera.horizontal_offset = cam_offset.x
 			camera.vertical_offset = cam_offset.y
 			if !follow_player:
-				camera.position = position + cam_position
+				camera.position = position + position_when_not_following
+			position_when_not_following += move_cam
 		else:
 			var tween: Tween = Tween.new()
 			tween.interpolate_property(camera, 'horizontal_offset', camera.horizontal_offset, cam_offset.x, animations_duration)
 			tween.interpolate_property(camera, 'vertical_offset', camera.vertical_offset, cam_offset.y, animations_duration)
+			if move_cam.x != 0:
+				tween.interpolate_property(camera, 'position:x', camera.position.x, camera.position.x + move_cam.x, animations_duration)
+			if move_cam.y != 0:
+				tween.interpolate_property(camera, 'position:y', camera.position.y, camera.position.y + move_cam.y, animations_duration)
 			if !follow_player:
-				tween.interpolate_property(camera, 'position', camera.position, position + cam_position, animations_duration)
+				tween.interpolate_property(camera, 'position', camera.position, position + position_when_not_following, animations_duration)
 			tween.connect('tween_all_completed', self, '_animation_ended', [tween])
 			add_child(tween)
 			tween.start()
@@ -74,22 +80,3 @@ func _player_exited(body_id: int, body: Node, body_shape: int, local_shape: int)
 				add_child(tween)
 				tween.start()
 			return
-		camera.follow_player = prev_state[0]
-		camera.followLeft = prev_state[1]
-		camera.followRight = prev_state[2]
-		camera.followUp = prev_state[3]
-		camera.followDown = prev_state[4]
-		if !animate_exit:
-			camera.horizontal_offset = prev_state[5]
-			camera.vertical_offset = prev_state[6]
-			if !follow_player:
-				camera.position = prev_state[7]
-		else:
-			var tween: Tween = Tween.new()
-			tween.interpolate_property(camera, 'horizontal_offset', camera.horizontal_offset, prev_state[5], animations_duration)
-			tween.interpolate_property(camera, 'vertical_offset', camera.vertical_offset, prev_state[6], animations_duration)
-			if !follow_player:
-				tween.interpolate_property(camera, 'position', camera.position, prev_state[7], animations_duration)
-			tween.connect('tween_all_completed', self, '_animation_ended', [tween])
-			add_child(tween)
-			tween.start()

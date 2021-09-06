@@ -24,8 +24,13 @@ func _physics_process(delta: float) -> void:
 	scale = Vector2.ONE * (z_pos + 1)
 	scale = scale if scale > Vector2.ZERO else Vector2.ZERO
 	z_index = int(z_pos*100)
+	#print(timer.time_left)
+	if timer.time_left >= 0.08:
+		emit_signal("explosion_gen_end")
 
 func _on_ScreenSensor_screen_exited() -> void:
+	if timer.time_left < 0.08:
+		return
 	var timer : Timer = Timer.new()
 	timer.connect('timeout', self, 'queue_free_time', [timer])
 	add_child(timer)

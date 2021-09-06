@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://general-objects/players-objects/player-obj.tscn" type="PackedScene" id=1]
+[ext_resource path="res://general-objects/act-sign.tscn" type="PackedScene" id=2]
 [ext_resource path="res://zones/test-zone-objects/block-generator-object.tscn" type="PackedScene" id=3]
 [ext_resource path="res://zones/test-zone-objects/top-block-object.tscn" type="PackedScene" id=4]
 [ext_resource path="res://zones/test-zone-objects/block-with-slope-object.tscn" type="PackedScene" id=5]
@@ -48,3 +49,9 @@ position = Vector2( 385, 156 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 43, 94 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+
+[node name="Sign" parent="." instance=ExtResource( 2 )]
+jump_when_pass = true

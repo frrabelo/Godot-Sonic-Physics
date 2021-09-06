@@ -4,12 +4,14 @@ class_name AudioPlayer
 export var audios = {}
 var instantied_players = {}
 
-func play(audio_name : String, from : float = 0.0) -> void:
+func play(audio_name : String, from : float = 0.0, audio_2d:bool = false, position:Vector2 = Vector2.ZERO) -> void:
 	if audios.has(audio_name):
 		#print(audios[audio_name], audio_name)
-		var stream : AudioStreamPlayer
+		var stream
 		if !instantied_players.has(audio_name):
-			stream = AudioStreamPlayer.new()
+			stream = AudioStreamPlayer.new() if !audio_2d else AudioStreamPlayer2D.new()
+			if stream is AudioStreamPlayer2D:
+				stream.position = position
 			stream.set_stream(audios[audio_name])
 			stream.connect('finished', self, 'delete_stream', [audio_name])
 			stream.set_bus('SFX')

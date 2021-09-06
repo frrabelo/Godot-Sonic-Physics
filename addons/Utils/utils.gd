@@ -113,3 +113,6 @@ static func get_max_vector2pool(val : PoolVector2Array, prop:String="x") -> floa
 			to_return = i[prop]
 	
 	return to_return
+
+static func new_tween() -> Tween:
+	return Tween.new()

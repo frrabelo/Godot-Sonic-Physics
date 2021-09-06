@@ -1916,7 +1916,7 @@ resource_name = "tile_set_testzone"
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 30/z_index = 0
-31/name = "testtilesetteasertwo.png 31"
+31/name = "BlockRampJoint"
 31/texture = ExtResource( 3 )
 31/tex_offset = Vector2( 0, 0 )
 31/modulate = Color( 1, 1, 1, 1 )

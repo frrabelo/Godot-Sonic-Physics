@@ -28,7 +28,8 @@ func _ready() -> void:
 func play_sounds (stream_player, audio : AudioStream, loop : bool = false):
 	#var stream_player : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
 	if !stream_player.is_inside_tree():
-		rocket.add_child(stream_player)
+		add_child(stream_player)
+		stream_player.position = rocket.position
 		stream_player.connect('finished', self, 'temp_stream_finish', [stream_player])
 	stream_player.set_stream(audio)
 	stream_player.set_autoplay(loop)
@@ -166,7 +167,10 @@ func _on_Snap_body_shape_entered(body_id: int, body: Node, body_shape: int, loca
 				add_child(timer)
 				timer.start(delay_ascend)
 				animator.play('WickBurning')
-				sonic_sprite.scale.x = -sign(player.global_position.x - global_position.x)
+				var direction = -sign(player.global_position.x - global_position.x)
+				sonic_sprite.scale.x = direction if direction != 0 else sonic_sprite.scale.x
+				if sonic_sprite.scale.x == 0:
+					sonic_sprite.scale.x = -1
 				sonic_hit_box.position = sonic_sprite.offset * sonic_sprite.scale.x
 				sonic_sprite.get_node('SsAnimator').play('snapped-sonic')
 				play_sounds($Rocket/Audios, load('res://game-assets/audio/sfx/grab.wav'))

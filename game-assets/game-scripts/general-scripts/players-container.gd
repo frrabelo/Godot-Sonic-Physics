@@ -1,7 +1,7 @@
 extends Node
 onready var selected
 export(NodePath) var main_player
-
+class_name PlayersContainer
 func _ready():
 	var children = get_children()
 	

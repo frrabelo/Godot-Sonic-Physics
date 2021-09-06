@@ -117,7 +117,7 @@ func step(host: PlayerPhysics, delta):
 	host.speed.x = 0 if host.is_wall_left && host.speed.x < 0 else host.speed.x
 	host.speed.x = 0 if host.is_wall_right && host.speed.x > 0 else host.speed.x
 
-	var can_move = true if !host.control_locked && !roll_jump else false
+	var can_move = true if !host.control_locked else false
 	var no_rotation = has_jumped or has_rolled
 	host.rotation_degrees = int(lerp(host.rotation_degrees, 0, .2)) if !no_rotation else 0
 	
