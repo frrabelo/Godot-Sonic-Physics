@@ -141,13 +141,6 @@ func step(host: PlayerPhysics, delta):
 		if host.speed.x < host.TOP:
 			host.speed.x += host.AIR;
 	if !spring_loaded:
-		if host.selected_character.instaShield:
-			if Input.is_action_just_pressed("ui_jump") and\
-			can_attack:
-				host.player_vfx.play('InstaShield', true)
-				host.audio_player.play('insta_shield')
-				can_attack = false
-				roll_jump = false
 		if has_jumped:
 			if Input.is_action_just_released("ui_jump"): # has jumped
 				var jmp_release = -240.0
@@ -171,6 +164,7 @@ func exit(host, next_state):
 	is_floating = false;
 	host.is_floating = false;
 	was_throwed = false
+	host.throwed = false
 	cannot_break_bottom = true
 	cannot_break_top = true
 	if next_state == 'OnGround' || host.is_grounded:

@@ -15,7 +15,7 @@ func update_grabs () -> void:
 	var coll_size = get_node_or_null("GrabTopArea/MainShape")
 	var move_area
 	if sp && coll_size:
-		coll_size.shape.extents.x = (width/2 * length)
+		coll_size.shape.extents.x = (width/2 * length)-4
 		coll_size.position.x = (width/2 * length) - (width / 2)
 		sp.position.x = (width/2 * length) - (width/3)
 		sp.region_rect.size.x = width * length

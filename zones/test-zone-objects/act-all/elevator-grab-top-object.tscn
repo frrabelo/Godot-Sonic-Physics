@@ -11,10 +11,6 @@ extents = Vector2( 12, 8 )
 script = ExtResource( 3 )
 chain_length = 6
 grab_position = 0.0
-can_move_right_top = true
-can_move_left_top = false
-can_move_right_bottom = false
-can_move_left_bottom = false
 
 [node name="Chain" type="Sprite" parent="."]
 texture = ExtResource( 2 )

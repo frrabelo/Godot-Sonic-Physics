@@ -192,5 +192,6 @@ shape = SubResource( 5 )
 modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 0, 1 )
 shape = SubResource( 6 )
+
 [connection signal="animation_finished" from="Motobug/MotobugAnim" to="." method="_on_MotobugAnim_animation_finished"]
 [connection signal="body_entered" from="HitArea" to="." method="_on_HitArea_body_entered"]

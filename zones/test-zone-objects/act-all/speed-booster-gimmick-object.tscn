@@ -2,7 +2,7 @@
 
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/speed-booster-sprite.png" type="Texture" id=1]
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/gimmick-speed-booster.gd" type="Script" id=2]
-[ext_resource path="res://zones/test-zone-objects/speed-booster-bullet-object.tscn" type="PackedScene" id=3]
+[ext_resource path="res://zones/test-zone-objects/act-all/speed-booster-bullet-object.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 4 )

@@ -15,6 +15,7 @@ onready var spark_timer : Timer = $SparkleTimer
 onready var audio_player : AudioPlayer = $AudioPlayer
 
 func _ready() -> void:
+	set_physics_process(false)
 	if start_from_air:
 		set_physics_process(true)
 		audio_player.play('twinkle')

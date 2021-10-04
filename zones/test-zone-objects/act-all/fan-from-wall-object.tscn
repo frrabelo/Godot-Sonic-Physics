@@ -2,7 +2,7 @@
 
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/chr011.png" type="Texture" id=3]
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/from-wall-script.gd" type="Script" id=4]
-[ext_resource path="res://zones/test-zone-objects/fan-object.tscn" type="PackedScene" id=5]
+[ext_resource path="res://zones/test-zone-objects/act-all/fan-object.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 

@@ -93,8 +93,10 @@ func _on_HitArea_body_entered(body):
 			explode_audio_player.play('Destroy');
 			if player.fsm.current_state == "OnAir":
 				var angle = rotation
-				player.speed.y -= (player.speed.y * 1.85) * cos(angle)
-				player.speed.x -= (player.speed.x * 1.85) * sin(angle)
+				if player.speed.y < 0:
+					player.speed.y *= 0.75
+				else:
+					player.speed.y *= -1
 			var explode_instance = explode.instance();
 			explode_instance.position = global_position;
 			$"/root/main/Level".add_child(explode_instance);

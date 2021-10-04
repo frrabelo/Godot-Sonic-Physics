@@ -1303,6 +1303,16 @@ func enter(host, prev_statem, state = null):
 
 func step(host, delta, state = null) -> void:
 	if state.has_jumped:
+		if !host.spring_loaded:
+			if character.instaShield:
+				if Input.is_action_just_pressed(\"ui_jump\") and\\
+				state.can_attack:
+					host.invulnerable = true
+					host.invulnerability_time(0.15)
+					host.player_vfx.play('InstaShield', true)
+					host.audio_player.play('insta_shield')
+					state.can_attack = false
+					state.roll_jump = false
 		if character.dropDash:
 			if !Input.is_action_pressed('ui_jump'):
 				dropPress = false;
@@ -1355,7 +1365,8 @@ func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta, sta
 		if dropCharging:
 			anim_name = 'DropCharge';
 			anim_speed = 4.5;
-		
+	
+	var inst = host.player_vfx.vfx['InstaShield'] as AnimationPlayer
 	return {
 		\"anim_name\": anim_name,
 		\"anim_speed\": anim_speed
@@ -1434,12 +1445,14 @@ visible = false
 position = Vector2( -19, 13 )
 texture = ExtResource( 19 )
 hframes = 14
-frame = 10
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VFX/ChargeDust"]
 anims/ChargeDust = SubResource( 1 )
 
 [node name="InstaShield" type="Sprite" parent="VFX"]
+visible = false
+modulate = Color( 1, 1, 1, 0.5 )
 position = Vector2( 0, 9 )
 texture = ExtResource( 16 )
 hframes = 7
@@ -1514,6 +1527,14 @@ script = ExtResource( 20 )
 size = Vector2( 20, 20 )
 offset = Vector2( 0, 10 )
 
+[node name="AttackBox" type="Node" parent="Characters/Sonic"]
+script = ExtResource( 191 )
+
+[node name="RectManipulate2D" type="Node2D" parent="Characters/Sonic/AttackBox"]
+script = ExtResource( 20 )
+color = Color( 1, 0, 0, 0.5 )
+offset = Vector2( 0, 10 )
+
 [node name="CharStates" type="Node" parent="Characters/Sonic"]
 
 [node name="OnGround" type="Node" parent="Characters/Sonic/CharStates"]
@@ -1560,22 +1581,26 @@ shape = SubResource( 32 )
 disabled = true
 
 [node name="RightWallSensor" type="RayCast2D" parent="."]
+visible = false
 enabled = true
 cast_to = Vector2( 12, 0 )
 collision_mask = 481
 
 [node name="LeftWallSensor" type="RayCast2D" parent="."]
+visible = false
 enabled = true
 cast_to = Vector2( -12, 0 )
 collision_mask = 481
 
 [node name="RightWallSensorBottom" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 enabled = true
 cast_to = Vector2( 12, 0 )
 collision_mask = 481
 
 [node name="LeftWallSensorBottom" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, 5 )
 enabled = true
 cast_to = Vector2( -12, 0 )
@@ -1587,7 +1612,7 @@ collision_mask = 481
 
 [node name="LeftGroundSensor" type="RayCast2D" parent="GroundSensors"]
 modulate = Color( 0.0901961, 1, 0.0117647, 1 )
-position = Vector2( -10, 0 )
+position = Vector2( -9, 0 )
 enabled = true
 collision_mask = 33
 
@@ -1598,7 +1623,7 @@ collision_mask = 33
 
 [node name="RightGroundSensor" type="RayCast2D" parent="GroundSensors"]
 modulate = Color( 0.0901961, 1, 0.0117647, 1 )
-position = Vector2( 10, 0 )
+position = Vector2( 9, 0 )
 enabled = true
 collision_mask = 33
 

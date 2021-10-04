@@ -6,19 +6,10 @@
 script = ExtResource( 1 )
 objects = {
 "BreakableBlock": {
-"scene": "res://zones/test-zone-objects/breakable-block-object.tscn"
+"scene": "res://general-objects/breakable-objects/breakable-block-object.tscn"
 },
 "Fan": {
-"scene": "res://zones/test-zone-objects/fan-object.tscn"
-},
-"MaskBlue": {
-"scene": "res://general-objects/mask-setter-blue.tscn"
-},
-"MaskInvert": {
-"scene": "res://general-objects/mask-setter-invert.tscn"
-},
-"MaskRed": {
-"scene": "res://general-objects/mask-setter-red.tscn"
+"scene": "res://zones/test-zone-objects/act-all/fan-object.tscn"
 },
 "RedSpring": {
 "properties": {
@@ -30,7 +21,7 @@ objects = {
 "scene": "res://general-objects/ring-object.tscn"
 },
 "SpeedBooster": {
-"scene": "res://zones/test-zone-objects/speed-booster-gimmick-object.tscn"
+"scene": "res://zones/test-zone-objects/act-all/speed-booster-gimmick-object.tscn"
 },
 "Spike": {
 "scene": "res://general-objects/Spike.tscn"

@@ -175,11 +175,13 @@ func followAgain(timerNode:Timer):
 
 func _draw() -> void:
 	#if Engine.editor_hint:
-		var drag_color: Color = Color.aqua
-		var drag_color_g: Color = Color.blueviolet
-		draw_line(Vector2(LEFT, AIR_BOTTOM), Vector2(LEFT, -AIR_TOP), drag_color, 2.0)
-		draw_line(Vector2(LEFT, -AIR_TOP), Vector2(RIGHT, -AIR_TOP), drag_color, 2.0)
-		draw_line(Vector2(RIGHT, -AIR_TOP), Vector2(RIGHT, AIR_BOTTOM), drag_color, 2.0)
-		draw_line(Vector2(RIGHT, AIR_BOTTOM), Vector2(LEFT, AIR_BOTTOM), drag_color, 2.0)
-		draw_line(Vector2(LEFT, -GROUND_TOP), Vector2(RIGHT, -GROUND_TOP), drag_color_g, 2.0)
-		draw_line(Vector2(LEFT, GROUND_BOTTOM), Vector2(RIGHT, GROUND_BOTTOM), drag_color_g, 2.0)
+	if !Engine.editor_hint:
+		return
+	var drag_color: Color = Color.aqua
+	var drag_color_g: Color = Color.blueviolet
+	draw_line(Vector2(LEFT, AIR_BOTTOM), Vector2(LEFT, -AIR_TOP), drag_color, 2.0)
+	draw_line(Vector2(LEFT, -AIR_TOP), Vector2(RIGHT, -AIR_TOP), drag_color, 2.0)
+	draw_line(Vector2(RIGHT, -AIR_TOP), Vector2(RIGHT, AIR_BOTTOM), drag_color, 2.0)
+	draw_line(Vector2(RIGHT, AIR_BOTTOM), Vector2(LEFT, AIR_BOTTOM), drag_color, 2.0)
+	draw_line(Vector2(LEFT, -GROUND_TOP), Vector2(RIGHT, -GROUND_TOP), drag_color_g, 2.0)
+	draw_line(Vector2(LEFT, GROUND_BOTTOM), Vector2(RIGHT, GROUND_BOTTOM), drag_color_g, 2.0)

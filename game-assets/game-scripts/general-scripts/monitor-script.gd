@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 class_name ItemBox
 tool
 signal exploded
@@ -9,10 +9,10 @@ var explode : PackedScene = preload('res://general-objects/item-boxes/item-box-e
 onready var base_sprite = $base
 onready var object_sprite = $Display/ObjectIndicator
 onready var explode_area = $ExplodeArea
-onready var hit_box = $HitBox
+onready var cshape : CollisionShape2D = Utils.get_node_by_type(self, 'CollisionShape2D')
 
 func _ready() -> void:
-	set_process(false)
+	set_physics_process(false)
 	if !Engine.editor_hint:
 		for i in get_children():
 			if i is Area2D:
@@ -40,7 +40,7 @@ func _on_ExplodeArea_body_entered(body: Node) -> void:
 			var explosion_obj : AnimatedSprite = explode.instance()
 			explosion_obj.position = base_sprite.position + Vector2(0, -8)
 			add_child(explosion_obj)
-			hit_box.queue_free()
+			cshape.set_deferred('disabled', true)
 			explode_area.queue_free()
 			for i in base_sprite.get_children():
 				i.queue_free()
@@ -54,17 +54,18 @@ func _on_ExplodeArea_body_entered(body: Node) -> void:
 			return
 		if body.speed.y < 0:
 			yspeed = body.speed.y if body.speed.y > -200 else -200
-			set_process(true)
+			set_physics_process(true)
+			
 			body.speed.y = 10
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	yspeed += 600 * delta
-	position.y += yspeed * delta
+	
+	yspeed = move_and_slide(Vector2.DOWN * yspeed, Vector2.UP, true, 4, 0, false).y
 	#print(yspeed)
-	if global_position.y > spawn_pos.y:
+	if is_on_floor():
 		yspeed = 0
-		global_position.y = spawn_pos.y
-		set_process(false)
+		set_physics_process(false)
 
 func _timeout_action(timer : Timer, body : Node) -> void:
 	_action(body)

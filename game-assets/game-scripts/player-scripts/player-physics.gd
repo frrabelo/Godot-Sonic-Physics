@@ -2,15 +2,7 @@ extends KinematicBody2D
 class_name PlayerPhysics
 signal damaged
 signal loaded
-enum Rays{
-	LEFT_GROUND = 0,
-	MIDDLE_GROUND = 1,
-	RIGHT_GROUND = 2,
-	LEFT_WALL_TOP = 3,
-	LEFT_WALL_BOTTOM = 4
-	RIGHT_WALL_TOP = 5,
-	RIGHT_WALL_BOTTOM = 6
-}
+
 var im_main_player : bool = false
 export(int) var CHARACTER_SELECTED = 0 setget _set_character_sel
 var ACC
@@ -27,7 +19,7 @@ var FALL
 var AIR
 var GRV
 export(bool) var spinDash = true;
-
+var my_spawn_point : PlayerSpawner
 onready var selected_character
 onready var fsm : = $StateMachine
 onready var player_camera = get_tree().get_current_scene().get_node('PlayerCamera')
@@ -42,6 +34,7 @@ onready var right_ground:RayCast2D = $GroundSensors/RightGroundSensor
 onready var middle_ground:RayCast2D = $GroundSensors/MiddleGroundSensor
 onready var ground_sensors_container:Node2D = $GroundSensors
 onready var main_collider:CollisionShape2D = $MainCollider
+onready var attack_collider:CollisionShape2D = $AttackCollider
 onready var left_wall:RayCast2D = $LeftWallSensor
 onready var right_wall:RayCast2D = $RightWallSensor
 onready var left_wall_bottom:RayCast2D = $LeftWallSensorBottom
@@ -226,7 +219,7 @@ func physics_step(delta):
 	is_ray_colliding = ground_ray != null
 	
 	if ground_ray:
-		if collider_is_one_way(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
+		if is_collider_oneway(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
 			ground_normal = ground_ray.get_collision_normal()
 			ground_mode = 0
 			return
@@ -255,19 +248,25 @@ func _set_control_locked(val : bool) -> void:
 
 func step_wall_collision(wall_sensors : Array) -> bool:
 	var to_return = false
-	for w in wall_sensors:
-		var rs : RayCast2D = w
+	for ws in wall_sensors:
+		var rs : RayCast2D = ws
 		var collider = rs.get_collider()
 		if collider:
-			var one_way = collider_is_one_way(rs, collider)
-			var angle = abs(floor(rad2deg(rs.get_collision_normal().angle())))
+			var one_way = is_collider_oneway(rs, collider)
+			var coll_angle = abs(floor(rad2deg(rs.get_collision_normal().angle())))
 			#print(angle)
-			if one_way || ((angle != 180 && angle != 0) && is_grounded) || (abs(rotation) > deg2rad(5) && fsm.current_state == 'OnAir'):
+			var grounded_wall : bool = \
+				((coll_angle != 180 && coll_angle != 0) && is_grounded)
+			
+			var air_wall = \
+				(abs(rotation) > deg2rad(15) && fsm.current_state == 'OnAir')
+			
+			if one_way or grounded_wall or air_wall:
 				continue
 			to_return = to_return || rs.is_colliding()
 	return to_return
 
-func collider_is_one_way(ray_cast : RayCast2D, collider) -> bool:
+func is_collider_oneway(ray_cast : RayCast2D, collider) -> bool:
 	var to_return : bool = false
 	if !collider:
 		return to_return
@@ -335,9 +334,7 @@ func ground_angle() -> float:
 func get_collider_normal_precise(ray:RayCast2D):
 	while ray.is_colliding():
 		var coll = ray.get_collider()
-		match coll.get_class():
-			'StaticBody2D':
-				(coll as StaticBody2D)
+		is_collider_oneway(ray, coll)
 
 func get_ground_ray() -> RayCast2D:
 	can_fall = true
@@ -394,7 +391,8 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 		audio_player.play("ring_loss")
 		var ground_angle = ground_angle()
 		position += speed * get_physics_process_delta_time()
-	audio_player.play(sound_to_play)
+	else:
+		audio_player.play(sound_to_play)
 	invulnerable = true;
 
 func drop_rings(rings:int = 0):
@@ -437,6 +435,12 @@ func timer_ivun_start(time:float):
 	add_child(timer_ivun);
 	timer_ivun.start(time);
 
+func invulnerability_time(time:float):
+	var timer_ivun = Timer.new();
+	timer_ivun.connect("timeout", self, "vunerable_again", [timer_ivun])
+	add_child(timer_ivun);
+	timer_ivun.start(time);
+
 func toogle_visible(timer:Timer):
 	timer.queue_free();
 	characters.visible = !characters.visible;
@@ -459,13 +463,6 @@ func get_class() -> String:
 func is_class(name:String) -> bool:
 	return name == get_class() || .is_class(name);
 
-func smooth_rotate(from:float, to:float, max_speed:float) -> float:
-	if from == null || to == null || max_speed == null:
-		return 0.0;
-	var rot = to - from;
-	rot = max(min(rot / 5, max_speed), -max_speed) + max(min(rot, 1), -1)
-	return rot;
-
 func set_is_rolling(val : bool):
 	if val && !is_rolling:
 		audio_player.play('spin')
@@ -482,7 +479,7 @@ func _set_character_sel(val : int) -> void:
 		var c : Node2D = children[CHARACTER_SELECTED]
 		selected_character = c
 		sprite = selected_character.get_node("Sprite")
-		print(selected_character.get_children())
+		#print(selected_character.get_children())
 		char_default_collision_floor = selected_character.get_node("DefaultBox")
 		#char_default_collision_air = selected_character.get_node("DefaultBoxAir")
 		#char_low_collision_air = selected_character.get_node("RollBoxAir")
@@ -512,7 +509,7 @@ func move_and_slide_preset() -> Vector2:
 		top_collide,
 		true,
 		4,
-		deg2rad(75),
+		deg2rad(76),
 		true
 	)
 

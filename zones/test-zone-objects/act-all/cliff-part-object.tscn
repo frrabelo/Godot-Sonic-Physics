@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/breakable-block-part.gd" type="Script" id=1]
+[ext_resource path="res://game-assets/game-scripts/general-scripts/breakables/breakable-block-part.gd" type="Script" id=1]
 [ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/tileset/breaked-block.png" type="Texture" id=2]
 
 [node name="ClifPart" type="Node2D"]

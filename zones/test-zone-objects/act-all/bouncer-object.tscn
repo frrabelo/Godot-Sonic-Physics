@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/switch-spring/switch-spring.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/switch-spring-object.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 16 )
+
+[node name="Bouncer" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="switch-spring" type="Sprite" parent="."]
+position = Vector2( 0, -16 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 16 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 32 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[connection signal="body_shape_entered" from="." to="." method="_on_SwitchSpring_body_shape_entered"]
