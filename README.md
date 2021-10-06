@@ -23,7 +23,7 @@ Godot is a tool:
 - Open-source;
 - Multiplataform;
 
-That is, accessibility is even greater for everyone, we can export to Windows, Mac/OS X, Linux, Android and IOS, and for being free, we can use with no problems, [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/) require the [Multimedia / ClickTeam Fusion](https://www.clickteam.com/clickteam-fusion-2-5) tool to operate (good tools, but are paid and the editor only has native support for Windows), my intention is to make as close as possible to [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/), for fans can make their games without support with support.
+That is, accessibility is even greater for everyone, we can export to Windows, Mac/OS X, Linux, Android and IOS, and for being free, we can use with no problems, [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/) require the [Multimedia / ClickTeam Fusion](https://www.clickteam.com/clickteam-fusion-2-5) tool to operate (good tools, but are paid and the editor only has native support for Windows), my intention is to make as close as possible to [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/), so fans can make their games without worrying about devices support, or buy and game engine.
 
 ## The logo?
 ![HedgeGodotLogo?](./splash.png)
