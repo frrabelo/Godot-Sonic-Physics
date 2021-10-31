@@ -25,6 +25,15 @@ static func get_node_by_type(from:Node, i:String):
 			return c
 	return null
 
+static func get_parent_by_type(from:Node, i:String, max_search:int):
+	var node = from
+	var accuracy:int = max_search
+	for n in accuracy:
+		node = from.get_parent()
+		if node.is_class(i):
+			return node
+	return null
+
 static func get_nodes_by_type(from:Node, i:String):
 	var to_return = []
 	for c in from.get_children():

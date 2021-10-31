@@ -4,13 +4,12 @@ onready var anim_player = $AnimationPlayer
 var finished : bool = false
 var loaded : bool = false
 onready var loader : Control = get_node('/root/AdvancedBackgroundLoader')
-
 func _enter_tree() -> void:
 	var lo = get_node('/root/AdvancedBackgroundLoader')
 	lo.SIMULATED_DELAY_SEC = 0.001
 	lo.connect('can_change', self, '_on_Loader_can_change')
 	lo.connect('error', self, '_on_Loader_error')
-	lo.preload_scene('res://zones/test-zone-act-1-scene.tscn')
+	lo.preload_scene('res://scenes/title-screen.tscn')
 	set_process_input(false)
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:

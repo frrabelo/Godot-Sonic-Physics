@@ -99,7 +99,7 @@ anchor_bottom = 0.666
 margin_top = -0.0300064
 margin_bottom = -0.0105438
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="SEGA" type="TextureRect" parent="SEGAP/CenterContainer"]
@@ -272,7 +272,7 @@ anchor_right = 0.975
 anchor_bottom = 0.955556
 __meta__ = {
 "_edit_group_": true,
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="AnimatedSprite" parent="LoadingIndicator" instance=ExtResource( 8 )]

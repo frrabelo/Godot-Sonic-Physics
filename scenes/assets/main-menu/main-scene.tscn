@@ -1,0 +1,166 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/tv.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/title-texts/main-menu.png" type="Texture" id=2]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/header-title.png" type="Texture" id=4]
+[ext_resource path="res://scenes/assets/main-menu/MainButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/black-triangle.png" type="Texture" id=7]
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/d-box-container.gd" type="Script" id=8]
+
+[sub_resource type="CanvasItemMaterial" id=2]
+light_mode = 1
+
+[sub_resource type="Animation" id=1]
+resource_name = "snowing"
+length = 0.12
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03, 0.06, 0.09 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[node name="Main" type="Node"]
+
+[node name="Header" type="TextureRect" parent="."]
+material = SubResource( 2 )
+anchor_left = 0.5
+anchor_top = 0.038
+anchor_right = 0.5
+anchor_bottom = 0.038
+margin_left = -107.0
+margin_top = 12.74
+margin_right = 107.0
+margin_bottom = 52.74
+mouse_filter = 2
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main-menu" type="Sprite" parent="Header"]
+position = Vector2( 111, 7 )
+texture = ExtResource( 2 )
+
+[node name="RightRect" type="TextureRect" parent="."]
+material = SubResource( 2 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 76.0
+margin_top = 90.0
+margin_right = 370.0
+margin_bottom = 384.0
+rect_rotation = 180.0
+mouse_filter = 2
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="CenterContainer" parent="."]
+margin_top = 135.0
+margin_bottom = 135.0
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.35
+use_top_left = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="tv" type="Sprite" parent="Control"]
+position = Vector2( -1, -45 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 1, 0 )
+hframes = 4
+vframes = 2
+
+[node name="Television" type="AnimationPlayer" parent="Control/tv"]
+autoplay = "snowing"
+anims/snowing = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="VBoxContainer" type="Container" parent="."]
+margin_right = 480.0
+margin_bottom = 270.0
+size_flags_horizontal = 7
+size_flags_vertical = 3
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+separation = 10
+x_pivot = 150.0
+tween_path = NodePath("../Tween")
+
+[node name="TextureButton" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 390.0
+margin_right = 870.0
+text = "play"
+
+[node name="OnlineMode" parent="VBoxContainer" instance=ExtResource( 5 )]
+modulate = Color( 0.5, 0.5, 0.5, 1 )
+margin_left = 355.0
+margin_top = 35.0
+margin_right = 835.0
+margin_bottom = 60.0
+disabled = true
+text = "multiplayer"
+
+[node name="TextureButton5" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 320.0
+margin_top = 70.0
+margin_right = 800.0
+margin_bottom = 95.0
+text = "controls"
+
+[node name="TextureButton7" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 285.0
+margin_top = 105.0
+margin_right = 765.0
+margin_bottom = 130.0
+text = "options"
+
+[node name="TextureButton6" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 250.0
+margin_top = 140.0
+margin_right = 730.0
+margin_bottom = 165.0
+text = "exit"
+
+[node name="TextureButton8" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 215.0
+margin_top = 175.0
+margin_right = 695.0
+margin_bottom = 200.0
+text = "exit"
+
+[node name="TextureButton9" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 180.0
+margin_top = 210.0
+margin_right = 660.0
+margin_bottom = 235.0
+text = "exit"
+
+[node name="TextureButton10" parent="VBoxContainer" instance=ExtResource( 5 )]
+margin_left = 145.0
+margin_top = 245.0
+margin_right = 625.0
+margin_bottom = 270.0
+text = "exit"

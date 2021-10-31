@@ -91,7 +91,7 @@ func camera_step(player : PlayerPhysics, delta : float):
 			position.y -= 20 * cos(rotation);
 			position.x -= 20 * -sin(rotation)
 		else:
-			rotation_degrees += player.smooth_rotate(rotation_degrees, 0, 180);
+			rotation_degrees += player.rotation_degrees * (0.5/delta)
 	else:
 		if object_to_stuck:
 			var vel_default = 4

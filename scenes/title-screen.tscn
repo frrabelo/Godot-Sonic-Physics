@@ -1,0 +1,1456 @@
+[gd_scene load_steps=115 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/gear.svg" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-scripts/title-screen-scripts/gear.gd" type="Script" id=2]
+[ext_resource path="res://game-assets/audio/musics/S3TitleScreen.mp3" type="AudioStream" id=3]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/ribbon-decompose/roll.png" type="Texture" id=4]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/background-movement.png" type="Texture" id=5]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/bg2.png" type="Texture" id=6]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/wing-ring-flash.png" type="Texture" id=7]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/sonic-constelation.png" type="Texture" id=8]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/press-any-button.png" type="Texture" id=9]
+[ext_resource path="res://game-assets/game-scripts/title-screen-scripts/press-any-button.gd" type="Script" id=10]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/emblem-anim.png" type="Texture" id=11]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/angel-island-background-title.png" type="Texture" id=12]
+[ext_resource path="res://game-assets/3d-models/title-screen/SonicIsland.tscn" type="PackedScene" id=13]
+[ext_resource path="res://game-assets/game-scripts/title-screen-scripts/visibility-toggler.gd" type="Script" id=14]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/hedgegodot-title.png" type="Texture" id=15]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/ribbon-decompose/center.png" type="Texture" id=16]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/ribbon-decompose/ribon-sides.png" type="Texture" id=17]
+[ext_resource path="res://icon-new.png" type="Texture" id=18]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/title-screen/ribbon-decompose/ribbon-side-wind.png" type="Texture" id=19]
+[ext_resource path="res://game-assets/game-scripts/title-screen-scripts/title-screen.gd" type="Script" id=20]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("BackgroundGeneral/Island/Viewport")
+
+[sub_resource type="Shader" id=2]
+code = "/*
+Godot 3 2D CRT Shader.
+A 2D shader for Godot 3 simulating a CRT..
+
+Author: hiulit
+Repository: https://github.com/hiulit/Godot-3-2D-CRT-Shader
+Issues: https://github.com/hiulit/Godot-3-2D-CRT-Shader/issues
+License: MIT https://github.com/hiulit/Godot-3-2D-CRT-Shader/blob/master/LICENSE
+*/
+
+shader_type canvas_item;
+
+const float PI = 3.14159265359;
+
+uniform vec2 screen_size = vec2(320.0, 180.0);
+uniform bool show_curvature = true;
+uniform float curvature_x_amount : hint_range(3.0, 15.0, 0.01) = float(6.0); 
+uniform float curvature_y_amount : hint_range(3.0, 15.0, 0.01) = float(4.0);
+uniform vec4 corner_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool show_vignette = true;
+uniform float vignette_opacity : hint_range(0.0, 1.0, 0.01) = 0.2;
+uniform bool show_horizontal_scan_lines = true;
+uniform float horizontal_scan_lines_amount : hint_range(0.0, 180.0, 0.1) = 180.0;
+uniform float horizontal_scan_lines_opacity : hint_range(0.0, 1.0, 0.01) = 1.0;
+uniform bool show_vertical_scan_lines = false;
+uniform float vertical_scan_lines_amount : hint_range(0.0, 320.0, 0.1) = 320.0;
+uniform float vertical_scan_lines_opacity : hint_range(0.0, 1.0, 0.01) = 1.0;
+uniform float boost : hint_range(1.0, 2.0, 0.01) = 1.2;
+uniform float aberration_amount : hint_range(0.0, 10.0, 0.01) = 0.0;
+uniform float zoom : hint_range(0.0, 1.0, 0.005) = 0.5;
+
+vec2 uv_curve(vec2 uv) {
+	if (show_curvature) {
+		uv = uv * 2.0 - 1.0;
+		vec2 offset = abs(uv.yx) / vec2(curvature_x_amount, curvature_y_amount);
+		offset.x = 0.0;
+		offset.y *= (cos(uv.x)/uv.x) * curvature_y_amount;
+		offset.y /= 1.5;
+		uv = uv + uv * offset * offset;
+		uv = uv * zoom + 0.5;
+	}
+
+	return uv;
+}
+
+
+void fragment() {
+	vec2 uv = uv_curve(UV);
+	vec2 screen_uv = uv_curve(SCREEN_UV);
+	vec3 color = texture(SCREEN_TEXTURE, screen_uv).rgb;
+
+	if (aberration_amount > 0.0) {
+		float adjusted_amount = aberration_amount / screen_size.x;
+		color.r = texture(SCREEN_TEXTURE, vec2(screen_uv.x + adjusted_amount, screen_uv.y)).r;
+		color.g = texture(SCREEN_TEXTURE, screen_uv).g;
+		color.b = texture(SCREEN_TEXTURE, vec2(screen_uv.x - adjusted_amount, screen_uv.y)).b;
+	}
+
+	if (show_vignette) {
+		float vignette = uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
+		vignette = clamp(pow((screen_size.x / 4.0) * vignette, vignette_opacity), 0.0, 1.0);
+		color *= vignette;
+	}
+
+	if (show_horizontal_scan_lines) {
+		float s = sin(screen_uv.y * horizontal_scan_lines_amount * PI * 2.0);
+		s = (s * 0.5 + 0.5) * 0.9 + 0.1;
+		vec4 scan_line = vec4(vec3(pow(s, horizontal_scan_lines_opacity)), 1.0);
+		color *= scan_line.rgb;
+	}
+
+	if (show_vertical_scan_lines) {
+		float s = sin(screen_uv.x * vertical_scan_lines_amount * PI * 2.0);
+		s = (s * 0.5 + 0.5) * 0.9 + 0.1;
+		vec4 scan_line = vec4(vec3(pow(s, vertical_scan_lines_opacity)), 1.0);
+		color *= scan_line.rgb;
+	}
+
+	if (show_horizontal_scan_lines || show_vertical_scan_lines) {
+		color *= boost;
+	}
+
+	// Fill the blank space of the corners, left by the curvature, with black.
+	if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
+		color = corner_color.rgb;
+	}
+
+	COLOR = vec4(color, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/screen_size = Vector2( 0, 180 )
+shader_param/show_curvature = true
+shader_param/curvature_x_amount = 3.0
+shader_param/curvature_y_amount = 4.0
+shader_param/corner_color = Color( 0, 0, 0, 1 )
+shader_param/show_vignette = false
+shader_param/vignette_opacity = 0.2
+shader_param/show_horizontal_scan_lines = false
+shader_param/horizontal_scan_lines_amount = 180.0
+shader_param/horizontal_scan_lines_opacity = 1.0
+shader_param/show_vertical_scan_lines = false
+shader_param/vertical_scan_lines_amount = 320.0
+shader_param/vertical_scan_lines_opacity = 1.0
+shader_param/boost = 1.0
+shader_param/aberration_amount = 0.0
+shader_param/zoom = 0.345
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 11 )
+region = Rect2( 642, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 11 )
+region = Rect2( 963, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 11 )
+region = Rect2( 1284, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 11 )
+region = Rect2( 1605, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 11 )
+region = Rect2( 642, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 11 )
+region = Rect2( 963, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 1284, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 11 )
+region = Rect2( 1605, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 11 )
+region = Rect2( 642, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 11 )
+region = Rect2( 963, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 11 )
+region = Rect2( 1284, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 11 )
+region = Rect2( 1605, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 11 )
+region = Rect2( 642, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 11 )
+region = Rect2( 963, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 11 )
+region = Rect2( 1284, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 11 )
+region = Rect2( 1605, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 11 )
+region = Rect2( 642, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 11 )
+region = Rect2( 963, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 11 )
+region = Rect2( 1284, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 11 )
+region = Rect2( 1605, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 11 )
+region = Rect2( 321, 895, 321, 179 )
+
+[sub_resource type="SpriteFrames" id=36]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "invisible",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ) ],
+"loop": true,
+"name": "emblem",
+"speed": 60.0
+} ]
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 0, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 179, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 358, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=55]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 537, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 716, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 7 )
+region = Rect2( 1284, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 7 )
+region = Rect2( 1605, 895, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=73]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 1074, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=74]
+atlas = ExtResource( 7 )
+region = Rect2( 321, 1074, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=75]
+atlas = ExtResource( 7 )
+region = Rect2( 642, 1074, 321, 179 )
+
+[sub_resource type="AtlasTexture" id=76]
+atlas = ExtResource( 7 )
+region = Rect2( 963, 1074, 321, 179 )
+
+[sub_resource type="SpriteFrames" id=77]
+animations = [ {
+"frames": [ SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ) ],
+"loop": true,
+"name": "default",
+"speed": 60.0
+} ]
+
+[sub_resource type="Shader" id=78]
+code = "shader_type canvas_item;
+
+uniform float size_x = 32.0; // blocks by x direction
+uniform float size_y = 32.0; // blocks by y direction
+
+void fragment() {
+    COLOR = texture(TEXTURE, vec2(floor(UV.x * size_x) / (size_x - 1.0), floor(UV.y * size_y) / (size_y - 1.0)));
+}"
+
+[sub_resource type="ShaderMaterial" id=79]
+shader = SubResource( 78 )
+shader_param/size_x = 48.0
+shader_param/size_y = 48.0
+
+[sub_resource type="Animation" id=80]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("rollR:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 5, 0 ), Vector2( -10, 0 ), Vector2( -170, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("rollL:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4, 0 ), Vector2( 10, 0 ), Vector2( 170, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("rollR:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("rollL:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("center:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.7, 1 ), Vector2( 0.7, 1 ), Vector2( 15, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("hedgegodot-title:region_rect")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 160, 0, 0, 46 ), Rect2( 160, 0, 6, 46 ), Rect2( 0, 0, 326, 46 ) ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("rollR")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("rollL")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("ribbonR:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("ribbonR:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 0, 5 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("ribbonL:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("ribbonL:frame")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 0, 5 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath(".:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/13/type = "method"
+tracks/13/path = NodePath("ribbonR")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/14/type = "method"
+tracks/14/path = NodePath("ribbonL")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("ribbonR2:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("ribbonL2:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/17/type = "method"
+tracks/17/path = NodePath("ribbonR2")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "default", false ],
+"method": "play"
+} ]
+}
+tracks/18/type = "method"
+tracks/18/path = NodePath("ribbonL2")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "default", false ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="AtlasTexture" id=81]
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=82]
+atlas = ExtResource( 19 )
+region = Rect2( 53, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=83]
+atlas = ExtResource( 19 )
+region = Rect2( 106, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=84]
+atlas = ExtResource( 19 )
+region = Rect2( 159, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=85]
+atlas = ExtResource( 19 )
+region = Rect2( 212, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=86]
+atlas = ExtResource( 19 )
+region = Rect2( 265, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=87]
+atlas = ExtResource( 19 )
+region = Rect2( 318, 0, 53, 77 )
+
+[sub_resource type="AtlasTexture" id=88]
+atlas = ExtResource( 19 )
+region = Rect2( 371, 0, 53, 77 )
+
+[sub_resource type="SpriteFrames" id=89]
+animations = [ {
+"frames": [ SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ) ],
+"loop": true,
+"name": "default",
+"speed": 30.0
+} ]
+
+[sub_resource type="Animation" id=90]
+length = 2.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("BackHidden:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.45, 0.5, 0.65, 1.9, 1.95 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.14902, 0.14902, 0.14902, 1 ), Color( 0.0509804, 0.0509804, 0.0509804, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Music:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 1,
+"values": [  ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Music")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Title/Emblem/EmblemNormal/EmblemLightning:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.45, 1.5, 1.95 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 0, 31, 40 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Parallax:current_animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "[stop]" ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("Parallax")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1.95 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Parallax", -1, 0.1, false ],
+"method": "play"
+} ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("Float")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 1.95 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Float", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Float:current_animation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ "" ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Title/Emblem/gear5:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 1.94, 1.95 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.137255 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Title/press-any-button:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 2.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("Title/press-any-button")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 2.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Title/Emblem/EmblemNormal:animation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 1.55, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "invisible", "emblem", "emblem" ]
+}
+tracks/12/type = "method"
+tracks/12/path = NodePath("Title/Emblem/EmblemNormal")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 1.55 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "emblem", false ],
+"method": "play"
+} ]
+}
+tracks/13/type = "method"
+tracks/13/path = NodePath("AngelIsland")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 1.95 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "AngelIsland", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("DisplayFilter:color")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 1.9, 1.95, 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("GearsTop:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 1.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("GearsBottom:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 1.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/17/type = "method"
+tracks/17/path = NodePath("Title/Emblem/EmblemNormal/EmblemLightning")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Title/Emblem/Ribbon:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 1.55 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/19/type = "method"
+tracks/19/path = NodePath("Title/Emblem/Ribbon/AnimationPlayer")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 1.55 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "RibbonAnimation", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Title/Emblem/Ribbon/AnimationPlayer:current_animation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ "RibbonAnimation" ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Title/Emblem/EmblemNormal/icon-new:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0.3, 1.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Title/Emblem/Ribbon/ribbonR2:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Title/Emblem/Ribbon/ribbonL2:visible")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=91]
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("BackgroundGeneral/bg2:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 512.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BackgroundGeneral/background-movement:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 969.0, -323.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BackgroundGeneral/bg2/sonic-constelation:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 20.0, -45.0 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("BackgroundGeneral/bg2/sonic-constelation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "toggle_visibility"
+} ]
+}
+
+[sub_resource type="Animation" id=92]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("angel-island-background:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 600.0, -110.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("angel-island-background:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 0.5, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.3, 0.3 ), Vector2( 0.5, 0.5 ) ]
+}
+
+[sub_resource type="Animation" id=93]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title/Emblem:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ -20.0, -15.0 ]
+}
+
+[sub_resource type="Animation" id=94]
+resource_name = "FadeOut"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("DisplayFilter:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "go_to_menu"
+} ]
+}
+
+[node name="TitleScreen" type="Node"]
+script = ExtResource( 20 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0627451, 0.0627451, 0.376471, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundGeneral" type="Node2D" parent="."]
+
+[node name="bg2" type="Sprite" parent="BackgroundGeneral"]
+position = Vector2( 443.733, 119 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1024, 240 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="sonic-constelation" type="Sprite" parent="BackgroundGeneral/bg2"]
+position = Vector2( 11.3333, -69 )
+texture = ExtResource( 8 )
+script = ExtResource( 14 )
+
+[node name="background-movement" type="Sprite" parent="BackgroundGeneral"]
+position = Vector2( 796.733, 110 )
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1938, 142 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Island" type="Sprite" parent="BackgroundGeneral"]
+position = Vector2( 244, 202 )
+scale = Vector2( 0.516, 0.516 )
+texture = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Viewport" type="Viewport" parent="BackgroundGeneral/Island"]
+size = Vector2( 500, 500 )
+transparent_bg = true
+handle_input_locally = false
+render_target_v_flip = true
+
+[node name="Spatial" parent="BackgroundGeneral/Island/Viewport" instance=ExtResource( 13 )]
+
+[node name="angel-island-background" type="Sprite" parent="."]
+modulate = Color( 0.465806, 0.465806, 0.760742, 1 )
+position = Vector2( 600, 95 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 417, 214 )
+
+[node name="BackHidden" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Effect" type="ColorRect" parent="."]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="GearsTop" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gear" type="Polygon2D" parent="GearsTop"]
+color = Color( 0.8722, 0.89, 0.887923, 1 )
+antialiased = true
+polygon = PoolVector2Array( -19, -79, -17, -80, -12, -81, -4, -82, 4, -82, 12, -81, 17, -80, 19, -79, 19, -66, 24, -65, 27, -64, 31, -62, 34, -60, 43, -69, 45, -68, 48, -66, 54, -61, 59, -56, 65, -48, 67, -45, 68, -43, 60, -34, 62, -31, 64, -27, 65, -24, 66, -19, 79, -19, 80, -16, 81, -11, 82, -5, 82, 4, 81, 11, 80, 16, 79, 19, 66, 19, 65, 23, 63, 28, 60, 33, 69, 42, 68, 45, 66, 48, 61, 54, 54, 61, 48, 66, 45, 68, 42, 69, 35, 60, 32, 62, 28, 64, 25, 65, 20, 66, 18, 66, 18, 79, 16, 80, 11, 81, 5, 82, -4, 82, -11, 81, -16, 80, -19, 79, -19, 66, -25, 64, -30, 62, -34, 60, -43, 69, -46, 68, -49, 66, -54, 62, -62, 54, -67, 48, -69, 45, -70, 42, -60, 33, -63, 28, -65, 23, -66, 19, -79, 19, -80, 17, -81, 13, -82, 6, -82, -7, -81, -14, -80, -17, -79, -19, -66, -19, -65, -24, -63, -29, -60, -34, -70, -44, -69, -46, -67, -49, -62, -55, -55, -62, -48, -67, -45, -69, -43, -70, -33, -60, -30, -62, -26, -64, -23, -65, -19, -66 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+rpm = 60.0
+
+[node name="Gear1" type="Polygon2D" parent="GearsTop/Gear"]
+scale = Vector2( 0.829268, 0.829268 )
+color = Color( 0.670588, 0.772549, 0.760784, 1 )
+antialiased = true
+polygon = PoolVector2Array( -19, -79, -17, -80, -12, -81, -4, -82, 4, -82, 12, -81, 17, -80, 19, -79, 19, -66, 24, -65, 27, -64, 31, -62, 34, -60, 43, -69, 45, -68, 48, -66, 54, -61, 59, -56, 65, -48, 67, -45, 68, -43, 60, -34, 62, -31, 64, -27, 65, -24, 66, -19, 79, -19, 80, -16, 81, -11, 82, -5, 82, 4, 81, 11, 80, 16, 79, 19, 66, 19, 65, 23, 63, 28, 60, 33, 69, 42, 68, 45, 66, 48, 61, 54, 54, 61, 48, 66, 45, 68, 42, 69, 35, 60, 32, 62, 28, 64, 25, 65, 20, 66, 18, 66, 18, 79, 16, 80, 11, 81, 5, 82, -4, 82, -11, 81, -16, 80, -19, 79, -19, 66, -25, 64, -30, 62, -34, 60, -43, 69, -46, 68, -49, 66, -54, 62, -62, 54, -67, 48, -69, 45, -70, 42, -60, 33, -63, 28, -65, 23, -66, 19, -79, 19, -80, 17, -81, 13, -82, 6, -82, -7, -81, -14, -80, -17, -79, -19, -66, -19, -65, -24, -63, -29, -60, -34, -70, -44, -69, -46, -67, -49, -62, -55, -55, -62, -48, -67, -45, -69, -43, -70, -33, -60, -30, -62, -26, -64, -23, -65, -19, -66 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+rpm = 0.0
+
+[node name="GearsBottom" type="Control" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = -40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gear" type="Polygon2D" parent="GearsBottom"]
+position = Vector2( 40, 40 )
+color = Color( 0.8722, 0.89, 0.887923, 1 )
+antialiased = true
+polygon = PoolVector2Array( -19, -79, -17, -80, -12, -81, -4, -82, 4, -82, 12, -81, 17, -80, 19, -79, 19, -66, 24, -65, 27, -64, 31, -62, 34, -60, 43, -69, 45, -68, 48, -66, 54, -61, 59, -56, 65, -48, 67, -45, 68, -43, 60, -34, 62, -31, 64, -27, 65, -24, 66, -19, 79, -19, 80, -16, 81, -11, 82, -5, 82, 4, 81, 11, 80, 16, 79, 19, 66, 19, 65, 23, 63, 28, 60, 33, 69, 42, 68, 45, 66, 48, 61, 54, 54, 61, 48, 66, 45, 68, 42, 69, 35, 60, 32, 62, 28, 64, 25, 65, 20, 66, 18, 66, 18, 79, 16, 80, 11, 81, 5, 82, -4, 82, -11, 81, -16, 80, -19, 79, -19, 66, -25, 64, -30, 62, -34, 60, -43, 69, -46, 68, -49, 66, -54, 62, -62, 54, -67, 48, -69, 45, -70, 42, -60, 33, -63, 28, -65, 23, -66, 19, -79, 19, -80, 17, -81, 13, -82, 6, -82, -7, -81, -14, -80, -17, -79, -19, -66, -19, -65, -24, -63, -29, -60, -34, -70, -44, -69, -46, -67, -49, -62, -55, -55, -62, -48, -67, -45, -69, -43, -70, -33, -60, -30, -62, -26, -64, -23, -65, -19, -66 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+rpm = 60.0
+
+[node name="Gear1" type="Polygon2D" parent="GearsBottom/Gear"]
+scale = Vector2( 0.829268, 0.829268 )
+color = Color( 0.670588, 0.772549, 0.760784, 1 )
+antialiased = true
+polygon = PoolVector2Array( -19, -79, -17, -80, -12, -81, -4, -82, 4, -82, 12, -81, 17, -80, 19, -79, 19, -66, 24, -65, 27, -64, 31, -62, 34, -60, 43, -69, 45, -68, 48, -66, 54, -61, 59, -56, 65, -48, 67, -45, 68, -43, 60, -34, 62, -31, 64, -27, 65, -24, 66, -19, 79, -19, 80, -16, 81, -11, 82, -5, 82, 4, 81, 11, 80, 16, 79, 19, 66, 19, 65, 23, 63, 28, 60, 33, 69, 42, 68, 45, 66, 48, 61, 54, 54, 61, 48, 66, 45, 68, 42, 69, 35, 60, 32, 62, 28, 64, 25, 65, 20, 66, 18, 66, 18, 79, 16, 80, 11, 81, 5, 82, -4, 82, -11, 81, -16, 80, -19, 79, -19, 66, -25, 64, -30, 62, -34, 60, -43, 69, -46, 68, -49, 66, -54, 62, -62, 54, -67, 48, -69, 45, -70, 42, -60, 33, -63, 28, -65, 23, -66, 19, -79, 19, -80, 17, -81, 13, -82, 6, -82, -7, -81, -14, -80, -17, -79, -19, -66, -19, -65, -24, -63, -29, -60, -34, -70, -44, -69, -46, -67, -49, -62, -55, -55, -62, -48, -67, -45, -69, -43, -70, -33, -60, -30, -62, -26, -64, -23, -65, -19, -66 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+rpm = 0.0
+
+[node name="Title" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Emblem" type="Node2D" parent="Title"]
+position = Vector2( 0, -20 )
+
+[node name="gear5" type="Sprite" parent="Title/Emblem"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, 16 )
+scale = Vector2( 1.25, 1.25 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+rpm = -60.0
+
+[node name="EmblemNormal" type="AnimatedSprite" parent="Title/Emblem"]
+frames = SubResource( 36 )
+animation = "invisible"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="EmblemLightning" type="AnimatedSprite" parent="Title/Emblem/EmblemNormal"]
+frames = SubResource( 77 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="icon-new" type="Sprite" parent="Title/Emblem/EmblemNormal"]
+visible = false
+material = SubResource( 79 )
+position = Vector2( 1, 8 )
+scale = Vector2( 0.187372, 0.187372 )
+texture = ExtResource( 18 )
+
+[node name="Ribbon" type="Node2D" parent="Title/Emblem"]
+visible = false
+position = Vector2( 0, 62 )
+
+[node name="center" type="Sprite" parent="Title/Emblem/Ribbon"]
+position = Vector2( 0, 3 )
+scale = Vector2( 15, 1 )
+texture = ExtResource( 16 )
+
+[node name="rollR" type="Sprite" parent="Title/Emblem/Ribbon"]
+position = Vector2( -170, 0 )
+texture = ExtResource( 4 )
+hframes = 2
+frame = 1
+
+[node name="rollL" type="Sprite" parent="Title/Emblem/Ribbon"]
+position = Vector2( 170, 0 )
+texture = ExtResource( 4 )
+hframes = 2
+frame = 1
+
+[node name="hedgegodot-title" type="Sprite" parent="Title/Emblem/Ribbon"]
+texture = ExtResource( 15 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 326, 46 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title/Emblem/Ribbon"]
+anims/RibbonAnimation = SubResource( 80 )
+
+[node name="ribbonR" type="Sprite" parent="Title/Emblem/Ribbon"]
+visible = false
+position = Vector2( 198, 20 )
+texture = ExtResource( 17 )
+hframes = 6
+frame = 5
+
+[node name="ribbonR2" type="AnimatedSprite" parent="Title/Emblem/Ribbon"]
+visible = false
+position = Vector2( 171, -20 )
+frames = SubResource( 89 )
+centered = false
+
+[node name="ribbonL" type="Sprite" parent="Title/Emblem/Ribbon"]
+visible = false
+position = Vector2( -198, 21 )
+scale = Vector2( -1, 1 )
+texture = ExtResource( 17 )
+hframes = 6
+frame = 5
+
+[node name="ribbonL2" type="AnimatedSprite" parent="Title/Emblem/Ribbon"]
+visible = false
+position = Vector2( -172, -20 )
+scale = Vector2( -1, 1 )
+frames = SubResource( 89 )
+centered = false
+
+[node name="press-any-button" type="Sprite" parent="Title"]
+visible = false
+position = Vector2( 0, 87 )
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="DisplayFilter" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Music"
+
+[node name="StartAnimation" type="AnimationPlayer" parent="."]
+autoplay = "TitleAnimation"
+anims/TitleAnimation = SubResource( 90 )
+
+[node name="Parallax" type="AnimationPlayer" parent="."]
+playback_speed = 15.0
+anims/Parallax = SubResource( 91 )
+
+[node name="AngelIsland" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/AngelIsland = SubResource( 92 )
+
+[node name="Float" type="AnimationPlayer" parent="."]
+anims/Float = SubResource( 93 )
+
+[node name="FadeOut" type="AnimationPlayer" parent="."]
+anims/FadeOut = SubResource( 94 )

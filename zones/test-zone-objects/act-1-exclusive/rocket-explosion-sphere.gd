@@ -4,7 +4,7 @@ signal explosion_gen_end
 
 const explosion = preload('res://general-objects/explosions/boss-explosion-object.tscn')
 onready var timer : Timer = $Timer
-var speed : Vector3 = Vector3(0, 0, 0)
+export var speed : Vector3 = Vector3(0, 0, 0)
 const GRAV : float = 1000.0
 var friction : float = 40
 var z_pos = 0.0

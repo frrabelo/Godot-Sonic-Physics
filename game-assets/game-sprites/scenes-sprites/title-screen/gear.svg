@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Krita: https://krita.org -->
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:krita="http://krita.org/namespaces/svg/krita"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    width="132pt"
+    height="132pt"
+    viewBox="0 0 132 132">
+<defs/>
+<circle id="shape0" transform="translate(14.3999995513394, 14.3999995513394)" r="51.6000004486606" cx="51.6000004486606" cy="51.6000004486606" fill="#ffffff" fill-rule="evenodd"/><g id="group0" transform="matrix(1.00069609337067 0 0 1.00118620815357 52.1904005935681 4.52631501151901)" fill="none">
+  <path id="shape1" transform="translate(1.43192653325741e-05, 0)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612482 18.3665 -0.632007 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+  <path id="shape0" transform="matrix(1.00000004304211 0 0 -1.00000004304211 -7.105427357601e-15 122.734411440426)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+ </g><g id="group0" transform="matrix(0.707106788975217 0.707106788975217 -0.707106788975217 0.707106788975217 99.5314696831969 12.7827485303209)" fill="none">
+  <path id="shape01" transform="translate(1.43192653325741e-05, -5.54502374683352e-07)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+  <path id="shape02" transform="matrix(1.00000004304211 0 0 -1.00000004304211 -7.105427357601e-15 122.734411244931)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+ </g><g id="group01" transform="matrix(0.707106788975217 -0.707106788975217 0.707106788975217 0.707106788975217 12.7451346431221 31.9253296034882)" fill="none">
+  <path id="shape03" transform="translate(1.43192653325741e-05, -5.54502374683352e-07)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+  <path id="shape04" transform="matrix(1.00000004304211 0 0 -1.00000004304211 -7.105427357601e-15 122.734411244931)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+ </g><g id="group02" transform="matrix(2.22044604925031e-16 -1.00069605121508 1.00118616597734 0 4.43999697438819 79.8000035807719)" fill="none">
+  <path id="shape05" transform="translate(1.43192653254687e-05, -5.54502374683352e-07)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+  <path id="shape06" transform="matrix(1.00000004304211 0 0 -1.00000004304211 0 122.734411244931)" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="0.24" stroke-linecap="square" stroke-linejoin="bevel" d="M0 1.86676C9.17302 -0.612481 18.3665 -0.632006 27.5808 1.86676L27.5808 11.8303L0 11.8303Z"/>
+ </g>
+</svg>
