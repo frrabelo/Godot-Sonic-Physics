@@ -1,4 +1,5 @@
 extends Node
+class_name LevelInfos
 var count:float = 0;
 var seconds:float = 0;
 var milliseconds:float;
@@ -7,8 +8,15 @@ var rings:int = 100 setget set_ring;
 var time:String;
 onready var HUD = get_node_or_null("./HUD")
 onready var HUD_count = HUD.get_node_or_null("./Separate/STRCounters/Count")
+onready var global : = $"/root/GlobalScript"
+onready var players = $Players
+export var zone_name : String
+export var act : int
+export var continue_last_transition = true
+export var show_title_card: bool = false
 
 func _ready():
+	players.set_owner(self)
 	set_ring(rings)
 	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 

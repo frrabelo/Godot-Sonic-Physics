@@ -32,5 +32,5 @@ func _unhandled_key_input(event):
 			timer.start(time_left)
 			set_visible(true)
 			music_player.stop()
-			sfx.play('MenuAccept')
+			sfx.play('AlternativeMenuAccept')
 			fade_out.play('FadeOut')

@@ -29,13 +29,14 @@ onready var camera_scroll = $CameraScroll
 onready var camera : Camera2D = $CameraScroll/Camera2D
 
 var scroll_timer : float
-export(bool) var rotateWithPlayer:bool
+export(bool) var rotate_with_player:bool = false
 var stuck_in_object:bool
 var object_to_stuck : Node2D;
 var secondary_target:Node2D;
 
 func camera_ready(player : PlayerPhysics) -> void:
 	position = player.position
+	set_as_toplevel(true)
 
 func can_scroll(delta : float):
 	if scroll_timer > 0:
@@ -78,20 +79,16 @@ func camera_step(player : PlayerPhysics, delta : float):
 		horizontal_border(player, delta)
 		vertical_border(player, delta)
 		vertical_scrolling(player, delta);
-		if rotation == 0 && rotateWithPlayer == false:
-			camera.rotating = false;
-		else:
-			camera.rotating = true;
-		if rotateWithPlayer:
+		if rotate_with_player:
 			if !secondary_target:
 				return
 			var dir = (player.position - secondary_target.position).normalized();
-			rotation_degrees = rad2deg(dir.angle()) + 90;
+			rotation = lerp_angle(rotation, player.rotation, delta*10)
 			position += (secondary_target.position - position) * delta * 10
 			position.y -= 20 * cos(rotation);
 			position.x -= 20 * -sin(rotation)
 		else:
-			rotation_degrees += player.rotation_degrees * (0.5/delta)
+			rotation = lerp_angle(rotation, 0, delta*10)
 	else:
 		if object_to_stuck:
 			var vel_default = 4
@@ -140,12 +137,12 @@ func vertical_scrolling(player : PlayerPhysics, delta : float):
 	var scroll_back = true
 	var scroll_world = camera_scroll.global_position
 	
-	if player.is_looking_up:
+	if player.fsm.is_current_state("LookUp"):
 		if can_scroll(delta):
 			camera_scroll.position.y -= SCROLL_SPEED * delta
 			camera_scroll.position.y = max(camera_scroll.position.y, SCROLL_UP)
 			scroll_back = false
-	elif player.is_looking_down:
+	elif player.fsm.is_current_state("Crouch"):
 		if can_scroll(delta):
 			camera_scroll.position.y += SCROLL_SPEED * delta
 			camera_scroll.position.y = min(camera_scroll.position.y, SCROLL_DOWN)

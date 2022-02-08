@@ -6,27 +6,21 @@ var has_rolled : bool
 var spring_loaded : bool
 var spring_loaded_v : bool
 var roll_jump : bool
-var can_attack : bool
 var is_floating
 var override_anim : String
 var post_damage:bool
 var can_snap:float
 var was_throwed : bool = false
-var cannot_break_bottom :bool
-var cannot_break_top :bool
+var roll_on_snap_ground : bool = false
 
 func enter(host, prev_state):
 	host.snap_margin = 0
 	can_snap = 0
-	cannot_break_bottom = host.speed.y >= 0
-	host.set_collision_mask_bit(7, host.speed.y >= 0)
-	host.set_collision_layer_bit(7, host.speed.y >= 0)
-	cannot_break_top = host.speed.y <= 0 or !host.roll_anim
-	host.set_collision_mask_bit(8, cannot_break_top)
-	host.set_collision_layer_bit(8, cannot_break_top)
+	host.ray_collider.set_deferred("disabled", true)
+	
 	#print(prev_state)
 	host.ground_sensors_container.rotation = 0
-	if host.has_jumped || host.spring_loaded || host.is_rolling:
+	if host.has_jumped || host.spring_loaded || host.fsm.is_current_state("Rolling"):
 		host.characters.rotation = 0;
 	was_damaged = host.was_damaged;
 	#print(was_damaged)
@@ -42,7 +36,7 @@ func enter(host, prev_state):
 		spring_loaded_v = host.spring_loaded_v
 		if !spring_loaded:
 			has_jumped = host.has_jumped
-			has_rolled = host.is_rolling
+			has_rolled = host.fsm.is_current_state("Rolling")
 			spring_loaded_v = false
 		else:
 			has_jumped = false
@@ -52,10 +46,9 @@ func enter(host, prev_state):
 		has_jumped = false
 		has_rolled = false
 		
-	host.sprite.offset = Vector2(0, 6) if (has_rolled || has_jumped) else host.sprite.offset
-	can_attack = has_jumped
+	host.sprite.offset = Vector2(-15, -10)
+	host.characters.rotation = 0.0 if roll_jump else host.characters.rotation
 	host.has_jumped = false
-	host.is_rolling = false
 	host.spring_loaded = false;
 	host.is_floating = false;
 	host.spring_loaded_v = false
@@ -67,12 +60,6 @@ func enter(host, prev_state):
 			return to_return
 
 func step(host: PlayerPhysics, delta):
-	cannot_break_bottom = host.speed.y >= 0
-	host.set_collision_mask_bit(7, cannot_break_bottom)
-	host.set_collision_layer_bit(7, cannot_break_bottom)
-	cannot_break_top = host.speed.y <= 0 or !host.roll_anim
-	host.set_collision_mask_bit(8, cannot_break_top)
-	host.set_collision_layer_bit(8, cannot_break_top)
 	if host.ground_normal:
 		host.ground_sensors_container.global_rotation = 0
 	else:
@@ -86,17 +73,7 @@ func step(host: PlayerPhysics, delta):
 		spring_loaded = false
 		has_rolled = false
 		is_floating = true
-		can_attack = false
 		host.control_locked = false
-	
-	if host.spring_loaded || host.spring_loaded_v:
-		spring_loaded = true
-		if host.spring_loaded_v:
-			spring_loaded_v = true
-		has_jumped = false
-		has_rolled = false
-		is_floating = false
-		can_attack = false
 	
 	if host.was_damaged:
 		was_damaged = true
@@ -104,7 +81,15 @@ func step(host: PlayerPhysics, delta):
 		spring_loaded = false
 		has_rolled = false
 		is_floating = false
-		can_attack = false
+		
+	if host.spring_loaded || host.spring_loaded_v:
+		spring_loaded = true
+		if host.spring_loaded_v:
+			spring_loaded_v = true
+			was_damaged = false
+		has_jumped = false
+		has_rolled = false
+		is_floating = false
 	
 	#print(was_damaged)
 	#print(spring_loaded, is_floating)
@@ -127,6 +112,10 @@ func step(host: PlayerPhysics, delta):
 	#	if host.speed.y >= -50:
 			host.spring_loaded = false
 			host.snap_margin = host.snaps
+			if was_damaged:
+				return 'Idle'
+			if roll_on_snap_ground:
+				return 'Rolling'
 			return 'OnGround'
 	
 	can_snap += delta
@@ -142,7 +131,8 @@ func step(host: PlayerPhysics, delta):
 			host.speed.x += host.AIR;
 	if !spring_loaded:
 		if has_jumped:
-			if Input.is_action_just_released("ui_jump"): # has jumped
+			var ui_jump = "ui_jump_i%d" % host.player_index
+			if Input.is_action_just_released(ui_jump): # has jumped
 				var jmp_release = -240.0
 				if host.underwater:
 					jmp_release /= 2
@@ -165,20 +155,15 @@ func exit(host, next_state):
 	host.is_floating = false;
 	was_throwed = false
 	host.throwed = false
-	cannot_break_bottom = true
-	cannot_break_top = true
-	if next_state == 'OnGround' || host.is_grounded:
+	was_damaged = false
+	if host.is_grounded:
 		if host.was_damaged:
 			host.control_locked = false
-			host.speed.x = 0
 			host.gsp = 0
 			host.was_damaged = false
 		else:
 			host.ground_reacquisition()
-	if host.selected_character.states.has(name):
-		var to_return = host.selected_character.states[name].exit(host, next_state, self)
-		if to_return:
-			return to_return
+	roll_on_snap_ground = false
 
 func animation_step(host, animator, delta):
 	var anim_name = animator.current_animation
@@ -223,3 +208,6 @@ func _on_animation_finished(host, anim_name) -> void:
 
 func when_pushed_by_spring():
 	spring_loaded = true;
+
+func state_input(host, event):
+	pass

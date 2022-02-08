@@ -31,7 +31,6 @@ modulate = Color( 0.521569, 0.956863, 0.611765, 1 )
 shape = SubResource( 1 )
 
 [node name="Trigger" type="Area2D" parent="."]
-position = Vector2( 0, -4 )
 __meta__ = {
 "_edit_group_": true
 }

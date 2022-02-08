@@ -3,6 +3,9 @@ class_name PlayerPhysics
 signal damaged
 signal loaded
 
+var player_index: int
+var respawn_point : Vector2
+
 var im_main_player : bool = false
 export(int) var CHARACTER_SELECTED = 0 setget _set_character_sel
 var ACC
@@ -22,7 +25,7 @@ export(bool) var spinDash = true;
 var my_spawn_point : PlayerSpawner
 onready var selected_character
 onready var fsm : = $StateMachine
-onready var player_camera = get_tree().get_current_scene().get_node('PlayerCamera')
+onready var player_camera = $PlayerCamera
 onready var player_vfx = $VFX
 onready var GLOBAL = get_node("/root/Global");
 
@@ -42,10 +45,8 @@ onready var right_wall_bottom:RayCast2D = $RightWallSensorBottom
 
 onready var characters = $Characters
 onready var sprite
-var char_default_collision_floor
-var char_default_collision_air
-var char_low_collision_floor
-var char_low_collision_air
+var char_default_collision
+var char_roll_collision
 onready var animation
 onready var audio_player = $AudioPlayer
 onready var main_scene = get_tree().current_scene
@@ -69,17 +70,14 @@ var ground_point : Vector2
 var ground_normal : Vector2
 var has_jumped : bool
 var is_floating : bool
-var is_rolling : bool setget set_is_rolling
 var is_braking : bool
 var was_damaged : bool
 var is_wall_left : bool
 var is_wall_right : bool
 var is_pushing : bool
-var is_looking_down : bool
-var is_looking_up : bool
 var spring_loaded : bool
 var spring_loaded_v : bool
-var invulnerable : bool;
+var invulnerable : bool = false
 var constant_roll : bool
 var up_direction : Vector2 = Vector2.UP
 var prev_position : Vector2
@@ -93,6 +91,8 @@ var input_dict : Dictionary
 var speed_shoes : bool = false setget set_speed_shoes
 var underwater : bool = false setget set_underwater
 var roll_anim: bool = false
+# change to false when changes state
+var specific_animation_temp : bool = false setget set_specific_animation_temp
 
 func _enter_tree() -> void:
 	if Engine.editor_hint:
@@ -101,12 +101,12 @@ func _enter_tree() -> void:
 func _ready():
 	if !Engine.editor_hint:
 		#yield(get_tree().create_timer(0.1), 'timeout')
-		if player_camera:
-			player_camera.camera_ready(self)
 		_set_character_sel(CHARACTER_SELECTED)
 		set_collision_mask(get_collision_mask())
 		control_unlock_timer = control_unlock_time_normal
 		emit_signal('loaded')
+	if player_camera:
+		player_camera.camera_ready(self)
 
 func get_rays() -> Array:
 	return [left_ground, middle_ground, right_ground, left_wall, left_wall_bottom, right_wall, right_wall_bottom]
@@ -136,43 +136,7 @@ func _set_can_brake_wall( val : bool ) -> void:
 	can_break_wall = val
 	set_collision_mask_bit(5, can_break_wall)
 	set_collision_layer_bit(5, can_break_wall)
-
-func _step_setup(delta : float) -> void:
-	#print(speed)
-	roll_anim = animation.current_animation == 'Rolling'
-	if "animation_roll" in selected_character:
-		if selected_character.animation_roll is Array:
-			for i in selected_character.animation_roll:
-				roll_anim = roll_anim || animation.current_animation == i
-		else:
-			roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
-	#print(char_default_collision_air, char_default_collision_floor, char_low_collision_air, char_low_collision_floor)
-	assert (char_default_collision_floor && char_low_collision_floor, "Error: the variables not contains value")
-	var shape
-	#var shape_rect
-	#if roll_anim:
-	#	shape_rect = char_low_collision_floor if is_grounded else char_low_collision_air
-	#else:
-	#	shape_rect = char_default_collision_floor if is_grounded else char_default_collision_air	
 	
-	#if shape_rect:
-	#	shape = shape_rect.get_rectshape_2d()
-	#print(snap_margin)
-	shape = char_default_collision_floor.get_rectshape_2d() if !roll_anim else char_low_collision_floor.get_rectshape_2d()
-	main_collider.shape.extents = shape.shape.extents
-	#print(shape.position)
-	main_collider.position = shape.position
-	#left_ground.position.x = -9 if !roll_anim else -7
-	#right_ground.position.x = 9 if !roll_anim else 7
-	#ray_collider.set_deferred("disabled", fsm.current_state == 'OnAir' && speed.y < 0)
-	#print(roll_anim, " ", animation.current_animation)
-	_set_can_brake_wall(!(abs(gsp) > 270 && is_rolling && is_grounded))
-	#var can_break_from_bottom = speed.y < 0 && fsm.is_current_state('OnAir')
-	roll_anim = !roll_anim
-	set_collision_mask_bit(6, roll_anim)
-	set_collision_layer_bit(6, roll_anim)
-	roll_anim = !roll_anim
-	#print(get_collision_mask_bit(5))
 
 func set_speed_shoes(val:bool) -> void:
 	speed_shoes = val
@@ -234,9 +198,37 @@ func physics_step(delta):
 	is_wall_left = step_wall_collision([left_wall, left_wall_bottom])
 	is_wall_right = step_wall_collision([right_wall, right_wall_bottom])
 	if player_camera:
-		is_wall_left = is_wall_left or global_position.x-main_collider.shape.extents.x - player_camera.camera.limit_left <= 0
+		is_wall_left = is_wall_left or global_position.x- Utils.get_width_of_shape(main_collider.shape) - player_camera.camera.limit_left <= 0
 		is_wall_right = is_wall_right or global_position.x+9 - player_camera.camera.limit_right >= 0
 	#print("left: ", is_wall_left, ", right:", is_wall_right)
+	
+
+func _step_setup(delta : float) -> void:
+	#print(speed)
+	roll_anim = animation.current_animation == 'Rolling'
+	if "animation_roll" in selected_character:
+		if selected_character.animation_roll is Array:
+			for i in selected_character.animation_roll:
+				roll_anim = roll_anim || animation.current_animation == i
+		else:
+			roll_anim = roll_anim || animation.current_animation == selected_character.animation_roll
+	assert (char_default_collision && char_roll_collision, "Error: the variables not contains value")
+	
+	var coll_shape = char_default_collision if !roll_anim else char_roll_collision
+	
+	main_collider.shape = coll_shape.shape
+	main_collider.position = coll_shape.position
+	
+	_set_can_brake_wall(!(abs(gsp) > 270 && fsm.is_current_state("Rolling") && is_grounded))
+	
+	roll_anim = !roll_anim
+	set_collision_mask_bit(6, roll_anim)
+	set_collision_layer_bit(6, roll_anim)
+	
+	var is_Y_speed_above = speed.y <= 0
+	set_collision_mask_bit(8, is_Y_speed_above && roll_anim)
+	set_collision_layer_bit(8, is_Y_speed_above && roll_anim)
+	roll_anim = !roll_anim
 
 func _set_control_locked(val : bool) -> void:
 	control_locked = val
@@ -276,7 +268,8 @@ func is_collider_oneway(ray_cast : RayCast2D, collider) -> bool:
 			var tmap : TileMap = collider
 			var cell = tmap.get_cellv(tmap.world_to_map(ray_cast.get_collision_point()))
 			var shape = ray_cast.get_collider_shape()
-			to_return = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
+			if shape && cell >= 0:
+				to_return = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
 		'StaticBody2D', 'RigidBody2D', "KinematicBody2D":
 			var coll : CollisionObject2D = collider
 			var collider_shape_id : int = ray_cast.get_collider_shape()
@@ -300,22 +293,14 @@ func fall_from_ground() -> bool:
 
 func snap_to_ground() -> void:
 	var ground_ang = (ground_angle())
-	var to_radian = Utils.rad2dir(ground_ang, 24)
-	#print(angle_8dir)
-	#print(to_radian - (-rotation))
+	var to_radian = ground_ang
 	if abs(rad2deg(ground_ang)) <= 27:
 		rotation = 0
 		return
-	characters.rotation_degrees = rotation + characters.rotation
-		#print(-to_radian - rotation)
-	#	characters.rotation += to_radian - (-rotation)
-	#if get_floor_normal().angle() == ground_ang:
+	#characters.rotation_degrees = rotation + characters.rotation
 	rotation += (-to_radian - rotation)
 	
-	to_radian = ground_ang
-	#print(position - get_ground_ray().get_collision_point())
-	#print(ground_mode)
-	ground_sensors_container.global_rotation = -to_radian
+	ground_sensors_container.global_rotation = -ground_ang
 	speed += -ground_normal * 150
 
 func ground_reacquisition():
@@ -367,19 +352,16 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 	if invulnerable:
 		return
 	emit_signal("damaged")
-	var have_rings:bool = false;
-	var timer = Timer.new();
-	timer.connect("timeout", self, "vunerable_again", [timer])
-	add_child(timer);
-	timer.start(2)
-	timer_ivun_start(.1)
+	invulnerable = true;
+	var have_rings:bool = false
 	snap_margin = 0
-	fsm.change_state("OnAir")
 	is_grounded = false
+	_set_control_locked(true)
+	was_damaged = true
 	speed.x = side.x * 220
 	speed.y = side.y * 200
-	_set_control_locked(true)
-	was_damaged = true;
+	characters.scale.x = -sign(speed.x) if speed.x != 0 else characters.scale.x
+	fsm.change_state("OnAir")
 	speed = move_and_slide_preset()
 	if main_scene:
 		var rings = main_scene.rings
@@ -393,7 +375,20 @@ func damage(side:Vector2 = Vector2.ZERO, sound_to_play:String = "hurt"):
 		position += speed * get_physics_process_delta_time()
 	else:
 		audio_player.play(sound_to_play)
-	invulnerable = true;
+
+func invulnerable_for_sec(val : float) -> void:
+	invulnerable = true
+	yield(get_tree().create_timer(val), "timeout")
+	invulnerable = false
+
+func blink(sec : int):
+	for i in sec*5:
+		modulate.a = 0.25
+		yield(get_tree().create_timer(0.075), "timeout")
+		modulate.a = 1
+		yield(get_tree().create_timer(0.075), "timeout")
+	modulate.a = 1
+	make_vulnerable()
 
 func drop_rings(rings:int = 0):
 	var n = false;
@@ -429,44 +424,16 @@ func drop_rings(rings:int = 0):
 		# Add all rings on level
 		parent.add_child(c);
 
-func timer_ivun_start(time:float):
-	var timer_ivun = Timer.new();
-	timer_ivun.connect("timeout", self, "toogle_visible", [timer_ivun])
-	add_child(timer_ivun);
-	timer_ivun.start(time);
-
-func invulnerability_time(time:float):
-	var timer_ivun = Timer.new();
-	timer_ivun.connect("timeout", self, "vunerable_again", [timer_ivun])
-	add_child(timer_ivun);
-	timer_ivun.start(time);
-
-func toogle_visible(timer:Timer):
-	timer.queue_free();
-	characters.visible = !characters.visible;
-	if invulnerable:
-		if characters.visible:
-			timer_ivun_start(0.1);
-		else:
-			timer_ivun_start(0.025)
-	else:
-		characters.visible = true
-
-func vunerable_again(timer:Timer):
-	timer.queue_free();
-	characters.visible = true
-	invulnerable = false;
+func make_vulnerable():
+	was_damaged = false
+	invulnerable = false
+	modulate.a = 1.0
 
 func get_class() -> String:
 	return "PlayerPhysics"
 
 func is_class(name:String) -> bool:
 	return name == get_class() || .is_class(name);
-
-func set_is_rolling(val : bool):
-	if val && !is_rolling:
-		audio_player.play('spin')
-	is_rolling = val
 
 func _set_character_sel(val : int) -> void:
 	var children = characters.get_children()
@@ -479,11 +446,9 @@ func _set_character_sel(val : int) -> void:
 		var c : Node2D = children[CHARACTER_SELECTED]
 		selected_character = c
 		sprite = selected_character.get_node("Sprite")
-		#print(selected_character.get_children())
-		char_default_collision_floor = selected_character.get_node("DefaultBox")
-		#char_default_collision_air = selected_character.get_node("DefaultBoxAir")
-		#char_low_collision_air = selected_character.get_node("RollBoxAir")
-		char_low_collision_floor = selected_character.get_node("RollBox")
+		var coll_container = selected_character.get_node("CollisionContainer")
+		char_default_collision = coll_container.get_node("DefaultBox")
+		char_roll_collision = coll_container.get_node("RollBox")
 		animation = sprite.get_node("CharAnimation")
 		var props = [
 			"ACC", "DEC", "ROLLDEC", "FRC", "SLP", "SLPROLLUP",\
@@ -528,15 +493,13 @@ func jump() -> String:
 	audio_player.play('jump')
 	return 'OnAir'
 
-func get_slope_ratio() -> float:
-	var to_return : float
-	var ground_angle = ground_angle()
-	if !is_rolling:
-		to_return = -SLP
-	else:
-		if sign(gsp) == sign(sin(ground_angle)):
-			to_return = -SLPROLLUP
-		else:
-			to_return = -SLPROLLDOWN
-	
-	return to_return
+func activate():
+	player_camera.camera.current = true
+	im_main_player = true
+
+func deactivate():
+	player_camera.camera.current = false
+	im_main_player = false
+
+func set_specific_animation_temp(val : bool) -> void:
+	specific_animation_temp = val

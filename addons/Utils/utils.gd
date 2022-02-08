@@ -125,3 +125,62 @@ static func get_max_vector2pool(val : PoolVector2Array, prop:String="x") -> floa
 
 static func new_tween() -> Tween:
 	return Tween.new()
+
+static func create_timer(me: Node, seconds: float) -> Timer:
+	var timer : Timer = Timer.new()
+	me.add_child(timer)
+	timer.start(seconds)
+	return timer
+
+static func clamp_vector2(vec_to_clamp: Vector2, minv: Vector2, maxv: Vector2) -> Vector2:
+	var to_return = vec_to_clamp
+	to_return.x = min(maxv.x, max(minv.x, to_return.x))
+	to_return.y = min(maxv.y, max(minv.y, to_return.y))
+	return to_return
+
+static func get_area2D_coll_overlap(collided_area:Area2D, body_rid: RID, body: Node, body_shape_index:int, local_shape_index:int):
+	var body_shape_owner_id = body.shape_find_owner(body_shape_index)
+	var body_shape_owner = body.shape_owner_get_owner(body_shape_owner_id)
+	var body_shape_2d = body.shape_owner_get_shape(body_shape_owner_id, 0)
+	var body_global_transform = body_shape_owner.global_transform
+	
+	var area_shape_owner_id = collided_area.shape_find_owner(local_shape_index)
+	var area_shape_owner = collided_area.shape_owner_get_owner(area_shape_owner_id)
+	var area_shape_2d = collided_area.shape_owner_get_shape(area_shape_owner_id, 0)
+	var area_global_transform = area_shape_owner.global_transform
+	
+	var collision_points = area_shape_2d.collide_and_get_contacts(area_global_transform,
+									body_shape_2d,
+									body_global_transform)
+	
+	for i in collision_points.size():
+		collision_points[i] = collision_points[i] - collided_area.position
+	
+	return collision_points
+
+static func get_width_of_shape(shape:Shape2D):
+	match shape.get_class():
+		"RectangleShape2D":
+			return (shape as RectangleShape2D).extents.x
+		"CircleShape2D":
+			return (shape as CircleShape2D).radius
+		"CapsuleShape2D":
+			var capsule = shape as CapsuleShape2D
+			return capsule.radius
+		
+
+static func get_height_of_shape(shape:Shape2D):
+	match shape.get_class():
+		"RectangleShape2D":
+			return (shape as RectangleShape2D).extents.y
+		"CircleShape2D":
+			return (shape as CircleShape2D).radius
+		"CapsuleShape2D":
+			var capsule = shape as CapsuleShape2D
+			return capsule.radius + capsule.height
+
+static func fill_array(size: int, value) -> Array:
+	var to_return = []
+	for i in size:
+		to_return.append(value)
+	return to_return

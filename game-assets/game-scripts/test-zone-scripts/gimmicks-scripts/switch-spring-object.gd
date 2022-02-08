@@ -30,10 +30,12 @@ func set_length(val : int) -> void:
 func _ready():
 	set_side(side)
 
-func _on_SwitchSpring_body_shape_entered(body_id, body : Node, body_shape, local_shape):
+func _on_SwitchSpring_body_shape_entered(body_rid, body, body_shape, local_shape):
 	if body.is_class("PlayerPhysics"):
 		var player : PlayerPhysics = body
-		player.throwed = true
+		player.specific_animation_temp = true
+		player.animation.animate("Rotating")
+		player.animation.playback_speed = 4.0
 		sfx.play('Bouncer')
 		match side:
 			0:

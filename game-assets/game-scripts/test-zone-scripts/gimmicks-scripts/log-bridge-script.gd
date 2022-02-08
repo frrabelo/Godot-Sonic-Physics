@@ -52,20 +52,6 @@ func update_logs():
 			#print(log_obj.position)
 			lc.add_child(log_obj)
 
-
-func _on_ActiveArea_body_shape_entered(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
-	if body.is_class('PlayerPhysics'):
-		if players.has(body):
-			return
-		players.append(body)
-		set_process(true)
-
-
-func _on_ActiveArea_body_shape_exited(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
-	if body.is_class('PlayerPhysics'):
-		if players.has(body):
-			players.remove(players.find(body))
-
 func _process(delta: float) -> void:
 	if Engine.editor_hint:
 		set_process(false)
@@ -99,3 +85,17 @@ func _process(delta: float) -> void:
 			else:
 				log_distance = 1 - (difference / ((length - curr) + 1))
 			logs[i].position.y += (floor(max_dep * sin((PI/2) * log_distance)) - logs[i].position.y) * delta * 16
+
+
+func _on_ActiveArea_body_entered(body):
+	if body.is_class('PlayerPhysics'):
+		if players.has(body):
+			return
+		players.append(body)
+		set_process(true)
+
+
+func _on_ActiveArea_body_exited(body):
+	if body.is_class('PlayerPhysics'):
+		if players.has(body):
+			players.remove(players.find(body))

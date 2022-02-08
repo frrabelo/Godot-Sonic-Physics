@@ -55,5 +55,5 @@ position = Vector2( 79.75, 0 )
 visible = false
 shape = SubResource( 1 )
 
-[connection signal="body_shape_entered" from="ActiveArea" to="." method="_on_ActiveArea_body_shape_entered"]
-[connection signal="body_shape_exited" from="ActiveArea" to="." method="_on_ActiveArea_body_shape_exited"]
+[connection signal="body_entered" from="ActiveArea" to="." method="_on_ActiveArea_body_entered"]
+[connection signal="body_exited" from="ActiveArea" to="." method="_on_ActiveArea_body_exited"]

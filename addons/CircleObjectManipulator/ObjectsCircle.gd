@@ -2,7 +2,7 @@ tool
 extends Node2D
 class_name CircleObjects
 
-export var scene : PackedScene = preload('res://general-objects/spring-object.tscn')
+export var scene : PackedScene = preload('res://general-objects/spring-object.tscn') setget set_scene
 export var scene_offset : Vector2 = Vector2(8, 8) setget _set_scene_offset
 export var radius : float = 50 setget _set_radius
 export var object_count : int = 16 setget _set_object_count
@@ -69,10 +69,6 @@ func _set_editor_process (val : bool) -> void:
 
 func _spawn_objects(count : int, angle : float = 0, blanks : String = "") -> void:
 	_clear()
-	var container = Node2D.new()
-	container.name = "objContainer"
-	container.position = Vector2.ZERO
-	add_child(container)
 	var angle_step = 2*PI
 	var m_angle = angle
 	for i in count:
@@ -80,33 +76,28 @@ func _spawn_objects(count : int, angle : float = 0, blanks : String = "") -> voi
 			m_angle += angle_step / object_count
 			var obj : Node2D = Node2D.new()
 			obj.position = Vector2.RIGHT.rotated(angle)
-			container.add_child(obj)
+			add_child(obj)
 			continue
 		var scene_obj : Node2D = scene.instance(PackedScene.GEN_EDIT_STATE_INSTANCE)
 		var direction = Vector2(cos(m_angle), sin(m_angle))
-		var pos = (scene_offset + container.position) + (direction * radius)
+		var pos = (scene_offset + Vector2.ZERO) + (direction * radius)
 		if scene_obj != null:
 			scene_obj.set_position(pos)
-			container.add_child(scene_obj)
+			add_child(scene_obj)
 		m_angle += angle_step / object_count
 
 func _update_rings_pos(angle : float) -> void:
 	var angle_step = 2*PI
-	var container : Node2D
-	if get_child_count() > 0:
-		container = get_child(0)
-	if !container || (container && container.get_child_count() < 1):
-		return
 	#print(container.get_children())
 	var b : int = 0
-	for i in container.get_children():
+	for i in get_children():
 		#print(b < blank_position.length() && blank_position[b] == "0")
 		if b < blank_position.length() && blank_position[b] == "0":
 			b += 1
 			angle += angle_step/object_count
 			continue
 		var direction = Vector2(cos(angle), sin(angle))
-		var pos = (scene_offset + container.position) + (direction * radius)
+		var pos = (scene_offset + Vector2.ZERO) + (direction * radius)
 		i.set_position(pos)
 		angle += angle_step/object_count
 		b += 1
@@ -120,7 +111,7 @@ func _physics_process(delta: float) -> void:
 	process_angle = fmod(process_angle, PI*2)
 	var p_angle : float = process_angle
 	var angle_step : float = 2 * PI
-	for i in get_child(0).get_children():
+	for i in get_children():
 		var direction = Vector2(cos(p_angle), sin(p_angle))
 		var pos = scene_offset + direction * radius
 		i.position = pos
@@ -137,3 +128,7 @@ func _draw() -> void:
 func _edit_is_selected_on_click(p_point:Vector2, p_tolerance:float) -> bool:
 	var converted_cordinates = get_viewport().get_global_canvas_transform().affine_inverse().xform(p_point)
 	return converted_cordinates.length() < radius + p_tolerance;
+
+func set_scene(val : PackedScene):
+	scene = val
+	_spawn_objects(object_count, default_angle)

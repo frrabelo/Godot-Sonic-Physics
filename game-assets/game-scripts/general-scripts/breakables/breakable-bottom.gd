@@ -3,10 +3,11 @@ extends Breakable
 onready var positions:Node2D = $Positions
 var player : PlayerPhysics
 
-func _on_Trigger_body_entered(body: Node) -> void:
+
+func _on_Trigger_body_entered(body):
 	if body.is_class('PlayerPhysics'):
 		player = body
-		if player.speed.y > 0 || !player.fsm.is_current_state('OnAir'):
+		if player.speed.y > 0:
 			return
 		var speed = body.speed.y
 		global_sounds.play('CliffBreaking')

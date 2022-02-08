@@ -6,6 +6,7 @@ func _enter_tree() -> void:
 		'CliffBreaking': preload('res://game-assets/audio/sfx/cliff-breaking.wav'),
 		'WallBreak': preload('res://game-assets/audio/sfx/cliff-break.wav'),
 		'MenuAccept': preload('res://game-assets/audio/sfx/MenuAccept.wav'),
+		'AlternativeMenuAccept': preload("res://game-assets/audio/sfx/sonic-2-turning-supersonic.wav"),
 		'MenuBleep': preload('res://game-assets/audio/sfx/MenuBleep.wav'),
 		'MenuWoosh': preload('res://game-assets/audio/sfx/MenuWoosh.wav'),
 	}

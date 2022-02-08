@@ -1,0 +1,203 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/tesla-ball/plasma-lightning.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/tesla-ball/plasma-lightning-core.png" type="Texture" id=2]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/tesla-ball/plasma-glass-ball.png" type="Texture" id=3]
+[ext_resource path="res://game-assets/game-sprites/levels-sprites/test-zone-assets/test-zone-gimmicks-sprites/tesla-ball/plasma-circle.png" type="Texture" id=4]
+[ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/tesla-ball-script.gd" type="Script" id=5]
+[ext_resource path="res://game-assets/audio/sfx/plasma-ball.wav" type="AudioStream" id=6]
+
+[sub_resource type="CircleShape2D" id=27]
+radius = 45.0111
+
+[sub_resource type="CanvasItemMaterial" id=28]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 43, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 86, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 129, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 172, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 215, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 258, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 1 )
+region = Rect2( 301, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 344, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 1 )
+region = Rect2( 387, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 430, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 1 )
+region = Rect2( 473, 0, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 80, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 1 )
+region = Rect2( 43, 80, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 1 )
+region = Rect2( 86, 80, 43, 80 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 1 )
+region = Rect2( 129, 80, 43, 80 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=22]
+animations = [ {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"loop": true,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="CanvasItemMaterial" id=23]
+blend_mode = 1
+
+[sub_resource type="Animation" id=26]
+resource_name = "main"
+length = 0.4
+loop = true
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/path = NodePath("Core:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 3, 0, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Lightning/LeftLighting:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 15 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Lightning/RightLightning:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 15 ]
+}
+
+[node name="PlasmaBall" type="Area2D"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 27 )
+
+[node name="Back" type="Sprite" parent="."]
+modulate = Color( 0.117647, 0, 0.321569, 0.333333 )
+texture = ExtResource( 4 )
+
+[node name="Lightning" type="Node2D" parent="."]
+material = SubResource( 28 )
+
+[node name="LeftLighting" type="AnimatedSprite" parent="Lightning"]
+use_parent_material = true
+position = Vector2( -41, -40 )
+frames = SubResource( 1 )
+frame = 1
+centered = false
+
+[node name="RightLightning" type="AnimatedSprite" parent="Lightning"]
+use_parent_material = true
+position = Vector2( -3, -40 )
+frames = SubResource( 1 )
+frame = 1
+centered = false
+flip_h = true
+flip_v = true
+
+[node name="Core" type="AnimatedSprite" parent="."]
+use_parent_material = true
+frames = SubResource( 22 )
+frame = 1
+
+[node name="GlassBall" type="Sprite" parent="."]
+material = SubResource( 23 )
+texture = ExtResource( 3 )
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+autoplay = "main"
+anims/main = SubResource( 26 )
+
+[node name="PlasmaSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.947
+bus = "SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_TeslaBall_body_entered"]

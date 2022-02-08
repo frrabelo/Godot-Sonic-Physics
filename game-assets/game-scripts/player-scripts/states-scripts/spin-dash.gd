@@ -1,4 +1,4 @@
-extends '../state.gd'
+extends State
 
 var p : float # spin dash release power
 
@@ -9,9 +9,9 @@ func enter(host, prev_state):
 
 func step(host, delta):
 	if Input.is_action_just_released("ui_down"):
-		return 'OnGround'
+		return 'Rolling'
 	
-	if Input.is_action_just_pressed("ui_jump"):
+	if Input.is_action_just_pressed("ui_jump_i%d" % host.player_index):
 		p += 120
 		host.animation.stop(true)
 		host.audio_player.play('spin_dash_charge')
@@ -22,7 +22,6 @@ func step(host, delta):
 	p -= int(p / 7.5) / 15360.0
 
 func exit(host, next_state):
-	host.is_rolling = true
 	host.gsp = (480 + (floor(p) / 2)) * host.characters.scale.x
 	host.player_vfx.stop('ChargeDust')
 	host.audio_player.stop('spin_dash_charge')

@@ -41,7 +41,7 @@ func step(host: PlayerPhysics, delta: float):
 				side = 0
 			host.speed.x = 0
 	
-	if Input.is_action_just_pressed('ui_jump'):
+	if Input.is_action_just_pressed('ui_jump_i%d' % host.player_index):
 		host.has_jumped = true
 		host.speed.y -= host.JMP
 		host.is_grounded = false

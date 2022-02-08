@@ -1,36 +1,26 @@
-extends Node
+extends AudioStreamPlayer
 class_name MusicProcess
+tool
 
-export var preSong:AudioStream;
-export var song:AudioStream;
-export var autoplay:bool = false
-export var loop:bool = false
-
-onready var pre_player = AudioStreamPlayer.new()
-onready var song_player = AudioStreamPlayer.new()
+export var pre_stream:AudioStream
+export var main_stream:AudioStream
+export var extension_autoplay: bool = false
+var pre_song_played : bool
 
 func _ready():
-	add_child(pre_player)
-	add_child(song_player)
-	pre_player.connect("finished", self, "pre_song_finished")
-	song_player.connect("finished", self, "song_finished")
-	var to_play = pre_player
-	if preSong:
-		pre_player.stream = preSong
-		preSong.set("loop", false);
-	if song:
-		song_player.stream = song
-		song.set("loop", loop);
-		if !preSong:
-			to_play = song_player
-	else:
+	stream = null
+	if autoplay && (pre_stream || main_stream):
+		play(0.0)
+
+func play(val : float = 0.0) -> void:
+	if !pre_stream && !main_stream:
 		return
-	if autoplay:
-		to_play.play()
-
-func pre_song_finished():
-	song_player.play()
-	pre_player.queue_free()
-
-func song_finished():
-	pass
+	assert(is_inside_tree(), "Playback can only happen when a node is inside the scene tree")
+	if pre_stream:
+		stream = pre_stream
+		.play(val)
+		yield(self,"finished")
+		pre_song_played = true
+	if main_stream:
+		stream = main_stream
+		.play(val)

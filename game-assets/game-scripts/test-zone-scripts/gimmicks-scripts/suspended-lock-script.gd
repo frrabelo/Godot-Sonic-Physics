@@ -7,8 +7,16 @@ enum Lock {
 
 export(Lock) var lock:int = 0 setget _set_lock
 
-func _on_SuspendedLock_body_shape_entered(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
-	if body is PlayerPhysics:
+func _set_lock(val : int) -> void:
+	lock = val
+	modulate = {
+		Lock.LEFT: Color(0, 1, 0.5),
+		Lock.RIGHT: Color(0, 0.5, 1),
+	}[lock]
+
+
+func _on_SuspendedLock_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.is_class("PlayerPhysics"):
 		var p : PlayerPhysics = body
 		#print(lock == Lock.LEFT || lock == Lock.BOTH)
 		if lock == Lock.LEFT:
@@ -21,8 +29,8 @@ func _on_SuspendedLock_body_shape_entered(body_id: int, body: Node, body_shape: 
 		#print(p.suspended_can_left, p.suspended_can_right)
 
 
-func _on_SuspendedLock_body_shape_exited(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
-	if body is PlayerPhysics:
+func _on_SuspendedLock_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
+	if body.is_class("PlayerPhysics"):
 		var p : PlayerPhysics = body
 		if lock == Lock.LEFT:
 			p.suspended_can_left = true
@@ -33,10 +41,3 @@ func _on_SuspendedLock_body_shape_exited(body_id: int, body: Node, body_shape: i
 			p.suspended_can_right = true
 		
 		#print(p.suspended_can_left, p.suspended_can_right)
-
-func _set_lock(val : int) -> void:
-	lock = val
-	modulate = {
-		Lock.LEFT: Color(0, 1, 0.5),
-		Lock.RIGHT: Color(0, 0.5, 1),
-	}[lock]

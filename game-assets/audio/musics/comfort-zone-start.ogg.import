@@ -11,5 +11,5 @@ dest_files=[ "res://.import/comfort-zone-start.ogg-8f476d22b9dd2af853ede032b32c3
 
 [params]
 
-loop=true
-loop_offset=0
+loop=false
+loop_offset=0.0

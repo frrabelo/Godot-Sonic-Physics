@@ -22,7 +22,7 @@ func update_grabs () -> void:
 
 
 
-func _on_GrabTopArea_body_shape_entered(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
+func _on_GrabTopArea_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
 	if body is PlayerPhysics:
 		var p : PlayerPhysics = body
 		if p.suspended_jump:
@@ -31,18 +31,20 @@ func _on_GrabTopArea_body_shape_entered(body_id: int, body: Node, body_shape: in
 			p.fsm.change_state('Suspended')
 			var grab = get_node_or_null('GrabTopArea')
 			var snap : Vector2
-			snap.y = global_position.y
+			snap.y = global_position.y + Utils.get_height_of_shape(p.main_collider.shape) + 10
 			var size = (global_position.x + (24*(length-1))) -  global_position.x
 			var diff = round((p.global_position.x - global_position.x)/24)*24
 			snap.x = diff + global_position.x
 			if snap.x > global_position.x + 24 * (length-2):
 				snap.x -= 24
+			elif snap.x < global_position.x:
+				snap.x += 24
 			#print('d: %f, sz: %f, sn: %f, gb: %f' % [diff, size, snap.x, global_position.x])
 			p.global_position.y = snap.y
 			p.global_position.x = snap.x
 
 
-func _on_GrabTopArea_body_shape_exited(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
+func _on_GrabTopArea_body_shape_exited(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
 	if body is PlayerPhysics:
 		var p : PlayerPhysics = body
 		if p.suspended_jump:

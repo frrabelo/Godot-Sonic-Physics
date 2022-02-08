@@ -1,0 +1,325 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/save-select-sprites/save-select-horizontal-white.png" type="Texture" id=1]
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/menus-scripts/main-save-button.gd" type="Script" id=2]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/save-select-sprites/characters-head.png" type="Texture" id=3]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/save-select-sprites/arrow.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ConfigName/HeadContainer/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -8, -5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ConfigName/HeadContainer/Arrows:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ConfigName/HeadContainer/Head:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "hover"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("ConfigName/HeadContainer/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -12, -9 ), Vector2( -8, -5 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Focused")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "hovering", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "resetanim"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ConfigName/HeadContainer/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Focused")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "RESET", -1, 1.0, false ],
+"method": "play"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "select"
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/path = NodePath("ConfigName/HeadContainer/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -8, -5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ConfigName/HeadContainer/Arrows:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ConfigName/HeadContainer/Head:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.0416667, 0.0833333, 0.125, 0.166667, 0.25, 0.333333, 0.458333, 0.583333 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Save-select-horizontal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ConfigName/HeadContainer/Arrows:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0.309804, 0.4, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "hovering"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Save-select-horizontal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ConfigName/HeadContainer/Arrows:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Color( 1, 0, 0, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.309804, 0.4, 0.156863 ), Color( 0, 0.309804, 0.4, 0.490196 ) ]
+}
+
+[node name="SaveSelectButton" type="Container"]
+anchor_right = 0.583333
+anchor_bottom = 0.266667
+margin_right = 0.000152588
+margin_bottom = -9.15527e-05
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+option_values = [ {
+"character_id": 1,
+"enabled": true
+}, {
+"character_id": 1,
+"enabled": false
+}, {
+"character_id": 2,
+"enabled": false
+}, {
+"character_id": 3,
+"enabled": false
+}, {
+"character_id": 4,
+"enabled": false
+}, {
+"character_id": 5,
+"enabled": false
+} ]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0.309804, 0.4, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfigName" type="Control" parent="."]
+anchor_left = 0.578571
+anchor_top = 0.125
+anchor_right = 0.835857
+anchor_bottom = 1.00044
+margin_right = -0.0400085
+margin_bottom = -0.0320053
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HeadContainer" type="Node2D" parent="ConfigName"]
+position = Vector2( 4.0002, 3.99999 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Shade" type="Sprite" parent="ConfigName/HeadContainer"]
+texture = ExtResource( 3 )
+centered = false
+hframes = 6
+vframes = 2
+frame = 6
+
+[node name="Head" type="Sprite" parent="ConfigName/HeadContainer"]
+position = Vector2( -8, -5 )
+texture = ExtResource( 3 )
+centered = false
+hframes = 6
+vframes = 2
+
+[node name="Arrows" type="Node2D" parent="ConfigName/HeadContainer"]
+modulate = Color( 1, 0, 0, 0 )
+position = Vector2( 20, 21 )
+
+[node name="Left" type="Sprite" parent="ConfigName/HeadContainer/Arrows"]
+position = Vector2( -30, -5 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Right" type="Sprite" parent="ConfigName/HeadContainer/Arrows"]
+position = Vector2( 43, -5 )
+texture = ExtResource( 4 )
+centered = false
+flip_h = true
+
+[node name="Save-select-horizontal" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="AllPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 5 )
+anims/hover = SubResource( 2 )
+anims/resetanim = SubResource( 1 )
+anims/select = SubResource( 6 )
+
+[node name="Focused" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/hovering = SubResource( 4 )

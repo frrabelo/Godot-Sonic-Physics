@@ -24,7 +24,7 @@ func _ready() -> void:
 	else:
 		if path:
 			path_follow.rotate = false
-			remote_t.set_remote_node((platform as KinematicBody2D).get_path())
+			remote_t.set_remote_node(platform.get_path())
 			path.add_child(path_follow)
 			path_follow.add_child(remote_t)
 			path_follow.unit_offset= 0
@@ -38,7 +38,7 @@ func set_loop (val:bool) -> void:
 func get_size() -> Vector2:
 	var to_return : Vector2
 	for i in get_children():
-		if i is KinematicBody2D:
+		if i is PhysicsBody2D:
 			for j in i.get_children():
 				if j is CollisionShape2D:
 					to_return = j.shape.extents

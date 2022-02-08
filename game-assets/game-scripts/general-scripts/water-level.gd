@@ -10,25 +10,6 @@ func _ready() -> void:
 	var edi_coll_shape : CollisionShape2D = Utils.get_node_by_type(self, 'CollisionShape2D')
 	size = edi_coll_shape.shape.extents
 
-func get_coll_overlap(body_id: int, body: Node, body_shape:int, local_shape:int):
-	var body_shape_owner_id = body.shape_find_owner(body_shape)
-	var body_shape_owner = body.shape_owner_get_owner(body_shape_owner_id)
-	var body_shape_2d = body.shape_owner_get_shape(body_shape_owner_id, 0)
-	var body_global_transform = body_shape_owner.global_transform
-	
-	var area_shape_owner_id = shape_find_owner(local_shape)
-	var area_shape_owner = shape_owner_get_owner(area_shape_owner_id)
-	var area_shape_2d = shape_owner_get_shape(area_shape_owner_id, 0)
-	var area_global_transform = area_shape_owner.global_transform
-	
-	var collision_points = area_shape_2d.collide_and_get_contacts(area_global_transform,
-									body_shape_2d,
-									body_global_transform)
-	for i in collision_points.size():
-		collision_points[i] = collision_points[i] - position
-	
-	return collision_points
-
 func spawn_dive(p : PlayerPhysics, overlap:Array, local_shape:int):
 	var dive_obj : AnimatedSprite = dive.instance()
 	var overlapp = overlap[0]
@@ -71,13 +52,13 @@ func _update_color(val : Color) -> void:
 	update()
 
 
-func _on_WaterLevel_area_shape_entered(area_id: int, area: Area2D, area_shape: int, local_shape: int) -> void:
+func _on_WaterLevel_area_shape_entered(area_rid: RID, area: Area2D, area_shape: int, local_shape: int) -> void:
 	if Engine.editor_hint || !area:
 		return
 	if area.name == 'WaterSensor':
 		var p : PlayerPhysics = area.get_parent()
 		p.underwater = true
-		overlaps[p] = get_coll_overlap(area_id, area, area_shape, local_shape)
+		overlaps[p] = Utils.get_area2D_coll_overlap(self, area_rid, area, area_shape, local_shape)
 		if overlaps.has(p):
 			spawn_dive(p, overlaps[p], local_shape)
 

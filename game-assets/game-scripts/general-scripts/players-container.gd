@@ -4,14 +4,15 @@ export(int) var main_player = 0
 var player = preload('res://general-objects/players-objects/player-obj.tscn')
 class_name PlayersContainer
 onready var p_obj = $PlayersObj
-onready var spawner = $Spawner
+onready var spawner = $InitialSpawn
 func _ready():
-	
-	for i in spawner.get_children():
-		var point : Vector2 = i.position
+	yield(get_parent(), "ready")
+	for i in get_parent().global.players.size():
+		var player_infos = get_parent().global.players[i]
+		var point : Vector2 = spawner.position
 		var player_obj = player.instance()
 		player_obj.position = point
-		player_obj.my_spawn_point = i
+		player_obj.my_spawn_point = point
 		p_obj.add_child(player_obj)
 	
 	var children = p_obj.get_children()
@@ -30,7 +31,10 @@ func _ready():
 
 func set_main_player(child : PlayerPhysics):
 	selected = child.get_position_in_parent()
-	child.im_main_player = true
+	child.activate()
+	for i in p_obj.get_children():
+		if i != child:
+			i.deactivate()
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	if event.is_action_released('ui_end'):
@@ -43,3 +47,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 			var child = sel_player.get_child(selected)
 			main_player = children.find(children)
 			set_main_player(child)
+
+
+func _on_HUD_can_play():
+	get_tree().get_root().set_disable_input(false)

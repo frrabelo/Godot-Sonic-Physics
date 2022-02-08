@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/menus-scripts/first-menu.gd" type="Script" id=1]
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/options-assets/video-options-container.gd" type="Script" id=2]
+[ext_resource path="res://scenes/assets/main-menu/save-select/main-save-button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/assets/main-menu/save-select/delete-save-button.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+const MAIN_SAVE_BUTTON = preload(\"res://scenes/assets/main-menu/save-select/main-save-button.tscn\")
+
+func _enter_tree():
+	var loaded_data = $\"/root/GlobalScript\".loaded_data
+	for i in DataPersistance.get_max_slots():
+		var msb : Control = MAIN_SAVE_BUTTON.instance()
+		msb.text = \"Slot %d\" % (i+1)
+		get_parent().get_node(\"ButtonSelector\").add_child(msb)
+		if loaded_data.size() <= i: continue
+		var loaded = loaded_data[i]
+		if loaded != null:
+			msb.can_change_value = false
+			msb.current_value = loaded[\"character\"]
+	queue_free()
+"
+
+[node name="SaveSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+hue_value = 63
+main_scene_path = "res://scenes/assets/main-menu/main-scene.tscn"
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Node" type="Node" parent="."]
+script = SubResource( 1 )
+
+[node name="ButtonSelector" type="Container" parent="."]
+anchor_left = 0.414583
+anchor_top = 0.281481
+anchor_right = 0.997917
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+separation = 4
+min_scroll = -184
+dynamic_scroll_size = true
+
+[node name="SaveSelectButton2" parent="ButtonSelector" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 45.988
+rect_min_size = Vector2( 0, 0 )
+
+[node name="SaveSelectButton" parent="ButtonSelector" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 76.0
+margin_right = 280.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 0, 0 )
+option_values = [ {
+"character_id": 0,
+"enabled": true
+}, {
+"character_id": 0,
+"enabled": false
+}, {
+"character_id": 0,
+"enabled": false
+}, {
+"character_id": 0,
+"enabled": false
+}, {
+"character_id": 0,
+"enabled": false
+}, {
+"character_id": 0,
+"enabled": false
+} ]
+text = "No save"

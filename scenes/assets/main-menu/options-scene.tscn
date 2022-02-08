@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/menus-scripts/first-menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/assets/main-menu/MainButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/header-title.png" type="Texture" id=3]
+[ext_resource path="res://game-assets/game-sprites/scenes-sprites/main-menu/title-texts/options.png" type="Texture" id=4]
+[ext_resource path="res://game-assets/game-scripts/main-menu-scripts/button-selector-container.gd" type="Script" id=5]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+light_mode = 1
+
+[node name="Options" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+hue_value = 25
+main_scene_path = "res://scenes/assets/main-menu/options-scene.tscn"
+back_scene_path = "res://scenes/assets/main-menu/main-scene.tscn"
+
+[node name="Header" type="TextureRect" parent="."]
+material = SubResource( 1 )
+anchor_left = 0.5
+anchor_top = 0.038
+anchor_right = 0.5
+anchor_bottom = 0.038
+margin_left = -107.0
+margin_top = 12.74
+margin_right = 107.0
+margin_bottom = 52.74
+mouse_filter = 2
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="main-menu" type="Sprite" parent="Header"]
+position = Vector2( 111, 7 )
+texture = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="HBoxContainer" type="Container" parent="."]
+anchor_left = 0.079
+anchor_top = 0.359
+anchor_right = 0.933
+anchor_bottom = 0.789
+margin_left = 0.079998
+margin_top = 0.0699997
+margin_right = 0.159973
+margin_bottom = -0.030014
+rect_min_size = Vector2( 410, 115 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+columns = 2
+v_separation = 20
+h_separation = 10
+
+[node name="Video" parent="HBoxContainer" instance=ExtResource( 2 )]
+text = "Video"
+action = "res://scenes/assets/main-menu/options-scenes/options-videos-scene.tscn"
+
+[node name="Controls" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 210.0
+margin_right = 410.0
+text = "placeholder"
+clickable = false
+
+[node name="Audio" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_top = 45.0
+margin_bottom = 70.0
+text = "placeholder"
+clickable = false
+
+[node name="Language" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 210.0
+margin_top = 45.0
+margin_right = 410.0
+margin_bottom = 70.0
+text = "Placeholder"
+clickable = false
+
+[node name="Data" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_top = 90.0
+margin_bottom = 115.0
+text = "Placeholder"
+clickable = false
+
+[node name="Credits" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 210.0
+margin_top = 90.0
+margin_right = 410.0
+margin_bottom = 115.0
+text = "Placeholder"

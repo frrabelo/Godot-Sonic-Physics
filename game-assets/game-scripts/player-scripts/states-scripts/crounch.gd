@@ -9,18 +9,17 @@ func enter(host : PlayerPhysics, prev_state : String):
 
 func step(host : PlayerPhysics, delta: float):
 	var ground_angle = host.ground_angle()
-	slope = host.get_slope_ratio()
+	slope = -host.SLPROLLDOWN
 	host.gsp += slope * sin(ground_angle)
 	host.gsp -= min(abs(host.gsp), host.FRC) * sign(host.gsp)
 	if !host.is_grounded:
 		return 'OnAir'
 	if crouched:
-		if Input.is_action_just_pressed('ui_jump') && (host.spinDash || host.selected_character.spin_dash_override):
+		if Input.is_action_just_pressed('ui_jump_i%d' % host.player_index) && (host.spinDash || host.selected_character.spin_dash_override):
 			return 'SpinDash'
 		return
 	if host.gsp != 0:
-		host.is_rolling = true
-		return 'OnGround'
+		return 'Rolling'
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta:float):
 	var play_speed := Utils.sign_bool(host.direction.y > 0) * 4.0 
