@@ -45,8 +45,9 @@ func enter(host, prev_state):
 		spring_loaded = false;
 		has_jumped = false
 		has_rolled = false
-		
-	host.sprite.offset = Vector2(-15, -10)
+	
+	if has_jumped:
+		host.sprite.offset = Vector2(-15, -10)
 	host.characters.rotation = 0.0 if roll_jump else host.characters.rotation
 	host.has_jumped = false
 	host.spring_loaded = false;
@@ -208,6 +209,3 @@ func _on_animation_finished(host, anim_name) -> void:
 
 func when_pushed_by_spring():
 	spring_loaded = true;
-
-func state_input(host, event):
-	pass

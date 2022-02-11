@@ -22,17 +22,12 @@ func step(host, delta):
 	if abs_gsp == 0 && host.direction.x == 0:
 		return 'Idle'
 	
-	if host.was_damaged:
-		host.snap_margin = 0
-		return 'OnAir'
+	if !host.is_grounded or host.was_damaged or host.is_floating:
+		return "OnAir"
 	
-	if !host.is_ray_colliding || host.fall_from_ground():
+	if !host.is_ray_colliding or host.fall_from_ground():
 		host.is_grounded = false
 		host.move_and_slide_preset()
-		host.snap_margin = 0
-		return 'OnAir'
-	
-	if host.is_floating:
 		host.snap_margin = 0
 		return 'OnAir'
 	
@@ -73,7 +68,7 @@ func step(host, delta):
 			host.gsp -= min(abs_gsp, host.FRC) * sign(host.gsp)
 			abs_gsp = abs(host.gsp)
 	
-	if host.is_wall_right && host.gsp > 0 || host.is_wall_left && host.gsp < 0:
+	if (host.is_wall_right && host.gsp > 0) || (host.is_wall_left && host.gsp < 0):
 		host.is_pushing = true
 	else:
 		host.is_pushing = false

@@ -1,6 +1,6 @@
 # HedgeGodot Engine
 
-![Hedgegodot](./.gitPresentation/main-image.jpg)
+![Hedgegodot](./.gitPresentation/main-image-2.jpg)
 
 ## License
 
@@ -19,17 +19,19 @@ My philosophy in this project is to schedule everything using GDScript (logical 
 ## Why Godot?
 
 Godot is a tool:
-- Free;
-- Open-source;
-- Multiplataform;
+
+-   Free;
+-   Open-source;
+-   Multiplataform;
 
 That is, accessibility is even greater for everyone, we can export to Windows, Mac/OS X, Linux, Android and IOS, and for being free, we can use with no problems, [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/) require the [Multimedia / ClickTeam Fusion](https://www.clickteam.com/clickteam-fusion-2-5) tool to operate (good tools, but are paid and the editor only has native support for Windows), my intention is to make as close as possible to [Sonic Worlds](http://info.sonicretro.org/Sonic_Worlds) and [Core Engine](https://sonicfangameshq.com/forums/showcase/core-engine.852/), so fans can make their games without worrying about devices support, or buy and game engine.
 
 ## The logo?
+
 ![HedgeGodotLogo?](./splash.png)
 
 Use the logo as you want, i've just drawed for identification :P
 
-
 ## The community
+
 Feel free to add features, let's grow the variety of Engines for Sonic together!!!

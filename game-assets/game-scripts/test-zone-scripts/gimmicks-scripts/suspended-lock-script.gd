@@ -12,6 +12,7 @@ func _set_lock(val : int) -> void:
 	modulate = {
 		Lock.LEFT: Color(0, 1, 0.5),
 		Lock.RIGHT: Color(0, 0.5, 1),
+		Lock.BOTH: Color(0, 1.0, 1.0)
 	}[lock]
 
 

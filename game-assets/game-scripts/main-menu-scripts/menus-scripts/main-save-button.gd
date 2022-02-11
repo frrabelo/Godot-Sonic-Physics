@@ -8,6 +8,7 @@ onready var head : Sprite = $ConfigName/HeadContainer/Head
 
 func _ready():
 	._ready()
+	rect_min_size = Vector2(280, 72)
 	if !can_change_value:
 		$ConfigName/HeadContainer/Arrows.visible = false
 

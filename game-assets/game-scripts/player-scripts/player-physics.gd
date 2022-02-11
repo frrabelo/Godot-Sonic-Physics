@@ -176,18 +176,18 @@ func physics_step(delta):
 		position.x = min(player_camera.camera.limit_right-9, position.x)
 	else:
 		position.x = max(9, position.x)
+		
 	if is_on_floor():
 		is_grounded = true
 	
 	ground_ray = get_ground_ray()
 	is_ray_colliding = ground_ray != null
-	
-	if ground_ray:
-		if is_collider_oneway(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
+	if ground_ray and is_ray_colliding:
+		if Utils.is_collider_oneway(ground_ray, ground_ray.get_collider()) && ground_mode != 0:
 			ground_normal = ground_ray.get_collision_normal()
 			ground_mode = 0
 			return
-		ground_normal = ground_ray.get_collision_normal()
+		ground_normal = Utils.get_collider_normal_precise(ground_ray, ground_mode)
 		ground_mode = int(round(rad2deg(ground_angle()) / 90.0)) % 4
 		ground_mode = -ground_mode if ground_mode == -2 else ground_mode
 	else:
@@ -244,7 +244,7 @@ func step_wall_collision(wall_sensors : Array) -> bool:
 		var rs : RayCast2D = ws
 		var collider = rs.get_collider()
 		if collider:
-			var one_way = is_collider_oneway(rs, collider)
+			var one_way = Utils.is_collider_oneway(rs, collider)
 			var coll_angle = abs(floor(rad2deg(rs.get_collision_normal().angle())))
 			#print(angle)
 			var grounded_wall : bool = \
@@ -255,27 +255,7 @@ func step_wall_collision(wall_sensors : Array) -> bool:
 			
 			if one_way or grounded_wall or air_wall:
 				continue
-			to_return = to_return || rs.is_colliding()
-	return to_return
-
-func is_collider_oneway(ray_cast : RayCast2D, collider) -> bool:
-	var to_return : bool = false
-	if !collider:
-		return to_return
-	#print(ray_cast.name)
-	match collider.get_class():
-		'TileMap':
-			var tmap : TileMap = collider
-			var cell = tmap.get_cellv(tmap.world_to_map(ray_cast.get_collision_point()))
-			var shape = ray_cast.get_collider_shape()
-			if shape && cell >= 0:
-				to_return = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
-		'StaticBody2D', 'RigidBody2D', "KinematicBody2D":
-			var coll : CollisionObject2D = collider
-			var collider_shape_id : int = ray_cast.get_collider_shape()
-			var collider_shape_owner_id : int = coll.shape_find_owner(collider_shape_id)
-			to_return = coll.is_shape_owner_one_way_collision_enabled(collider_shape_owner_id)
-			
+			to_return = to_return or rs.is_colliding()
 	return to_return
 
 func fall_from_ground() -> bool:
@@ -289,6 +269,20 @@ func fall_from_ground() -> bool:
 		
 		#print('fall')
 		
+	return false
+
+func is_on_ground():
+	var ground_ray = get_ground_ray()
+	if ground_ray != null:
+		if Utils.is_collider_oneway(ground_ray, ground_ray.get_collider()):
+			return false
+		var point = ground_ray.get_collision_point()
+		var normal = ground_ray.get_collision_normal()
+		if abs(rad2deg(normal.angle_to(Vector2(0, -1)))) < 90:
+			var player_pos = global_position.y+ 10 + (Utils.get_height_of_shape(main_collider.shape)*1.5)
+			var to_return = player_pos > point.y
+			return to_return
+	
 	return false
 
 func snap_to_ground() -> void:
@@ -315,11 +309,6 @@ func ground_reacquisition():
 
 func ground_angle() -> float:
 	return ground_normal.angle_to(Vector2(0, -1))
-
-func get_collider_normal_precise(ray:RayCast2D):
-	while ray.is_colliding():
-		var coll = ray.get_collider()
-		is_collider_oneway(ray, coll)
 
 func get_ground_ray() -> RayCast2D:
 	can_fall = true
@@ -396,9 +385,6 @@ func drop_rings(rings:int = 0):
 	var drop_real:int = min(drop_max, rings); 
 	var angle = 101.25
 	var drop_speed = 200;
-	var parent = get_node("/root/main/Level")
-	var last_rings:Array = [];
-		
 	# Add all rings instances to last_rings
 	for i in drop_real:
 		var instance_ring:KinematicBody2D = ring_scene.instance();
@@ -413,16 +399,10 @@ func drop_rings(rings:int = 0):
 		if i == drop_real / 2:
 			drop_speed /= 2
 			angle = 101.25
+		add_child(instance_ring)
 		instance_ring.physical = true
 		instance_ring.pick_box.set_deferred("disabled", was_damaged)
-		last_rings.append(instance_ring);
-		
-	# Make all rings ignore each other collisions
-	for c in last_rings:
-		for e in last_rings:
-			c.add_collision_exception_with(e);
-		# Add all rings on level
-		parent.add_child(c);
+		instance_ring.set_as_toplevel(true)
 
 func make_vulnerable():
 	was_damaged = false

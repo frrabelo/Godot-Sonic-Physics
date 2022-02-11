@@ -5,7 +5,7 @@
 [ext_resource path="res://game-assets/game-scripts/test-zone-scripts/gimmicks-scripts/elevator-script.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12, 8 )
+extents = Vector2( 8, 8 )
 
 [node name="Elevator" type="Node2D"]
 script = ExtResource( 3 )

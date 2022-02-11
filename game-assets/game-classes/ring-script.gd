@@ -17,16 +17,14 @@ var exit_timer:float = 4
 func _ready():
 	set_physics_process(physical)
 	hitBox.set_deferred("disabled", !physical)
-	#$CollisionFloor.set_deferred("disabled", !physical)
-	#$Left.set_deferred("enabled", physical);
-	#$Right.set_deferred("enabled", physical);
 
 func get_physical():
 	return physical;
 
 func set_physical(value:bool):
 	physical = value
-	_ready();
+	set_physics_process(physical)
+	hitBox.set_deferred("disabled", !physical)
 
 func _physics_process(delta):
 	var grounded = is_on_floor()
@@ -69,17 +67,19 @@ func _physics_process(delta):
 		exit_timer -= delta;
 	else:
 		queue_free()
-	#print(is_on_floor(), is_on_wall(), speed, collided)
 
 func _on_Area_body_entered(body:Node):
-	if body.is_class("PlayerPhysics"):
-		_catch(body)
+	match body.get_class():
+		"PlayerPhysics":
+			_catch(body)
+		"Ring":
+			add_collision_exception_with(body)
 
 func get_class():
 	return "Ring"
 
-func is_class(name:String):
-	return name == get_class();
+func is_class(class_:String):
+	return class_ == get_class() or class_ == .get_class();
 
 
 func _on_Area_area_entered(area: Area2D) -> void:

@@ -184,3 +184,35 @@ static func fill_array(size: int, value) -> Array:
 	for i in size:
 		to_return.append(value)
 	return to_return
+
+static func is_collider_oneway(ray_cast : RayCast2D, collider) -> bool:
+	var to_return : bool = false
+	if !collider:
+		return to_return
+	#print(ray_cast.name)
+	match collider.get_class():
+		'TileMap':
+			var tmap : TileMap = collider
+			var cell = tmap.get_cellv(tmap.world_to_map(ray_cast.get_collision_point()))
+			var shape = ray_cast.get_collider_shape()
+			if shape && cell >= 0:
+				to_return = tmap.get_tileset().tile_get_shape_one_way(cell, shape)
+		'StaticBody2D', 'RigidBody2D', "KinematicBody2D":
+			var coll : CollisionObject2D = collider
+			var collider_shape_id : int = ray_cast.get_collider_shape()
+			var collider_shape_owner_id : int = coll.shape_find_owner(collider_shape_id)
+			to_return = coll.is_shape_owner_one_way_collision_enabled(collider_shape_owner_id)
+			
+	return to_return
+
+static func get_collider_normal_precise(ray:RayCast2D, ground_mode):
+	var collider = ray.get_collider()
+	if ground_mode == 0:
+		return ray.get_collision_normal()
+	while collider:
+		if is_collider_oneway(ray, collider):
+			ray.add_exception(collider)
+			ray.force_raycast_update()
+			continue
+		return ray.get_collision_normal()
+	ray.clear_exceptions()

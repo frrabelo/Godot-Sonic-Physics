@@ -13,9 +13,13 @@ export var grab_position_from : float = 1.0 setget _set_grab_position_from
 export var grab_position : float = 1.0 setget _set_grab_position
 export var grab_position_to : float = 1.0
 export var animation_duration : float = 1.0
+export var can_move_right_top:bool
+export var can_move_right_bottom:bool
+export var can_move_left_top:bool
+export var can_move_left_bottom:bool
 
 func _ready() -> void:
-	set_process(false)
+	set_physics_process(false)
 	if !Engine.editor_hint:
 		_set_grab_position(grab_position_from)
 
@@ -48,25 +52,28 @@ func update_grab() -> void:
 		update()
 
 
-func _on_Collision_body_shape_entered(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
+func _on_Collision_body_shape_entered(body_rid: RID, body: Node, body_shape: int, local_shape: int) -> void:
 	if body is PlayerPhysics:
 		var p : PlayerPhysics = body
 		if p.suspended_jump:
 			return
-		players.append(p)
+		if !players.has(p):
+			players.append(p)
 		if players.size() > 0:
 			to_top = true
-			p.fsm.change_state('Suspended')
 			var grab = get_node_or_null('Collision')
-			p.global_position = grab.global_position
+			if !p.fsm.is_current_state('Suspended'):
+				p.global_position.x = grab.global_position.x
+			p.fsm.change_state('Suspended')
+			p.global_position.y = grab.global_position.y + Utils.get_height_of_shape(p.main_collider.shape) + 10
 			p.player_camera.followUp = false
 			p.player_camera.followDown = false
-			set_process(true)
-			_set_players_props('suspended_can_left', false)
-			_set_players_props('suspended_can_right', false)
+			set_physics_process(true)
+			p.suspended_can_left = false
+			p.suspended_can_right = false
 
 
-func _on_Collision_body_shape_exited(body_id: int, body: Node, body_shape: int, local_shape: int) -> void:
+func _on_Collision_body_shape_exited(body_id: RID, body: Node, body_shape: int, local_shape: int) -> void:
 	if body is PlayerPhysics:
 		var p : PlayerPhysics = body
 		if p.suspended_jump:
@@ -77,35 +84,49 @@ func _on_Collision_body_shape_exited(body_id: int, body: Node, body_shape: int, 
 		players.remove(players.find(p))
 		if players.size() <= 0:
 			to_top = false
-			set_process(true)
+			set_physics_process(true)
+			
 
-func _process(delta: float) -> void:
-	var direction = -Utils.sign_bool(to_top)
+func _physics_process(delta: float) -> void:
+	var direction = Utils.sign_bool(to_top) * Utils.sign_2_bool(grab_position_from>=grab_position_to, grab_position_from<grab_position_to)
+	
+	for p in players:
+		if p.global_position.x != global_position.x:
+			p.global_position.x += (global_position.x - p.global_position.x) * delta
+			if abs(p.global_position.x - global_position.x) < 1:
+				p.global_position.x = global_position.x
+			return
+	
 	speed += direction*2 * delta
 	_set_grab_position(grab_position + (speed * delta))
-	var cameras_aligned = true
-	if players.size() > 0:
-		for n in players.size():
-			if !players[n]:
-				continue
-			var p : PlayerPhysics = players[n]
-			if p.fsm.current_state == "Suspended":
-				p.global_position.y = coll.global_position.y
-				if p.player_camera.global_position.y != p.global_position.y:
-					p.player_camera.global_position.y += (p.global_position.y - p.player_camera.global_position.y) * delta * 10
-			else:
-				players.remove(n)
-			cameras_aligned = cameras_aligned && p.player_camera.global_position.y != p.global_position.y
 	
-	if grab_position == float(!to_top):
-		_set_players_props('suspended_can_left', true)
-		_set_players_props('suspended_can_right', true)
-		if cameras_aligned:
-			set_process(false)
+	for p in players:
+		if p.global_position.x != global_position.x:
+			return
+		if p.fsm.current_state == "Suspended":
+			p.global_position.y = coll.global_position.y + Utils.get_height_of_shape(p.main_collider.shape) + 10
+			if p.player_camera.global_position.y != p.global_position.y:
+				p.player_camera.global_position.y += (p.global_position.y - p.player_camera.global_position.y) * delta * 10
+		else:
+			players.remove(players.find(p))
+	
+	var top_pos = min(grab_position_from, grab_position_to)
+	var bottom_pos = max(grab_position_from, grab_position_to)
+	
+	if (grab_position <= top_pos and direction < 0) or (grab_position >= bottom_pos and direction > 0):
+		set_physics_process(false)
 		speed = 0
+	
+	if grab_position > top_pos and grab_position < bottom_pos:
+		_set_players_props("suspended_can_left", false)
+		_set_players_props("suspended_can_right", false)
 	else:
-		_set_players_props('suspended_can_left', false)
-		_set_players_props('suspended_can_right', false)
+		if grab_position >= bottom_pos:
+			_set_players_props("suspended_can_left", can_move_left_bottom)
+			_set_players_props("suspended_can_right", can_move_right_bottom)
+		elif grab_position <= top_pos:
+			_set_players_props("suspended_can_left", can_move_left_top)
+			_set_players_props("suspended_can_right", can_move_right_top)
 
 func _set_players_props(prop: String, value) -> void:
 	for i in players.size():

@@ -96,15 +96,16 @@ func _input(event: InputEvent) -> void:
 		host.direction.x = Input.get_axis(ui_left, ui_right)
 	if action_chk.call_func(ui_up) || action_chk.call_func(ui_down):
 		host.direction.y = Input.get_axis(ui_up, ui_down)
+	
 	var state = get_available_state()
-	var cstate = state.state_input(host, event)
-	if cstate:
-		change_state(cstate)
+	var state_name = state.state_input(host, event)
+	if state_name:
+		change_state(state_name)
 		state = get_available_state()
 	if host.selected_character.states.has(current_state) && !state is StateChar:
-		cstate = host.selected_character.states[current_state].state_input(host, event, state)
-		if cstate:
-			change_state(cstate)
+		state_name = host.selected_character.states[current_state].state_input(host, event, state)
+		if state_name:
+			change_state(state_name)
 
 func _on_CharAnimation_animation_finished(anim_name: String) -> void:
 	get_available_state()._on_animation_finished(host, anim_name)

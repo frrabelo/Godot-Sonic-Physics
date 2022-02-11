@@ -26,10 +26,7 @@ func step(host : PlayerPhysics, delta):
 			else:
 				return 'LookUp'
 	
-	if host.ground_mode != 0:
-		return 'OnAir'
-	
-	if !host.is_grounded:
+	if host.ground_mode != 0 or !host.is_grounded:
 		return 'OnAir'
 	
 	#host.speed.x = host.gsp * cos(ground_angle)

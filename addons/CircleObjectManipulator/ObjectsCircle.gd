@@ -116,7 +116,9 @@ func _physics_process(delta: float) -> void:
 		var pos = scene_offset + direction * radius
 		i.position = pos
 		p_angle += angle_step / object_count
-		p_angle = fmod(p_angle, PI*2)
+		p_angle = fmod(p_angle, TAU)
+		if p_angle < 0:
+			p_angle = TAU-p_angle
 
 
 func _draw() -> void:

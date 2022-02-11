@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if enabled:
-		point = get_parent().get_parent().characters.global_position + get_parent().get_parent().sprite.offset
+		point = get_parent().get_parent().characters.global_position
 		add_point(point)
 		while get_point_count() > max_length:
 			remove_point(0)

@@ -56,6 +56,8 @@ func step(host: PlayerPhysics, delta: float):
 func exit(host: PlayerPhysics, next_state:String):
 	target_pos = null
 	side = 0
+	host.suspended_can_left = true
+	host.suspended_can_right = true
 
 func animation_step(host: PlayerPhysics, animator: CharacterAnimator, delta):
 	#print(main_anim_name)
